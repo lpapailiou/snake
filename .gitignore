@@ -1,0 +1,10 @@
+/workspace.xml
+*.iml
+/.idea/
+/out/
+/target/
+/.settings/
+/bin/
+/classes/
+*.classpath
+*.project
