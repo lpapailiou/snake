@@ -72,6 +72,14 @@ public class GamePanel implements Initializable {
         return instance;
     }
 
+    public List<int[]> getSnake() {
+        return board.getSnake();
+    }
+
+    public int[] getGoodie() {
+        return board.getGoodie();
+    }
+
     public static void setDirection(Direction dir) {
         instance.direction = dir;
     }

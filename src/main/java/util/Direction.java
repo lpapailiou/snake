@@ -34,4 +34,8 @@ public enum Direction {
         int random = RANDOM.nextInt(dirList.length);
         return dirList[random];
     }
+
+    public int[] asArray() {
+        return new int[] {x, y};
+    }
 }

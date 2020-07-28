@@ -5,6 +5,7 @@ import util.Direction;
 import java.util.Arrays;
 import java.util.List;
 
+import static ai.PathGenerator.exists;
 import static util.Setting.*;
 
 public class Board {
@@ -14,21 +15,27 @@ public class Board {
     private int result = 0;
 
     public Board() {
-        int[] snakePos = snake.getBody().get(0);
-        goodie = getRandomGoodie();
-        while (Arrays.equals(snakePos, goodie)) {
-            goodie = getRandomGoodie();
-        }
+        setGoodie();
     }
 
-    private int[] getRandomGoodie() {
-        return new int[] {RANDOM.nextInt(BOARD_WIDTH), RANDOM.nextInt(BOARD_HEIGHT)};
+    private void setGoodie() {
+        int[] newGoodie = null;
+        while (newGoodie == null || exists(snake.getBody(), newGoodie)) {
+            newGoodie = new int[] {RANDOM.nextInt(BOARD_WIDTH), RANDOM.nextInt(BOARD_HEIGHT)};
+        }
+        goodie = newGoodie;
     }
+
+
 
 
     public boolean moveSnake(Direction dir) {
-        snake.move(dir, goodie);
+        boolean newGoodieRequired = false;
+        newGoodieRequired = snake.move(dir, goodie);
         if (snake.isAlive() && !snake.isWinner()) {
+            if (newGoodieRequired) {
+                setGoodie();
+            }
             return true;
         }
         result = snake.isWinner() ? 1 : -1;

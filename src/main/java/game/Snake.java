@@ -17,27 +17,29 @@ public class Snake {
         snake.add(new int[] {BOARD_WIDTH/2, BOARD_HEIGHT/2});
     }
 
-    public void move(Direction dir, int[] goodie) {
+    public boolean move(Direction dir, int[] goodie) {
         int[] coord = new int[] {snake.get(0)[0]+dir.getX(), snake.get(0)[1]+dir.getY()};
         if (!isAlive) {
-            return;
+            return false;
         } else if (!isOnBoard(coord) || isGoingBackwards(coord)) {
             isAlive = false;
-            return;
+            return false;
         } else if (isPartOfSnake(coord)) {
             isAlive = false;
-            return;
+            return false;
         }
         snake.add(0, coord.clone());
         if (!Arrays.equals(coord, goodie)) {
             snake.remove(snake.size() - 1);
         } else {
             if (snake.size() < BOARD_WIDTH*BOARD_HEIGHT) {
-                setNewGoodie(goodie);
+                //setNewGoodie(goodie);
+                return true;
             } else {
                 isWinner = true;
             }
         }
+        return false;
     }
 
     public boolean isAlive() {
