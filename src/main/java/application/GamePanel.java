@@ -20,8 +20,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static game.Board.BOARD_HEIGHT;
-import static game.Board.BOARD_WIDTH;
+import static util.Setting.*;
 
 public class GamePanel implements Initializable {
 
@@ -46,20 +45,22 @@ public class GamePanel implements Initializable {
     int PADDING_HEIGHT = BASE_PADDING;
     private FadeTransition transitionGameOverTitle = null;
     private FadeTransition transitionGameOverText = null;
-    private Direction direction = Direction.RIGHT;
+    private Direction direction = Direction.getRandomDirection();
     private boolean isTimerStopped = false;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        gameOverTitle.setTextFill(Color.LIME);
-        gameOverText.setTextFill(Color.LIME);
-        setUpTimer();
+        gameOverTitle.setTextFill(COLOR_SCHEME.getText());
+        gameOverText.setTextFill(COLOR_SCHEME.getText());
+        if (!HASBOT) {
+            setUpTimer();
+        }
     }
 
     private void setUpTimer() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(SPEED), event -> {
             if (!isTimerStopped) {
                 move(direction);
             }
@@ -102,7 +103,8 @@ public class GamePanel implements Initializable {
             instance.paint();
         } else {
             instance.isTimerStopped = true;
-            instance.showEndGameDialog();
+            instance.repaint();
+            //instance.showEndGameDialog();
         }
     }
 
@@ -127,8 +129,10 @@ public class GamePanel implements Initializable {
     private void stopGameOverAnimation() {
         gameOverTitle.setText("");
         gameOverText.setText("");
-        instance.transitionGameOverTitle.stop();
-        instance.transitionGameOverText.stop();
+        if (instance.transitionGameOverTitle != null && instance.transitionGameOverText != null) {
+            instance.transitionGameOverTitle.stop();
+            instance.transitionGameOverText.stop();
+        }
     }
 
     public static void restart() {
@@ -136,7 +140,7 @@ public class GamePanel implements Initializable {
             instance.stopGameOverAnimation();
             instance.board = new Board();
             instance.paint();
-            instance.direction = Direction.RIGHT;
+            instance.direction = Direction.getRandomDirection();
             instance.isTimerStopped = false;
         }
     }
@@ -153,28 +157,34 @@ public class GamePanel implements Initializable {
     }
 
     private void paint() {
-        paintBackground();
+        paintBackground(COLOR_SCHEME.getBackgroundFrame());
         paintSnake();
         paintGoodie();
     }
 
-    private void paintBackground() {
+    private void repaint() {
+        paintBackground(COLOR_SCHEME.getBackgroundFrameEnd());
+        paintSnake();
+        paintGoodie();
+    }
+
+    private void paintBackground(Color backgroundFrameColor) {
         context.clearRect(0, 0, BOARD_WIDTH*CELL_WIDTH, BOARD_HEIGHT*CELL_WIDTH);
         int offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
-        context.setFill(Color.LIME);
+        context.setFill(backgroundFrameColor);
         context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*BOARD_WIDTH)+offset*2, (CELL_WIDTH*BOARD_HEIGHT)+offset*2);
-        context.setFill(Color.BLACK);
+        context.setFill(COLOR_SCHEME.getBackground());
         context.fillRect(PADDING_WIDTH, PADDING_HEIGHT, (CELL_WIDTH*BOARD_WIDTH), (CELL_WIDTH*BOARD_HEIGHT));
     }
 
     private void paintGameOverBackground() {
-        context.setFill(Color.BLACK);
+        context.setFill(COLOR_SCHEME.getBackground());
         context.fillRect(PADDING_WIDTH, WINDOW_HEIGHT/2-80, (CELL_WIDTH*BOARD_WIDTH), 110);
     }
 
     private void paintGoodie() {
         int[] goodie = board.getGoodie();
-        drawCell(goodie[0], goodie[1], Color.RED);
+        drawCell(goodie[0], goodie[1], COLOR_SCHEME.getGoodie());
     }
 
     private void paintSnake() {
@@ -188,10 +198,10 @@ public class GamePanel implements Initializable {
                 } else {
                     partNext = snake.get(i);
                 }
-                drawLine(part[0], part[1], partNext[0], partNext[1], Color.LIME);
+                drawLine(part[0], part[1], partNext[0], partNext[1], COLOR_SCHEME.getSnake());
             }
         } else {
-            drawCell(snake.get(0)[0], snake.get(0)[1], Color.LIME);
+            drawCell(snake.get(0)[0], snake.get(0)[1], COLOR_SCHEME.getSnake());
         }
     }
 

@@ -1,24 +1,20 @@
 package game;
 
 import util.Direction;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
-import static game.Board.BOARD_HEIGHT;
-import static game.Board.BOARD_WIDTH;
+import static util.Setting.*;
 
 public class Snake {
 
     private List<int[]> snake = new ArrayList<>();
-    private static final Random RANDOM = new Random();
     private boolean isAlive = true;
     private boolean isWinner = false;
 
     public Snake() {
-        snake.add(new int[] {0, 0});
+        snake.add(new int[] {BOARD_WIDTH/2, BOARD_HEIGHT/2});
     }
 
     public void move(Direction dir, int[] goodie) {

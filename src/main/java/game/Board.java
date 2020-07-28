@@ -2,15 +2,28 @@ package game;
 
 import util.Direction;
 
+import java.util.Arrays;
 import java.util.List;
+
+import static util.Setting.*;
 
 public class Board {
 
-    public static final int BOARD_WIDTH = 15;
-    public static final int BOARD_HEIGHT = 12;
     private Snake snake = new Snake();
-    private int[] goodie = new int[] {BOARD_WIDTH-1, BOARD_HEIGHT-1};
+    private int[] goodie;
     private int result = 0;
+
+    public Board() {
+        int[] snakePos = snake.getBody().get(0);
+        goodie = getRandomGoodie();
+        while (Arrays.equals(snakePos, goodie)) {
+            goodie = getRandomGoodie();
+        }
+    }
+
+    private int[] getRandomGoodie() {
+        return new int[] {RANDOM.nextInt(BOARD_WIDTH), RANDOM.nextInt(BOARD_HEIGHT)};
+    }
 
 
     public boolean moveSnake(Direction dir) {

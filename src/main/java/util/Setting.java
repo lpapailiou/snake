@@ -1,0 +1,13 @@
+package util;
+
+import java.util.Random;
+
+public class Setting {
+
+    public static final ColorScheme COLOR_SCHEME = ColorScheme.CLASSIC;
+    public static final int BOARD_WIDTH = 15;
+    public static final int BOARD_HEIGHT = 12;
+    public static final int SPEED = 200;
+    public static final boolean HASBOT = false;
+    public static final Random RANDOM = new Random();
+}
