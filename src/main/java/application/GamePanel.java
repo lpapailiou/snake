@@ -1,5 +1,7 @@
 package application;
 
+import ai.Bot;
+import ai.RandomBot;
 import game.Board;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -54,9 +56,6 @@ public class GamePanel implements Initializable {
         instance = this;
         gameOverTitle.setTextFill(COLOR_SCHEME.getText());
         gameOverText.setTextFill(COLOR_SCHEME.getText());
-        if (!HASBOT) {
-            setUpTimer();
-        }
     }
 
     private void setUpTimer() {
@@ -94,9 +93,14 @@ public class GamePanel implements Initializable {
             PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*BOARD_WIDTH))/2+BASE_PADDING;
         }
         paint();
+        if (!HASBOT) {
+            setUpTimer();
+        } else {
+            setUpBot();
+        }
     }
 
-    public static void move(Direction dir) {
+    public static boolean move(Direction dir) {
         instance.direction = dir;
         boolean success = instance.board.moveSnake(dir);
         if (success) {
@@ -106,6 +110,7 @@ public class GamePanel implements Initializable {
             instance.repaint();
             //instance.showEndGameDialog();
         }
+        return success;
     }
 
     private void showEndGameDialog() {
@@ -142,6 +147,13 @@ public class GamePanel implements Initializable {
             instance.paint();
             instance.direction = Direction.getRandomDirection();
             instance.isTimerStopped = false;
+            setUpBot();
+        }
+    }
+
+    private static void setUpBot() {
+        if (HASBOT) {
+            new RandomBot().start();
         }
     }
 

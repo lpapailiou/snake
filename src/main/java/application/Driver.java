@@ -34,11 +34,10 @@ public class Driver extends Application {
             stage.setMaxWidth(516);
             stage.setTitle("Snake");
             stage.getIcons().add(new Image("snake.png"));
+            setUpKeyParser(scene);
             stage.show();
-            if (!HASBOT) {
-                setUpKeyParser(scene);
-            }
             GamePanel.getPanel().setDimensions(scene.getWidth(), scene.getHeight());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,7 +51,9 @@ public class Driver extends Application {
             } else if (dir.name().equals("NONE")) {
                 GamePanel.restart();
             } else {
-                GamePanel.setDirection(dir);
+                if (!HASBOT) {
+                    GamePanel.setDirection(dir);
+                }
             }
             e.consume();
         });
