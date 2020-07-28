@@ -15,6 +15,7 @@ public enum Direction {
 
     private int x;
     private int y;
+    private static final Direction[] dirList = {UP, DOWN, LEFT, RIGHT};
 
     Direction(int x, int y) {
         this.x = x;
@@ -30,9 +31,26 @@ public enum Direction {
     }
 
     public static Direction getRandomDirection() {
-        Direction[] dirList = {UP, DOWN, LEFT, RIGHT};
         int random = RANDOM.nextInt(dirList.length);
         return dirList[random];
+    }
+
+    public static Direction[] getDirections() {
+        return dirList;
+    }
+
+    public static int[] getNextCoord(int[] start, Direction dir) {
+        int[] next = new int[] {start[0]+dir.getX(), start[1]+dir.getY()};
+        return next;
+    }
+
+    public static Direction getDirectionFromCoordinate(int x, int y) {
+        for (Direction dir : dirList) {
+            if (dir.x == x && dir.y == y) {
+                return dir;
+            }
+        }
+        return Direction.NONE;
     }
 
     public int[] asArray() {

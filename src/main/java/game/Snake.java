@@ -30,7 +30,7 @@ public class Snake {
         }
         snake.add(0, coord.clone());
         if (!Arrays.equals(coord, goodie)) {
-            snake.remove(snake.size() - 1);
+            //snake.remove(snake.size() - 1);
         } else {
             if (snake.size() < BOARD_WIDTH*BOARD_HEIGHT) {
                 //setNewGoodie(goodie);
