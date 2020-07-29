@@ -99,11 +99,15 @@ public class PathUtils {
     }
 
     public static boolean exists(List<int[]> list, int[] block) {
-        for (int i = 0; i < list.size(); i++) {
-            if (Arrays.equals(list.get(i), block)) {
+        for (int[] coord : list) {
+            if (Arrays.equals(coord, block)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static boolean intersect(int[] coord1, int[] coord2) {
+        return ((coord1[0] == coord2[0] ^ coord1[1] == coord2[1]) && (Math.abs(coord1[0] - coord2[0]) == 1 ^ Math.abs(coord1[1] - coord2[1]) == 1));
     }
 }

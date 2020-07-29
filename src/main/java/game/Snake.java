@@ -22,15 +22,21 @@ public class Snake {
         if (!isAlive) {
             return false;
         } else if (!isOnBoard(coord) || isGoingBackwards(coord)) {
+            if (!isOnBoard(coord)) {
+                System.out.println("dies at " + Arrays.toString(coord) + " beacause fell from board");
+            } else {
+                System.out.println("dies at " + Arrays.toString(coord) + " beacause is going backwards");
+            }
             isAlive = false;
             return false;
         } else if (isPartOfSnake(coord)) {
+            System.out.println("dies because run into himself at " + Arrays.toString(coord));
             isAlive = false;
             return false;
         }
         snake.add(0, coord.clone());
         if (!Arrays.equals(coord, goodie)) {
-            //snake.remove(snake.size() - 1);
+            snake.remove(snake.size() - 1);
         } else {
             if (snake.size() < BOARD_WIDTH*BOARD_HEIGHT) {
                 //setNewGoodie(goodie);
@@ -67,17 +73,12 @@ public class Snake {
     private boolean isOnBoard(int[] coord) {
         if (coord[0] < 0 || coord[0] >= BOARD_WIDTH) {
             return false;
-        } else if (coord[1] < 0 || coord[1] >= BOARD_HEIGHT) {
-            return false;
-        }
-        return true;
+        } else return coord[1] >= 0 && coord[1] < BOARD_HEIGHT;
     }
 
     private boolean isGoingBackwards(int[] coord) {
         if (snake.size() > 1) {
-            if (Arrays.equals(snake.get(1), coord)) {
-                return true;
-            }
+            return Arrays.equals(snake.get(1), coord);
         }
         return false;
     }

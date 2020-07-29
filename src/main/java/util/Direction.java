@@ -11,7 +11,7 @@ public enum Direction {
     DOWN(0, 1),
     LEFT(-1, 0),
     RIGHT(1, 0),
-    GONE(-9, 0);;
+    GONE(-9, 0);
 
     private int x;
     private int y;
@@ -39,9 +39,15 @@ public enum Direction {
         return dirList;
     }
 
+    public static Direction[] getAxisDirections(boolean horizontal) {
+        if (horizontal) {
+            return new Direction[] {Direction.LEFT, Direction.RIGHT};
+        }
+        return new Direction[] {Direction.UP, Direction.DOWN};
+    }
+
     public static int[] getNextCoord(int[] start, Direction dir) {
-        int[] next = new int[] {start[0]+dir.getX(), start[1]+dir.getY()};
-        return next;
+        return new int[] {start[0]+dir.getX(), start[1]+dir.getY()};
     }
 
     public static Direction getDirectionFromCoordinate(int x, int y) {

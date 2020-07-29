@@ -1,7 +1,6 @@
 package application;
 
-import ai.Bot;
-import ai.RandomBot;
+import ai.HamiltonBot;
 import game.Board;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -93,13 +92,13 @@ public class GamePanel implements Initializable {
 
         if (BOARD_WIDTH >= BOARD_HEIGHT) {
             CELL_WIDTH = (int) (WINDOW_WIDTH-BASE_PADDING*2)/BOARD_WIDTH;
-            STROKE_WIDTH = CELL_WIDTH/5*4;
-            PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*BOARD_HEIGHT))/2;
         } else {
             CELL_WIDTH = (int) (WINDOW_HEIGHT-BASE_PADDING*2)/BOARD_HEIGHT;
-            STROKE_WIDTH = CELL_WIDTH/5*4;
-            PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*BOARD_WIDTH))/2+BASE_PADDING;
         }
+        STROKE_WIDTH = CELL_WIDTH/5*4;
+        PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*BOARD_WIDTH))/2;
+        PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*BOARD_HEIGHT))/2;
+
         paint();
         if (!HASBOT) {
             setUpTimer();
@@ -161,7 +160,7 @@ public class GamePanel implements Initializable {
 
     private static void setUpBot() {
         if (HASBOT) {
-            new RandomBot().start();
+            new HamiltonBot().start();
         }
     }
 
