@@ -2,97 +2,77 @@ package ai;
 
 import util.Direction;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static util.Setting.BOARD_HEIGHT;
 import static util.Setting.BOARD_WIDTH;
 
 public class PathGenerator {
 
-    private static final int THRESHOLD = 50;
-
-    public static List<Direction> getPath(List<int[]> snake, int[] goodie) {
-        int[] distance = new int[] {goodie[0]-snake.get(0)[0], goodie[1]-snake.get(0)[1]};
-        List<Direction> path = getShortestPath(distance);
-        if (!path.isEmpty() && snake.size() > 1) {
-            int counter = path.size();
-            while (counter > 0 && Arrays.equals(new int[]{snake.get(0)[0] + path.get(path.size()-1).getX(), snake.get(0)[1] + path.get(path.size() - 1).getY()}, snake.get(1))) {
-                System.out.println("shuffle");
-                counter--;
-                Collections.shuffle(path);
-            }
-        }
-        System.out.println("generated path: " + path.toString());
-        return path;
-    }
-
-    public static List<Direction> getExploringPath(List<int[]> snake, int[] goodie) {
-        List<Direction> path= new ArrayList<>();
-        for (int i = 0; i < THRESHOLD; i++) {
-            if (path.isEmpty()) {
-                path = getExploring(snake, goodie);
+    public static void print(List<int[]> list) {
+        for (int i = 0; i < list.size(); i++) {
+            if (i == list.size()-1) {
+                System.out.print(Arrays.toString(list.get(i)) + "\n");
             } else {
-                break;
+                System.out.print(Arrays.toString(list.get(i)) + ", ");
             }
         }
-
-        if (path.isEmpty()) {
-            Direction dir = Direction.getRandomDirection();
-            path.add(dir);
-        }
-        return path;
+        System.out.println();
     }
 
-    public static List<Direction> getExploring(List<int[]> snake, int[] goodie) {
-        List<Direction> path = new ArrayList<>();
-        HashSet<Direction> dirsTested = new HashSet<>();
-        List<int[]> fakeSnake = new ArrayList<>(snake);
-        int[] current = snake.get(0);
-        Direction dir = Direction.getRandomDirection();
-        int[] next = new int[] {current[0]+dir.getX(), current[1]+dir.getY()};
-        boolean goodieReached = false;
-        while (!goodieReached) {
-            if (!exists(fakeSnake, next) && isValid(next)) {
-                path.add(0, dir);
-                fakeSnake.add(0, next.clone());
-                fakeSnake.remove(fakeSnake.size()-1);
-                current = next.clone();
-                goodieReached = Arrays.equals(goodie, current);
-                dirsTested.clear();
+    protected static List<Direction> getDirectionsFromPath(int[] start, List<int[]> path) {
+        List<Direction> newPath = new ArrayList<>();
+        int[] current = start;
+        for (int[] coord : path) {
+            newPath.add(Direction.getDirectionFromCoordinate(coord[0]-current[0], coord[1]-current[1]));
+            current = coord;
+        }
+        return newPath;
+    }
+
+    protected static List<int[]> getPathFromDirections(int[] start, List<Direction> path) {
+        List<int[]> newPath = new ArrayList<>();
+        int[] current = start;
+        for (Direction dir : path) {
+            current = new int[] {current[0]+dir.getX(), current[1]+dir.getY()};
+            newPath.add(current);
+        }
+        return newPath;
+    }
+
+
+
+    public static int getNextInvalidIndex(List<int[]> snake, List<Direction> path) {
+        snake = new ArrayList<>(snake);
+        for (int i = path.size()-1; i >= 0; i--) {
+            int[] next = Direction.getNextCoord(snake.get(0), path.get(i));
+            if (!isValid(next) || exists(snake, next)) {
+                snake.add(0, next);
             } else {
-                dirsTested.add(dir);
-                if (dirsTested.size() == 4) {
-                    return new ArrayList<>();
-                }
-            }
-            if (!goodieReached) {
-                dir = Direction.getRandomDirection();
-                next = new int[]{current[0] + dir.getX(), current[1] + dir.getY()};
-
+                return i;
             }
         }
-        return path;
+        return -1;
     }
 
 
-    private static boolean isValid(int[] next) {
-        if (next[0] < 0 || next[0] >= BOARD_WIDTH) {
-            return false;
-        } else return next[1] >= 0 && next[1] < BOARD_HEIGHT;
-    }
 
-    private static List<Direction> getShortestPath(int[] direction) {
+    public static List<Direction> getShortestPath(int[] start, int[] end) {
+        int[] distance = new int[]{end[0]-start[0], end[1]-start[1]};
         List<Direction> dirs = new ArrayList<>();
-        for (int i = 0; i < Math.abs(direction[0]); i++) {
-            if (direction[0] < 0) {
+        for (int i = 0; i < Math.abs(distance[0]); i++) {
+            if (distance[0] < 0) {
                 dirs.add(Direction.LEFT);
             } else {
                 dirs.add(Direction.RIGHT);
             }
         }
 
-        for (int i = 0; i < Math.abs(direction[1]); i++) {
-            if (direction[1] < 0) {
+        for (int i = 0; i < Math.abs(distance[1]); i++) {
+            if (distance[1] < 0) {
                 dirs.add(Direction.UP);
             } else {
                 dirs.add(Direction.DOWN);
@@ -100,6 +80,12 @@ public class PathGenerator {
         }
         Collections.shuffle(dirs);
         return dirs;
+    }
+
+    static boolean isValid(int[] next) {
+        if (next[0] < 0 || next[0] >= BOARD_WIDTH) {
+            return false;
+        } else return next[1] >= 0 && next[1] < BOARD_HEIGHT;
     }
 
     public static boolean exists(List<int[]> list, int[] block) {
@@ -111,26 +97,7 @@ public class PathGenerator {
         return false;
     }
 
-    public static boolean intersects(List<int[]> list, int[] block) {
-        for (Direction dir: Direction.getDirections()) {
-            int[] next = Direction.getNextCoord(block, dir);
-            if (exists(list, next)) {
-                return true;
-            }
-        }
-        return false;
+    static boolean intersect(int[] coord1, int[] coord2) {
+        return ((coord1[0] == coord2[0] ^ coord1[1] == coord2[1]) && (Math.abs(coord1[0] - coord2[0]) == 1 ^ Math.abs(coord1[1] - coord2[1]) == 1));
     }
-
-
-
-    public static int[] intersectsAt(List<int[]> list, int[] block) {
-        for (Direction dir: Direction.getDirections()) {
-            int[] next = Direction.getNextCoord(block, dir);
-            if (exists(list, next)) {
-                return next;
-            }
-        }
-        return new int[] {-1, -1};
-    }
-
 }

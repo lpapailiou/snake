@@ -1,8 +1,6 @@
 package game;
 
 import util.Direction;
-
-import java.util.Arrays;
 import java.util.List;
 
 import static ai.PathGenerator.exists;
@@ -26,14 +24,17 @@ public class Board {
         goodie = newGoodie;
     }
 
-
-
-
     public boolean moveSnake(Direction dir) {
-        boolean newGoodieRequired = false;
-        newGoodieRequired = snake.move(dir, goodie);
+        return validateMove(snake.move(dir, goodie));
+    }
+
+    public boolean moveSnake(int[] coord) {
+        return validateMove(snake.move(coord, goodie));
+    }
+
+    private boolean validateMove(boolean isNewGoodieRequired) {
         if (snake.isAlive() && !snake.isWinner()) {
-            if (newGoodieRequired) {
+            if (isNewGoodieRequired) {
                 setGoodie();
             }
             return true;

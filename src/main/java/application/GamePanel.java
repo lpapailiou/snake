@@ -1,6 +1,6 @@
 package application;
 
-import ai.HamiltonBot;
+import ai.bot.HamiltonianBot;
 import game.Board;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -110,6 +110,17 @@ public class GamePanel implements Initializable {
     public static boolean move(Direction dir) {
         instance.direction = dir;
         boolean success = instance.board.moveSnake(dir);
+        handleStep(success);
+        return success;
+    }
+
+    public static boolean move(int[] coord) {
+        boolean success = instance.board.moveSnake(coord);
+        handleStep(success);
+        return success;
+    }
+
+    private static void handleStep(boolean success) {
         if (success) {
             instance.paint();
         } else {
@@ -117,7 +128,6 @@ public class GamePanel implements Initializable {
             instance.repaint();
             //instance.showEndGameDialog();
         }
-        return success;
     }
 
     private void showEndGameDialog() {
@@ -160,7 +170,7 @@ public class GamePanel implements Initializable {
 
     private static void setUpBot() {
         if (HASBOT) {
-            new HamiltonBot().start();
+            new HamiltonianBot().start();
         }
     }
 

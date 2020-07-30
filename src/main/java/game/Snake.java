@@ -19,6 +19,11 @@ public class Snake {
 
     public boolean move(Direction dir, int[] goodie) {
         int[] coord = new int[] {snake.get(0)[0]+dir.getX(), snake.get(0)[1]+dir.getY()};
+        return move(coord, goodie);
+    }
+
+    public boolean move(int[] coord, int[] goodie) {
+
         if (!isAlive) {
             return false;
         } else if (!isOnBoard(coord) || isGoingBackwards(coord)) {
