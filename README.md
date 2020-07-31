@@ -4,7 +4,7 @@ A __snake__ game, with multiple ai algorithms.
 
 ## Table of Contents
 1. [About the game](#about-the-game)  
-2. [Implemented AI](#implemented-ai)
+2. [Implemented AI](#implemented-ai)  
 	2.1 [Hamiltonian cycle](#hamiltonian-cycle) 
 3. [Purpose of this project](#purpose-of-this-project) 
 4. [Project structure](#project-structure)  
@@ -23,22 +23,15 @@ A __snake__ game, with multiple ai algorithms.
 
 The game offers a manual mode, which is controlled by the keyboard.
 * __arrow left__, __arrow right__, __arrow up__, __arrow down__: will switch to this direction for the next snake move(s)
-  
-Every time the level increases, speed will also increase a little. 
-The shapes are generated on the fly, so the blocks will 'cluster'. This means, that it is more likely that compact 
-shapes appear.  
-If you want to get the game more annoying, you can add more blocks in the ``Settings`` class (which is located in the ``util`` 
-package). There, also the board size (default 17x10 blocks) may be adjusted.  
-  
+    
 ## Implemented AI
-  
 ### Hamiltonian cycle
 One of the most known algorithms to solve snake with an ai is to implement a hamiltonian cycle as base path. A hamiltonian 
 cycle is basically a circular path, with runs through every node (here 'cell') of a graph (here 'game panel').  
 This algorithm only works though, if the game panel has an even number of cells (e.g. a 25x25 panel will fail as one cell will 
 never be included in the path).
   
-Example of a such base path: 
+Example of a such base path:   
 ![screenshot of hamiltonian cycle](https://github.com/lpapailiou/snake/blob/master/src/main/resources/img/screenshot_hamiltonianPath.png)
   
 The snake can strictly follow this path. As a result, it will never run into its own body or a wall.  
