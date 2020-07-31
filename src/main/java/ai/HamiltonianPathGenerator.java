@@ -19,6 +19,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
     private static int boardY1 = 0;
     private static int boardX2 = BOARD_WIDTH;
     private static int boardY2 = BOARD_HEIGHT;
+    private static int PREV_SNAKE_SIZE = 0;
 
     private static List<int[]> tempPath = null;     // TODO: remove tempPath when testing is done
 
@@ -80,58 +81,123 @@ public class HamiltonianPathGenerator extends PathGenerator {
     }
 
     public static List<int[]> getPathSection(List<int[]> staticPath, List<int[]> snake, int[] goodie) {
+        System.out.println("snake: "+ Arrays.toString(snake.get(0)) +", goodie: "+ Arrays.toString(goodie));
         List<int[]> pathToGoodie = getPathBetween(staticPath, snake.get(0), goodie);
-        printArray("pathToGoodie array: ", pathToGoodie);
-        // get shortest path
+        printArray("pathToGoodie array: (size " + pathToGoodie.size() + ") ", pathToGoodie, true);
+
+
         List<List<int[]>> pathWays = new ArrayList<>();
-        collectPaths(pathWays, pathToGoodie, 0);
-        Optional<List<int[]>> pathToGo = pathWays.stream().reduce((a, b) -> a.size()<b.size()? a:b);
-        List<int[]> result = pathToGo.orElse(staticPath);
+        boolean full = false;
+        if (pathToGoodie.size() < 1000) {
+            full = true;
+        }
+        collectPaths(pathWays, new ArrayList<>(pathToGoodie), 0, full);
+        Collections.sort(pathWays, (Comparator<List>) (a1, a2) -> {
+            return a1.size() - a2.size();
+        });
 
-        // check if cutting off way out
-        int threshold = (staticPath.size()-snake.size()) - (pathToGoodie.size()-result.size());  // area to move - skipped path
-        if (threshold < snake.size()) {
-            pathToGoodie.remove(0);
+        List<int[]> result = new ArrayList<>();
 
+        int realSnakeSize = getSnakeSize(staticPath, snake);
+
+        boolean success = false;
+        for (List<int[]> pathToCheck : pathWays) {
+            if (pathToCheck.size() > 0) {
+                pathToCheck.remove(0);
+            }
+
+            int checkInt = staticPath.size() - realSnakeSize - (pathToGoodie.size() - pathToCheck.size())-1;
+            success = (checkInt > 0);
+            if (success) {
+                result = pathToCheck;
+                break;
+            }
+        }
+
+        if (!success) {
+            if (pathToGoodie.size() > 0) {
+                pathToGoodie.remove(0);
+            }
+            System.out.println("ORIGINAL ARRAY RETURNED\n");
             return pathToGoodie;
         }
-        printArray("result array: ", result);
-        System.out.println("skipped: " + (pathToGoodie.size()-result.size()));
+        printArray("shortcut array: (size " + result.size() + ") ", result, false);
+        System.out.println("SHORTCUT ARRAY RETURNED\n");
         return result;
     }
 
-    private static void collectPaths(List<List<int[]>> pathWays, List<int[]> passedPath, int index) {
+    private static int getSnakeSize(List<int[]> staticPath, List<int[]> snake) {
+        int[] start = snake.get(snake.size()-1);
+        int[] end = snake.get(0);
+        int size = 0;
+        boolean startFound = false;
+        for (int i = 0; i < staticPath.size(); i++) {
+            if (!startFound && !startFound && Arrays.equals(staticPath.get(i), start)) {
+                startFound = true;
+            }
+            if (startFound) {
+                size++;
+                if (Arrays.equals(staticPath.get(i), end)) {
+
+                    break;
+                }
+            }
+            if (i == staticPath.size()-1) {
+                i = -1;
+            }
+        }
+        return size;
+    }
+
+    private static void collectPaths(List<List<int[]>> pathWays, List<int[]> passedPath, int index, boolean full) {
+        if (passedPath.size() == (index+1)) {
+            if (!pathWays.contains(passedPath)) {
+                pathWays.add(passedPath);
+            }
+            return;
+        }
         List<int[]> path = new ArrayList<>(passedPath);
         int[] start = passedPath.get(index);
 
         int breakIndex = index;
-        List<Integer> biList = new ArrayList<>();
-        biList.add(breakIndex);
+        int breakIndex2 = index;
         boolean pathDone = false;
         for (int i = index; i < path.size(); i++) {
             if (i > index+1 && (intersect(path.get(i), start))) {
-                breakIndex = i;
-                biList.add(breakIndex);
-                break;
+                if (breakIndex == index) {
+                    breakIndex = i;
+                } else {
+                    breakIndex2 = i;
+                    break;
+                }
             }
             if (i == path.size()-1) {
                 pathDone = true;
             }
         }
-        for (int bIndex : biList) {
-            process(pathWays, new ArrayList<>(path), pathDone, index, bIndex);
+        if ((breakIndex+1) < path.size() && full) {
+            collectPaths(pathWays, new ArrayList<>(path), breakIndex + 1, full);        // continue
+        }
+        if (full) {
+            process(pathWays, new ArrayList<>(path), pathDone, index, breakIndex, full);     // cut first section
+        }
+        if (breakIndex2 != index || !full) {
+            if (!full) {
+                if (breakIndex2 == index){
+                    breakIndex2 = breakIndex;
+                }
+            }
+            process(pathWays, new ArrayList<>(path), pathDone, index, breakIndex2, full); // cut second section
         }
     }
 
-    private static void process(List<List<int[]>> pathWays, List<int[]> path, boolean pathDone, int index, int breakIndex) {
-        if (pathDone || path.size() <= 2) {
-            if (path.size() > 1) {
-                path.remove(0);
+    private static void process(List<List<int[]>> pathWays, List<int[]> path, boolean pathDone, int index, int breakIndex, boolean full) {
+        if (breakIndex==index || path.size() <= 2 || index == path.size()-1) {
+            if (!pathWays.contains(path)) {
+                pathWays.add(path);
             }
-            pathWays.add(path);
+            return;
         } else {
-            collectPaths(pathWays, new ArrayList<>(path), breakIndex);
-
             int counter = 0;
             int rem = breakIndex-index-1;
             if (rem > 0) {
@@ -142,13 +208,13 @@ public class HamiltonianPathGenerator extends PathGenerator {
                 }
             }
             breakIndex = breakIndex-counter-1;
-            if (path.size() > 2 && counter != 0) {
-                collectPaths(pathWays, new ArrayList<>(path), breakIndex);
+            if (path.size() > 2) {
+                collectPaths(pathWays, new ArrayList<>(path), breakIndex+1, full);        // continue
             } else {
-                if (path.size() > 1) {
-                    path.remove(0);
+                if (!pathWays.contains(path)) {
+                    pathWays.add(path);
                 }
-                pathWays.add(path);
+                return;
             }
         }
     }
@@ -156,6 +222,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
     private static List<int[]> getPathBetween(List<int[]> path, int[] start, int[] end) { // includes start, includes end
         List<int[]> pathSection = new ArrayList<>();
         boolean startFound = false;
+        boolean secondRound = false;
         for (int i = 0; i < path.size(); i++) {
             if (!startFound && Arrays.equals(start, path.get(i))) {
                 startFound = true;
@@ -165,8 +232,9 @@ public class HamiltonianPathGenerator extends PathGenerator {
                 if (Arrays.equals(path.get(i), end)) {
                     break;
                 }
-                if (i == path.size()-1) {
+                if (i == path.size()-1 && !secondRound) {       // check in case board cells are not even
                     i = -1;
+                    secondRound = true;
                 }
             }
         }
@@ -197,6 +265,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
     }
 
     public static List<int[]> getHamilton(int[] start) {    // TODO: backtracking may not be optimal yet
+        PREV_SNAKE_SIZE = 1;
         if (tempPath != null) {
             return tempPath;
         }
@@ -253,13 +322,19 @@ public class HamiltonianPathGenerator extends PathGenerator {
         //print(path);
         //tempPath = PathUtils.getDirectionsFromPath(new int[]{2, 2}, Arrays.asList(new int[][] {{2, 1}, {3, 1}, {3, 0}, {2, 0}, {1, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 2}, {0, 2}, {0, 3}, {1, 3}, {2, 3}, {3, 3}, {3, 2}, {2, 2}}));
         tempPath = path;
-        printArray("initial array: ", path);
+        printArray("initial array: ", path, false);
         return path;
         //return tempPath;
     }
 
-    private static void printArray(String name, List<int[]> list) {
-        System.out.println(name + ": " + Arrays.deepToString(list.toArray()).replace("[", "{").replace("]", "}"));
+    private static void printArray(String name, List<int[]> list, boolean removeFirst) {
+        if (removeFirst) {
+            String arr = Arrays.deepToString(list.toArray()).replace("[", "{").replace("]", "}");
+            arr = "{"+arr.substring(9);
+            System.out.println(name + ": " + arr);
+        } else {
+            System.out.println(name + ": " + Arrays.deepToString(list.toArray()).replace("[", "{").replace("]", "}"));
+        }
     }
 
     private static boolean createPath(List<int[]> path, int threshold) {
