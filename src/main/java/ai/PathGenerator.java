@@ -1,5 +1,6 @@
 package ai;
 
+import javafx.scene.Node;
 import util.Direction;
 
 import java.util.ArrayList;

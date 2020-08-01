@@ -71,6 +71,8 @@ public class HamiltonianPathGenerator extends PathGenerator {
         boardY2 -= 2;
     }
 
+    // Todo: A* algorithm for shortest path
+
     public static List<Direction> getStartCircle() {
         List<Direction> circle = new ArrayList();
         circle.add(Direction.UP);   // clockwise
@@ -88,7 +90,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
 
         List<List<int[]>> pathWays = new ArrayList<>();
         boolean full = false;
-        if (pathToGoodie.size() < 1000) {
+        if (pathToGoodie.size() < 300) {
             full = true;
         }
         collectPaths(pathWays, new ArrayList<>(pathToGoodie), 0, full);
@@ -179,7 +181,9 @@ public class HamiltonianPathGenerator extends PathGenerator {
             collectPaths(pathWays, new ArrayList<>(path), breakIndex + 1, full);        // continue
         }
         if (full) {
-            process(pathWays, new ArrayList<>(path), pathDone, index, breakIndex, full);     // cut first section
+            if (breakIndex != index) {
+                process(pathWays, new ArrayList<>(path), pathDone, index, breakIndex, full);     // cut first section
+            }
         }
         if (breakIndex2 != index || !full) {
             if (!full) {
@@ -187,7 +191,9 @@ public class HamiltonianPathGenerator extends PathGenerator {
                     breakIndex2 = breakIndex;
                 }
             }
-            process(pathWays, new ArrayList<>(path), pathDone, index, breakIndex2, full); // cut second section
+            if (breakIndex2 != index) {
+                process(pathWays, new ArrayList<>(path), pathDone, index, breakIndex2, full); // cut second section
+            }
         }
     }
 
@@ -219,7 +225,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
         }
     }
 
-    private static List<int[]> getPathBetween(List<int[]> path, int[] start, int[] end) { // includes start, includes end
+    public static List<int[]> getPathBetween(List<int[]> path, int[] start, int[] end) { // includes start, includes end
         List<int[]> pathSection = new ArrayList<>();
         boolean startFound = false;
         boolean secondRound = false;
@@ -330,9 +336,9 @@ public class HamiltonianPathGenerator extends PathGenerator {
     }
 
     private static void printArray(String name, List<int[]> list, boolean removeFirst) {
-        if (removeFirst && list.size() > 9) {
+        if (removeFirst && list.size() > 11) {
             String arr = Arrays.deepToString(list.toArray()).replace("[", "{").replace("]", "}");
-            arr = "{"+arr.substring(9);
+            arr = "{"+arr.substring(11);
             System.out.println(name + ": " + arr);
         } else {
             System.out.println(name + ": " + Arrays.deepToString(list.toArray()).replace("[", "{").replace("]", "}"));

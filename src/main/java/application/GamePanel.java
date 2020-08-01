@@ -1,5 +1,6 @@
 package application;
 
+import ai.bot.AStarBot;
 import ai.bot.HamiltonianBot;
 import game.Board;
 import javafx.animation.Animation;
@@ -170,7 +171,7 @@ public class GamePanel implements Initializable {
 
     private static void setUpBot() {
         if (HASBOT) {
-            new HamiltonianBot().start();
+            new AStarBot().start();
         }
     }
 
