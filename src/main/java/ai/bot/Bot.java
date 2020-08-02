@@ -14,7 +14,7 @@ public abstract class Bot {
     Timeline timeline;
 
     public void start() {
-        timeline = new Timeline(new KeyFrame(Duration.millis(20), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
             if (running) {
                 run();
             } else {

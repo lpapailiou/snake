@@ -38,16 +38,15 @@ public class AStarPathGenerator extends PathGenerator{
             } else {
                 if (currentNode.prev != null) {
                     for (Node neighbor : currentNode.prev.neighbors) {
-                        if (!Arrays.equals(neighbor.coordinate, currentNode.coordinate) && currentNode.prev.prev != null && !Arrays.equals(neighbor.coordinate, currentNode.prev.prev.coordinate)) {
-                            if (neighbor.baseScore < 4000) {
-                                neighbor.visited = false;
-                            }
-                        } else if (Arrays.equals(neighbor.coordinate, currentNode.coordinate)) {
+                        if (Arrays.equals(neighbor.coordinate, currentNode.coordinate)) {
                             neighbor.baseScore += 1000;
+                            currentNode.prev.neighbors.remove(neighbor);
+                            break;
                         }
                     }
-                    way.remove(currentNode);
                     currentNode = currentNode.prev;
+                    System.out.println("OOPS!");       // TODO: check why it did not work
+
                 } else {
                     System.out.println("NOPE!");       // TODO: check why it did not work
                     return availableNodes;

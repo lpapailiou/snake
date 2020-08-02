@@ -121,6 +121,22 @@ public class GamePanel implements Initializable {
         return success;
     }
 
+    public static boolean move(int[] coord, List<int[]> goodiepath, List<int[]> path) {
+        boolean success = instance.board.moveSnake(coord);
+        handleStep(success, goodiepath, path);
+        return success;
+    }
+
+    private static void handleStep(boolean success, List<int[]> goodiepath, List<int[]> path) {
+        if (success) {
+            instance.paint(goodiepath, path);
+        } else {
+            instance.isTimerStopped = true;
+            instance.repaint();
+            //instance.showEndGameDialog();
+        }
+    }
+
     private static void handleStep(boolean success) {
         if (success) {
             instance.paint();
@@ -192,6 +208,16 @@ public class GamePanel implements Initializable {
         paintGoodie();
     }
 
+    private void paint(List<int[]> pathgoodie, List<int[]> path) {
+        paintBackground(COLOR_SCHEME.getBackgroundFrame());
+        paintPath(pathgoodie, Color.BLUE);
+        paintPath(path, Color.YELLOW);
+        paintSnake();
+        paintGoodie();
+    }
+
+
+
     private void repaint() {
         paintBackground(COLOR_SCHEME.getBackgroundFrameEnd());
         paintSnake();
@@ -232,6 +258,23 @@ public class GamePanel implements Initializable {
             }
         } else {
             drawCell(snake.get(0)[0], snake.get(0)[1], COLOR_SCHEME.getSnake());
+        }
+    }
+
+    private void paintPath(List<int[]> path, Color color) {
+        if (path.size() > 1) {
+            for (int i = 0; i < path.size() - 1; i++) {
+                int[] part = path.get(i);
+                int[] partNext;
+                if (i + 1 < path.size()) {
+                    partNext = path.get(i + 1);
+                } else {
+                    partNext = path.get(i);
+                }
+                drawLine(part[0], part[1], partNext[0], partNext[1], color);
+            }
+        } else {
+            drawCell(path.get(0)[0], path.get(0)[1], color);
         }
     }
 
