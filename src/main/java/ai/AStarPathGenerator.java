@@ -8,7 +8,7 @@ import static util.Setting.RANDOM;
 
 public class AStarPathGenerator extends PathGenerator{
 
-    public static List<int[]> getAStarPath(List<int[]> availableNodes, int[] start, int[] end) {
+    public static List<int[]> getAStarPath(List<int[]> availableNodes, int[] start, int[] end, boolean minimize) {
         List<int[]> path = new ArrayList<>();
         Set<Node> graph = buildGraph(availableNodes, start, end);
         Node startNode = getNode(graph, start);
@@ -37,7 +37,11 @@ public class AStarPathGenerator extends PathGenerator{
                 if (!endFound) {
                     expandedNodes.add(currentNode);
                     nodesToCheck.remove(currentNode);
-                    currentNode = Collections.min(nodesToCheck);
+                    if (minimize) {
+                        currentNode = Collections.min(nodesToCheck);
+                    } else {
+                        currentNode = Collections.max(nodesToCheck);
+                    }
                 }
             } else {
                 throw new RuntimeException("path not found!");

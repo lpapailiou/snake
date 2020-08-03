@@ -36,7 +36,7 @@ public class AStarBot extends Bot {
 
     private List<int[]> getMyPath() {
         _goodiepath = getGoodiePath();
-        _path = AStarPathGenerator.getAStarPath(_goodiepath, GamePanel.getPanel().getSnake().get(0), GamePanel.getPanel().getGoodie());
+        _path = AStarPathGenerator.getAStarPath(_goodiepath, GamePanel.getPanel().getSnake().get(0), GamePanel.getPanel().getGoodie(), true);
         _path.remove(0);
         return _path;
     }
