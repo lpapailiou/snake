@@ -4,56 +4,45 @@ import util.Direction;
 
 import java.util.*;
 
+import static util.Setting.RANDOM;
+
 public class AStarPathGenerator extends PathGenerator{
 
     public static List<int[]> getAStarPath(List<int[]> availableNodes, int[] start, int[] end) {
         List<int[]> path = new ArrayList<>();
         Set<Node> graph = buildGraph(availableNodes, start, end);
-        Set<PathNode> way = new HashSet<>();
         Node startNode = getNode(graph, start);
-        startNode.visited = true;
-        PathNode currentNode = null;
 
-        currentNode = new PathNode(startNode, null);
-
-        way.add(currentNode);
+        PathNode currentNode = new PathNode(startNode, null);
+        Set<PathNode> expandedNodes = new HashSet<>();
+        expandedNodes.add(currentNode);
+        Set<PathNode> nodesToCheck = new HashSet<>(expandedNodes);
         boolean endFound = false;
         PATHFINDER: while (!endFound) {
-            Set<PathNode> nodesToCheck = new HashSet<>();
-            Set<Node> neighbors = currentNode.neighbors;
-            for (Node neigh : neighbors) {
+
+            for (Node neigh : currentNode.neighbors) {
                 if (Arrays.equals(neigh.coordinate, end)) {
+                    PathNode newNode = new PathNode(neigh, currentNode);
+                    currentNode = newNode;
                     endFound = true;
+                    break;
                 }
-                if (!neigh.visited) {
+                if (!pathNodeExists(expandedNodes, neigh.coordinate)) {
                     PathNode newNode = new PathNode(neigh, currentNode);
                     nodesToCheck.add(newNode);
-                    neigh.visited = true;
                 }
             }
 
             if (!nodesToCheck.isEmpty()) {
-                currentNode = Collections.min(nodesToCheck);
-                way.add(currentNode);
-            } else {
-                if (currentNode.prev != null) {
-                    for (Node neighbor : currentNode.prev.neighbors) {
-                        if (Arrays.equals(neighbor.coordinate, currentNode.coordinate)) {
-                            neighbor.baseScore += 1000;
-                            currentNode.prev.neighbors.remove(neighbor);
-                            break;
-                        }
-                    }
-                    currentNode = currentNode.prev;
-                    System.out.println("OOPS!");       // TODO: check why it did not work
-
-                } else {
-                    System.out.println("NOPE!");       // TODO: check why it did not work
-                    return availableNodes;
+                if (!endFound) {
+                    expandedNodes.add(currentNode);
+                    nodesToCheck.remove(currentNode);
+                    currentNode = Collections.min(nodesToCheck);
                 }
+            } else {
+                throw new RuntimeException("path not found!");
             }
         }
-
 
         boolean stop = false;
         while (!stop) {
@@ -61,7 +50,6 @@ public class AStarPathGenerator extends PathGenerator{
             path.add(0, currentNode.coordinate);
             currentNode = currentNode.prev;
         }
-
         return path;
     }
 
@@ -95,6 +83,15 @@ public class AStarPathGenerator extends PathGenerator{
         return null;
     }
 
+    public static boolean pathNodeExists(Set<PathNode> list, int[] block) {
+        for (PathNode node : list) {
+            if (Arrays.equals(node.coordinate, block)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static Node getNode(Set<Node> nodes, int[] coordinate) {
         for (Node no : nodes) {
             if (Arrays.equals(no.coordinate, coordinate)) {
@@ -108,8 +105,6 @@ public class AStarPathGenerator extends PathGenerator{
         Set<Node> neighbors = new HashSet<>();
         int[] coordinate;
         int distance;
-        int baseScore = 0;
-        boolean visited = false;
         Node (int[] coord, int distance) {
             this.coordinate = coord;
             this.distance = distance;
@@ -124,19 +119,10 @@ public class AStarPathGenerator extends PathGenerator{
             super(node.coordinate, node.distance);
             this.prev = prev;
             this.neighbors = node.neighbors;
-            this.visited = node.visited;
-            this.baseScore = node.baseScore;
             if (prev != null) {
                 weight = weight + prev.weight;
-                score = baseScore + weight + prev.weight + distance;
-            } else {
-                visited = true;
-                score = baseScore + weight + distance;
             }
-        }
-
-        void print() {
-            System.out.println("path node: " + Arrays.toString(coordinate) + ", score: " + score);
+            score = weight + distance;
         }
 
         @Override
