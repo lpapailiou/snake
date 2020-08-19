@@ -6,7 +6,7 @@ A __snake__ game, with multiple ai algorithms.
 1. [About the game](#about-the-game)  
 2. [Implemented AI](#implemented-ai)  
 	2.1 [Hamiltonian cycle](#hamiltonian-cycle)   
-	2.2 [A* algorithm](#a*-algorithm) 
+	2.2 [A* algorithm](#a-algorithm) 
 3. [Purpose of this project](#purpose-of-this-project) 
 4. [Project structure](#project-structure)  
 5. [How to get it](#how-to-get-it)  
