@@ -44,24 +44,10 @@ public class HamiltonianPathGenerator extends PathGenerator {
     }
 
     private static void incrementBoardDimensions() {
-        if (boardX1 <= 2 && boardY1 <= 2) {
-            resetBoardDimensions();
-        } else {
-            if (boardX1 <= 2) {
-                boardX1 = 0;
-                boardX2 = BOARD_WIDTH;
-            } else {
-                boardX1 -= 2;
-                boardX2 += 2;
-            }
-            if (boardY1 <= 2) {
-                boardY1 = 0;
-                boardY2 = BOARD_HEIGHT;
-            } else {
-                boardY1 -= 2;
-                boardY2 += 2;
-            }
-        }
+        boardX1 = (boardX1 > 2) ? boardX1-2 : 0;
+        boardY1 = (boardY1 > 2) ? boardY1-2 : 0;
+        boardX2 = (boardX2 < BOARD_WIDTH) ? boardX2+2 : BOARD_WIDTH;
+        boardY2 = (boardY2 < BOARD_HEIGHT) ? boardY2+2 : BOARD_HEIGHT;
     }
 
     private static void decrementBoardDimensions() {

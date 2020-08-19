@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Setting {
 
+    private Setting() {}
+
     public static final ColorScheme COLOR_SCHEME = ColorScheme.CLASSIC;
     public static final int BOARD_WIDTH = 8;
     public static final int BOARD_HEIGHT = 8;
