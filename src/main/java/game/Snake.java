@@ -26,19 +26,21 @@ public class Snake {
 
         if (!isAlive) {
             return false;
-        } else if (!isOnBoard(coord) || isGoingBackwards(coord)) {
-            if (!isOnBoard(coord)) {
-                System.out.println("dies at " + Arrays.toString(coord) + " beacause fell from board");
-            } else {
-                System.out.println("dies at " + Arrays.toString(coord) + " beacause is going backwards");
-            }
+        } else if (!isOnBoard(coord)) {
+            System.out.println("dies at " + Arrays.toString(coord) + " beacause fell from board");
             isAlive = false;
-            return false;
+        } else if (isGoingBackwards(coord)) {
+            System.out.println("dies at " + Arrays.toString(coord) + " beacause is going backwards");
+            isAlive = false;
         } else if (isPartOfSnake(coord)) {
             System.out.println("dies because run into himself at " + Arrays.toString(coord));
             isAlive = false;
+        }
+
+        if (!isAlive) {
             return false;
         }
+
         snake.add(0, coord.clone());
         if (!Arrays.equals(coord, goodie)) {
             snake.remove(snake.size() - 1);
