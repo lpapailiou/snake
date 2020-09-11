@@ -1,5 +1,8 @@
 package neuralnet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Matrix {
 
     double[][] data;
@@ -56,28 +59,16 @@ public class Matrix {
         }
     }
 
-
-    public void subtract(Matrix m) {
-        if (cols != m.cols || rows != m.rows) {
-            throw new IllegalArgumentException("wrong input matrix dimensions!");
+    public static Matrix subtract(Matrix a, Matrix b) {
+        if (a.cols != b.cols) {
+            throw new IllegalArgumentException("wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
         }
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                data[i][j] -= m.data[i][j];
+        for (int i = 0; i < a.rows; i++) {
+            for (int j = 0; j < a.cols; j++) {
+                a.data[i][j] -= b.data[i][j];
             }
         }
-    }
-
-    public void transponse() {
-        Matrix tmp = new Matrix(cols, rows);
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                tmp.data[i][j] = data[i][j];
-            }
-        }
-        data = tmp.data;
-        rows = tmp.rows;
-        cols = tmp.cols;
+        return a;
     }
 
     public void multiply(double scaler) {
@@ -86,24 +77,6 @@ public class Matrix {
                 data[i][j] *= scaler;
             }
         }
-    }
-
-    public void multiply(Matrix m) {
-        if (cols != m.rows) {
-            throw new IllegalArgumentException("wrong input matrix dimensions!");
-        }
-        Matrix tmp = new Matrix(rows, m.cols);
-        for (int i = 0; i < tmp.rows; i++) {
-            for (int j = 0; j < tmp.cols; j++) {
-                double sum = 0;
-                for (int k = 0; k < m.cols; k++) {
-                    sum += data[i][k] * m.data[k][j];
-                }
-                tmp.data[i][j] = sum;
-            }
-        }
-        this.data = tmp.data;
-        this.cols = tmp.cols;
     }
 
     public void multiplyElementwise(Matrix m) {
@@ -115,6 +88,33 @@ public class Matrix {
                 data[i][j] *= m.data[i][j];
             }
         }
+    }
+
+    public static Matrix multiply(Matrix a, Matrix b) {
+        if (a.cols != b.rows) {
+            throw new IllegalArgumentException("wrong input matrix dimensions for multiplication!");
+        }
+        Matrix tmp = new Matrix(a.rows, b.cols);
+        for (int i = 0; i < tmp.rows; i++) {
+            for (int j = 0; j < tmp.cols; j++) {
+                double sum = 0;
+                for (int k = 0; k < a.cols; k++) {
+                    sum += a.data[i][k] * b.data[k][j];
+                }
+                tmp.data[i][j] = sum;
+            }
+        }
+        return tmp;
+    }
+
+    public static Matrix transponse(Matrix m) {
+        Matrix tmp = new Matrix(m.cols, m.rows);
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
+                tmp.data[j][i] = m.data[i][j];
+            }
+        }
+        return tmp;
     }
 
     public void sigmoid() {
@@ -147,6 +147,24 @@ public class Matrix {
 
     public String getType() {
         return "(" + rows + ", " + cols + ")";
+    }
+
+    public static Matrix fromArray(double[] arr) {
+        Matrix tmp = new Matrix(arr.length, 1);
+        for (int i = 0; i < arr.length; i++) {
+            tmp.data[i][0] = arr[i];
+        }
+        return tmp;
+    }
+
+    public static List<Double> toArray(Matrix m) {
+        List<Double> tmp = new ArrayList<>();
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
+                tmp.add(m.data[i][j]);
+            }
+        }
+        return tmp;
     }
 
 }

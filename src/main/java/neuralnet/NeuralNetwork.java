@@ -5,9 +5,8 @@ import java.util.List;
 
 public class NeuralNetwork {
 
-    List<Layer> layers = new ArrayList<>();
-
-    double learningRate = 0.1;
+    private List<Layer> layers = new ArrayList<>();
+    private double learningRate = 0.1;
 
     /**
      * parameter list for matrix sizes.
@@ -16,7 +15,7 @@ public class NeuralNetwork {
      * parameters between = size of hidden layer
      * @param layerParams
      */
-    public NeuralNetwork(int... layerParams) {
+    NeuralNetwork(int... layerParams) {
         if (layerParams.length < 2) {
             throw new IllegalArgumentException("enter at least two parameters to create neural network!");
         }
@@ -25,74 +24,57 @@ public class NeuralNetwork {
         }
     }
 
-
     // forward pass
-    public List<Double> predict(double[] input) {
-        Matrix tmp = MatrixUtil.fromArray(input);
+    List<Double> predict(double[] input) {
+        Matrix tmp = Matrix.fromArray(input);
 
         for (Layer layer : layers) {
-            tmp = MatrixUtil.multiply(layer.weight, tmp);
+            tmp = Matrix.multiply(layer.weight, tmp);
             tmp.addBias(layer.bias);
             tmp.sigmoid();
         }
 
-        return MatrixUtil.toArray(tmp);
+        return Matrix.toArray(tmp);
     }
 
-    public void train(double[] x, double[] y) {
-        Matrix input = MatrixUtil.fromArray(x);
-        Matrix target = MatrixUtil.fromArray(y);
-/*
+    private void train(double[] inputNodes, double[] expectedOutputNodes) {
+        Matrix input = Matrix.fromArray(inputNodes);
+        Matrix target = Matrix.fromArray(expectedOutputNodes);
+
+        // forward propagate and add results to list
         List<Matrix> steps = new ArrayList<>();
-        Matrix tmp;
+        Matrix tmp = input;
         for (Layer layer : layers) {
-            tmp = MatrixUtil.multiply(layer.weight, tmp);
+            tmp = Matrix.multiply(layer.weight, tmp);
             tmp.addBias(layer.bias);
             tmp.sigmoid();
-            steps.add(0, tmp);
-        }*/
+            steps.add(tmp);
+        }
 
-        // forward propagate
-        Matrix hidden = MatrixUtil.multiply(layers.get(0).weight, input);
-        hidden.addBias(layers.get(0).bias);
-        hidden.sigmoid();
-        Matrix output = MatrixUtil.multiply(layers.get(1).weight, hidden);
-        output.addBias(layers.get(1).bias);
-        output.sigmoid();
+        // backward propagate to adjust weights
+        Matrix error = null;
+        for (int i = steps.size()-1; i >= 0; i--) {
+            if (error == null) {
+                error = Matrix.subtract(target, steps.get(steps.size()-1));
+            } else {
+                error = Matrix.multiply(Matrix.transponse(layers.get(i+1).weight), error);
+            }
+            Matrix gradient = steps.get(i).dsigmoid();
+            gradient.multiplyElementwise(error);
+            gradient.multiply(learningRate);
+            Matrix delta = Matrix.multiply(gradient, Matrix.transponse((i == 0) ? input : steps.get(i-1)));
+            layers.get(i).weight.add(delta);
+            layers.get(i).bias.addBias(gradient);
+        }
 
-
-
-        Matrix error = MatrixUtil.subtract(target, output);
-        Matrix gradient = output.dsigmoid();
-        gradient.multiplyElementwise(error);
-        gradient.multiply(learningRate);
-
-        Matrix hiddenT = MatrixUtil.transponse(hidden);
-        Matrix whoDelta = MatrixUtil.multiply(gradient, hiddenT);
-
-        layers.get(1).weight.add(whoDelta);
-        layers.get(1).bias.addBias(gradient);
-
-        Matrix whoT = MatrixUtil.transponse(layers.get(1).weight);
-        Matrix hiddenErr = MatrixUtil.multiply(whoT, error);
-
-        Matrix hGradient = hidden.dsigmoid();
-        hGradient.multiplyElementwise(hiddenErr);
-        hGradient.multiply(learningRate);
-
-        Matrix iT = MatrixUtil.transponse(input);
-        Matrix wDelta = MatrixUtil.multiply(hGradient, iT);
-
-        layers.get(0).weight.add(wDelta);
-        layers.get(0).bias.addBias(hGradient);
     }
 
-    public void fit(double[][] x, double[][] y, int rounds) {
+    // train with sample data in multiple test rounds
+    void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
         for (int i = 0; i < rounds; i++) {
-            int sample = (int) (Math.random() * x.length);
-            train(x[sample], y[sample]);
+            int sampleIndex = (int) (Math.random() * inputSet.length);
+            train(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);
         }
     }
-
 
 }

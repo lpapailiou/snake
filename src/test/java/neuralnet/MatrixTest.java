@@ -9,7 +9,7 @@ public class MatrixTest {
         double[][] d = new double[][] {{2,1},{3,5},{7,4}};
         Matrix a = new Matrix(d);
         a.print();
-        Matrix b = MatrixUtil.transponse(a);
+        Matrix b = Matrix.transponse(a);
         b.print();
     }
 
@@ -21,7 +21,7 @@ public class MatrixTest {
         a.print();
         Matrix b = new Matrix(c);
         b.print();
-        Matrix m = MatrixUtil.multiply(a, b);
+        Matrix m = Matrix.multiply(a, b);
         m.print();
 
     }

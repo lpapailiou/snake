@@ -11,8 +11,8 @@ public class NeuralTest {
         // testing xor function
         double[][] in = {{0,0}, {1,0}, {0,1}, {1,1}};
         double[][] out = {{0}, {1}, {1}, {0}};
-        NeuralNetwork net = new NeuralNetwork(2, 10, 1);
-        net.fit(in, out, 5000);
+        NeuralNetwork net = new NeuralNetwork(2, 10, 15, 1);
+        net.train(in, out, 10000);
         System.out.println("test: ");
         System.out.println("combo 1: " + net.predict(in[0]));
         System.out.println("combo 2: " + net.predict(in[1]));
