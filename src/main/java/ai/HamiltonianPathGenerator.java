@@ -46,8 +46,8 @@ public class HamiltonianPathGenerator extends PathGenerator {
     private static void incrementBoardDimensions() {
         boardX1 = (boardX1 > 2) ? boardX1-2 : 0;
         boardY1 = (boardY1 > 2) ? boardY1-2 : 0;
-        boardX2 = (boardX2 < BOARD_WIDTH) ? boardX2+2 : BOARD_WIDTH;
-        boardY2 = (boardY2 < BOARD_HEIGHT) ? boardY2+2 : BOARD_HEIGHT;
+        boardX2 = (boardX2 < BOARD_WIDTH-1) ? boardX2+2 : BOARD_WIDTH;
+        boardY2 = (boardY2 < BOARD_HEIGHT-1) ? boardY2+2 : BOARD_HEIGHT;
     }
 
     private static void decrementBoardDimensions() {

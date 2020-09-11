@@ -46,7 +46,6 @@ public class Snake {
             snake.remove(snake.size() - 1);
         } else {
             if (snake.size() < BOARD_WIDTH*BOARD_HEIGHT) {
-                //setNewGoodie(goodie);
                 return true;
             } else {
                 isWinner = true;
