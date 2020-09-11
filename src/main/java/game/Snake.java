@@ -27,13 +27,13 @@ public class Snake {
         if (!isAlive) {
             return false;
         } else if (!isOnBoard(coord)) {
-            System.out.println("dies at " + Arrays.toString(coord) + " beacause fell from board");
+            //System.out.println("dies at " + Arrays.toString(coord) + " beacause fell from board");
             isAlive = false;
         } else if (isGoingBackwards(coord)) {
-            System.out.println("dies at " + Arrays.toString(coord) + " beacause is going backwards");
+            //System.out.println("dies at " + Arrays.toString(coord) + " beacause is going backwards");
             isAlive = false;
         } else if (isPartOfSnake(coord)) {
-            System.out.println("dies because run into himself at " + Arrays.toString(coord));
+            //System.out.println("dies because run into himself at " + Arrays.toString(coord));
             isAlive = false;
         }
 

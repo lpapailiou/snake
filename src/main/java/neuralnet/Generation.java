@@ -33,7 +33,7 @@ public class Generation {
 
     private NeuralNetwork getBest(HashMap<BoardAdapter, Integer> map) {
         int max = Collections.max(generations.values());
-        List<BoardAdapter> ad = map.entrySet().stream().filter(e -> e.getValue() == max).map(e -> e.getKey()).collect(Collectors.toList());
+        List<BoardAdapter> ad = map.entrySet().stream().filter(e -> e.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());
         if (!ad.isEmpty()) {
             System.out.println("fitness of generation is: " + ad.get(0).getFitness());
             map.remove(ad.get(0));

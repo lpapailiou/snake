@@ -57,7 +57,8 @@ public class Board {
         int winnerPoints = result * 100;
         int snakeLength = snake.getBody().size();
         int movePoints = moveCounter;
-        return winnerPoints + snakeLength - movePoints;
+        //return winnerPoints + snakeLength - movePoints;
+        return winnerPoints + snakeLength;
     }
 
     public boolean isGameFinished() {
