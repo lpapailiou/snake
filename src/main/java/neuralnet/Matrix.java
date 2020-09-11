@@ -5,23 +5,23 @@ import java.util.List;
 
 public class Matrix {
 
-    double[][] data;
-    int rows;
-    int cols;
+    private double[][] data;
+    private int rows;
+    private int cols;
 
-    public Matrix(int rows, int cols) {
+    Matrix(int rows, int cols) {
         data = new double[rows][cols];
         this.rows = rows;
         this.cols = cols;
     }
 
-    public Matrix(double[][] input) {
+    Matrix(double[][] input) {
         data = input;
         rows = input.length;
         cols = input[0].length;
     }
 
-    public void randomize() {
+    void randomize() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 data[i][j] = Math.random() * 2 - 1;
@@ -48,7 +48,7 @@ public class Matrix {
         }
     }
 
-    public void addBias(Matrix m) {
+    void addBias(Matrix m) {
         if (cols != m.cols) {
             throw new IllegalArgumentException("wrong input matrix dimensions!");
         }
@@ -59,7 +59,7 @@ public class Matrix {
         }
     }
 
-    public static Matrix subtract(Matrix a, Matrix b) {
+    static Matrix subtract(Matrix a, Matrix b) {
         if (a.cols != b.cols) {
             throw new IllegalArgumentException("wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
         }
@@ -71,7 +71,7 @@ public class Matrix {
         return a;
     }
 
-    public void multiply(double scaler) {
+    void multiply(double scaler) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 data[i][j] *= scaler;
@@ -79,7 +79,7 @@ public class Matrix {
         }
     }
 
-    public void multiplyElementwise(Matrix m) {
+    void multiplyElementwise(Matrix m) {
         if (cols != m.cols || rows != m.rows) {
             throw new IllegalArgumentException("wrong input matrix dimensions!");
         }
@@ -90,7 +90,7 @@ public class Matrix {
         }
     }
 
-    public static Matrix multiply(Matrix a, Matrix b) {
+    static Matrix multiply(Matrix a, Matrix b) {
         if (a.cols != b.rows) {
             throw new IllegalArgumentException("wrong input matrix dimensions for multiplication!");
         }
@@ -107,7 +107,7 @@ public class Matrix {
         return tmp;
     }
 
-    public static Matrix transponse(Matrix m) {
+    static Matrix transponse(Matrix m) {
         Matrix tmp = new Matrix(m.cols, m.rows);
         for (int i = 0; i < m.rows; i++) {
             for (int j = 0; j < m.cols; j++) {
@@ -117,7 +117,7 @@ public class Matrix {
         return tmp;
     }
 
-    public void sigmoid() {
+    void sigmoid() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 data[i][j] = 1/(1 + Math.exp(-data[i][j]));
@@ -125,7 +125,7 @@ public class Matrix {
         }
     }
 
-    public Matrix dsigmoid() {
+    Matrix dsigmoid() {
         Matrix tmp = new Matrix(rows, cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -135,7 +135,7 @@ public class Matrix {
         return tmp;
     }
 
-    public void print() {
+    void print() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 System.out.print(data[i][j] + "  ");
@@ -145,11 +145,11 @@ public class Matrix {
         System.out.println();
     }
 
-    public String getType() {
+    private String getType() {
         return "(" + rows + ", " + cols + ")";
     }
 
-    public static Matrix fromArray(double[] arr) {
+    static Matrix fromArray(double[] arr) {
         Matrix tmp = new Matrix(arr.length, 1);
         for (int i = 0; i < arr.length; i++) {
             tmp.data[i][0] = arr[i];
@@ -157,7 +157,7 @@ public class Matrix {
         return tmp;
     }
 
-    public static List<Double> toArray(Matrix m) {
+    static List<Double> toArray(Matrix m) {
         List<Double> tmp = new ArrayList<>();
         for (int i = 0; i < m.rows; i++) {
             for (int j = 0; j < m.cols; j++) {

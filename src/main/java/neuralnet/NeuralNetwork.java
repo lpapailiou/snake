@@ -37,7 +37,7 @@ public class NeuralNetwork {
         return Matrix.toArray(tmp);
     }
 
-    private void train(double[] inputNodes, double[] expectedOutputNodes) {
+    private void learn(double[] inputNodes, double[] expectedOutputNodes) {
         Matrix input = Matrix.fromArray(inputNodes);
         Matrix target = Matrix.fromArray(expectedOutputNodes);
 
@@ -73,7 +73,7 @@ public class NeuralNetwork {
     void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
         for (int i = 0; i < rounds; i++) {
             int sampleIndex = (int) (Math.random() * inputSet.length);
-            train(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);
+            learn(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);
         }
     }
 
