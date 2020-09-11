@@ -10,6 +10,7 @@ public class Board {
 
     private Snake snake = new Snake();
     private int[] goodie;
+    private int moveCounter;
     private int result = 0;
 
     public Board() {
@@ -33,7 +34,12 @@ public class Board {
     }
 
     private boolean validateMove(boolean isNewGoodieRequired) {
+        if (moveCounter > 500) {
+            snake.kill();
+            System.out.println("killed snake because time limit is over");
+        }
         if (snake.isAlive() && !snake.isWinner()) {
+            moveCounter++;
             if (isNewGoodieRequired) {
                 setGoodie();
             }
@@ -45,6 +51,13 @@ public class Board {
 
     public int getResult() {
         return result;
+    }
+
+    public int getFitness() {
+        int winnerPoints = result * 100;
+        int snakeLength = snake.getBody().size();
+        int movePoints = moveCounter;
+        return winnerPoints + snakeLength - movePoints;
     }
 
     public boolean isGameFinished() {

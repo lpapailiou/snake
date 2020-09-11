@@ -24,8 +24,12 @@ public class NeuralNetwork {
         }
     }
 
+    private NeuralNetwork(List<Layer> layers) {
+        this.layers = new ArrayList<>(layers);
+    }
+
     // forward pass
-    List<Double> predict(double[] input) {
+    public List<Double> predict(double[] input) {
         Matrix tmp = Matrix.fromArray(input);
 
         for (Layer layer : layers) {
@@ -37,9 +41,8 @@ public class NeuralNetwork {
         return Matrix.toArray(tmp);
     }
 
-    private void learn(double[] inputNodes, double[] expectedOutputNodes) {
+    public List<Double> learn(double[] inputNodes, double[] expectedOutputNodes) {
         Matrix input = Matrix.fromArray(inputNodes);
-        Matrix target = Matrix.fromArray(expectedOutputNodes);
 
         // forward propagate and add results to list
         List<Matrix> steps = new ArrayList<>();
@@ -50,6 +53,8 @@ public class NeuralNetwork {
             tmp.sigmoid();
             steps.add(tmp);
         }
+
+        Matrix target = (expectedOutputNodes == null) ? tmp: Matrix.fromArray(expectedOutputNodes);
 
         // backward propagate to adjust weights
         Matrix error = null;
@@ -67,6 +72,7 @@ public class NeuralNetwork {
             layers.get(i).bias.addBias(gradient);
         }
 
+        return Matrix.toArray(tmp);
     }
 
     // train with sample data in multiple test rounds
@@ -74,6 +80,27 @@ public class NeuralNetwork {
         for (int i = 0; i < rounds; i++) {
             int sampleIndex = (int) (Math.random() * inputSet.length);
             learn(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);
+        }
+    }
+
+    public static NeuralNetwork merge(NeuralNetwork a, NeuralNetwork b) {
+        for (int i = 0; i < a.layers.size(); i++) {
+            a.layers.get(i).weight = Matrix.merge(a.layers.get(i).weight, b.layers.get(i).weight);
+            a.layers.get(i).bias = Matrix.merge(a.layers.get(i).bias, b.layers.get(i).bias);
+        }
+        return a;
+    }
+
+    public NeuralNetwork clone() {
+        NeuralNetwork net = new NeuralNetwork(layers);
+        net.randomize(0.1);
+        return net;
+    }
+
+    private void randomize(double factor) {
+        for (Layer layer : layers) {
+            layer.weight.randomize(factor);
+            layer.bias.randomize(factor);
         }
     }
 

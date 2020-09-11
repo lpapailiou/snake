@@ -58,6 +58,8 @@ public class Snake {
         return isAlive;
     }
 
+    public void kill() { isAlive = false; }
+
     public boolean isWinner() {
         return isWinner;
     }

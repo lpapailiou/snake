@@ -29,6 +29,14 @@ public class Matrix {
         }
     }
 
+    void randomize(double factor) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                data[i][j] = data[i][j] + (Math.random() * 2 - 1) * factor;
+            }
+        }
+    }
+
     public void add(double scaler) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -66,6 +74,18 @@ public class Matrix {
         for (int i = 0; i < a.rows; i++) {
             for (int j = 0; j < a.cols; j++) {
                 a.data[i][j] -= b.data[i][j];
+            }
+        }
+        return a;
+    }
+
+    static Matrix merge(Matrix a, Matrix b) {
+        if (a.rows != b.rows || a.cols != b.cols) {
+            throw new IllegalArgumentException("wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
+        }
+        for (int i = 0; i < a.rows; i++) {
+            for (int j = 0; j < a.cols; j++) {
+                a.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
             }
         }
         return a;
