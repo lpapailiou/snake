@@ -18,8 +18,8 @@ public class DeepBot extends Bot {
         NeuralNetwork net = new NeuralNetwork(4, 10, 10, 4);
 
         Generation gen;
-        for (int i = 0; i < 5000; i++) {
-            gen = new Generation(100);
+        for (int i = 0; i < 500; i++) {
+            gen = new Generation(500);
             net = gen.run(net);
             netList.add(net);
         }
