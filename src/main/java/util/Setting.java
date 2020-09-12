@@ -1,6 +1,10 @@
 package util;
 
+import ai.bot.Bot;
+import ai.bot.DeepBot;
+
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class Setting {
 
@@ -14,4 +18,6 @@ public class Setting {
 
     public static final boolean HASBOT = true;
     public static final Random RANDOM = new Random();
+
+    public static Supplier<Bot> BOT = DeepBot::new;
 }

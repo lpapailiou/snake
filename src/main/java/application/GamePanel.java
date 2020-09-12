@@ -1,5 +1,6 @@
 package application;
 
+import ai.bot.Bot;
 import ai.bot.DeepBot;
 import game.Board;
 import javafx.animation.Animation;
@@ -190,9 +191,7 @@ public class GamePanel implements Initializable {
 
     private static void setUpBot() {
         if (HASBOT) {
-            System.out.println("restart bot");
-            //new AStarBot().start();
-            new DeepBot().start();
+            BOT.get().start();
         }
     }
 
