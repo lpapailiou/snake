@@ -1,4 +1,4 @@
-package neuralnet;
+package neuralnet.net;
 
 class Layer {
 

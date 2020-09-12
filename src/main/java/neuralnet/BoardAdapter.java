@@ -2,6 +2,7 @@ package neuralnet;
 
 import ai.PathGenerator;
 import game.Board;
+import neuralnet.net.NeuralNetwork;
 import util.Direction;
 
 import java.util.Collections;

@@ -1,5 +1,6 @@
 package neuralnet;
 
+import neuralnet.net.Matrix;
 import org.junit.Test;
 
 public class MatrixTest {

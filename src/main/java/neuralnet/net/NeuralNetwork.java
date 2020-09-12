@@ -1,4 +1,4 @@
-package neuralnet;
+package neuralnet.net;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class NeuralNetwork {
     }
 
     // train with sample data in multiple test rounds
-    void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
+    public void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
         for (int i = 0; i < rounds; i++) {
             int sampleIndex = (int) (Math.random() * inputSet.length);
             learn(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);

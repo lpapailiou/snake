@@ -1,4 +1,4 @@
-package neuralnet;
+package neuralnet.net;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,19 +9,19 @@ public class Matrix {
     private int rows;
     private int cols;
 
-    Matrix(int rows, int cols) {
+    public Matrix(int rows, int cols) {
         data = new double[rows][cols];
         this.rows = rows;
         this.cols = cols;
     }
 
-    Matrix(double[][] input) {
+    public Matrix(double[][] input) {
         data = input;
         rows = input.length;
         cols = input[0].length;
     }
 
-    void randomize() {
+    public void randomize() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 data[i][j] = Math.random() * 2 - 1;
@@ -110,7 +110,7 @@ public class Matrix {
         }
     }
 
-    static Matrix multiply(Matrix a, Matrix b) {
+    public static Matrix multiply(Matrix a, Matrix b) {
         if (a.cols != b.rows) {
             throw new IllegalArgumentException("wrong input matrix dimensions for multiplication!");
         }
@@ -127,7 +127,7 @@ public class Matrix {
         return tmp;
     }
 
-    static Matrix transponse(Matrix m) {
+    public static Matrix transponse(Matrix m) {
         Matrix tmp = new Matrix(m.cols, m.rows);
         for (int i = 0; i < m.rows; i++) {
             for (int j = 0; j < m.cols; j++) {
@@ -155,7 +155,7 @@ public class Matrix {
         return tmp;
     }
 
-    void print() {
+    public void print() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 System.out.print(data[i][j] + "  ");

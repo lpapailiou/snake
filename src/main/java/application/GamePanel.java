@@ -1,8 +1,6 @@
 package application;
 
-import ai.bot.AStarBot;
 import ai.bot.DeepBot;
-import ai.bot.HamiltonianBot;
 import game.Board;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -17,8 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import neuralnet.BoardAdapter;
-import neuralnet.NeuralNetwork;
 import util.Direction;
 
 import java.net.URL;

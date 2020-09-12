@@ -3,7 +3,7 @@ package ai.bot;
 import application.GamePanel;
 import neuralnet.BoardAdapter;
 import neuralnet.Generation;
-import neuralnet.NeuralNetwork;
+import neuralnet.net.NeuralNetwork;
 import util.Direction;
 
 import java.util.ArrayList;
