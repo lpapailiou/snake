@@ -1,6 +1,7 @@
 package application;
 
 import ai.bot.AStarBot;
+import ai.bot.DeepBot;
 import ai.bot.HamiltonianBot;
 import game.Board;
 import javafx.animation.Animation;
@@ -16,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import neuralnet.BoardAdapter;
+import neuralnet.NeuralNetwork;
 import util.Direction;
 
 import java.net.URL;
@@ -109,10 +112,15 @@ public class GamePanel implements Initializable {
     }
 
     public static boolean move(Direction dir) {
+        System.out.println("mooooooooooove");
         instance.direction = dir;
         boolean success = instance.board.moveSnake(dir);
         handleStep(success);
         return success;
+    }
+
+    public static Board getBoard() {
+        return instance.board;
     }
 
     public static boolean move(int[] coord) {
@@ -187,7 +195,9 @@ public class GamePanel implements Initializable {
 
     private static void setUpBot() {
         if (HASBOT) {
-            new AStarBot().start();
+            System.out.println("restart bot");
+            //new AStarBot().start();
+            new DeepBot().start();
         }
     }
 

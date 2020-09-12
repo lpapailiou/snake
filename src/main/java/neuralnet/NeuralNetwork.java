@@ -15,7 +15,7 @@ public class NeuralNetwork {
      * parameters between = size of hidden layer
      * @param layerParams
      */
-    NeuralNetwork(int... layerParams) {
+    public NeuralNetwork(int... layerParams) {
         if (layerParams.length < 2) {
             throw new IllegalArgumentException("enter at least two parameters to create neural network!");
         }

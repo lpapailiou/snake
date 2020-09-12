@@ -9,7 +9,7 @@ public class IntegrationTest {
         NeuralNetwork net = new NeuralNetwork(4, 10, 10, 4);
 
         Generation gen;
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 10000; i++) {
             gen = new Generation(50);
             net = gen.run(net);
         }
