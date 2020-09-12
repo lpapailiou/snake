@@ -112,7 +112,6 @@ public class GamePanel implements Initializable {
     }
 
     public static boolean move(Direction dir) {
-        System.out.println("mooooooooooove");
         instance.direction = dir;
         boolean success = instance.board.moveSnake(dir);
         handleStep(success);

@@ -34,7 +34,7 @@ public class BoardAdapter {
         return process();
     }
 
-    public Direction getDirection() {
+    public Direction getDirection(Board board) {
         List<int[]> snake = board.getSnake();
         int[] snakeHead = snake.get(0);
         int[] goodie = board.getGoodie();
