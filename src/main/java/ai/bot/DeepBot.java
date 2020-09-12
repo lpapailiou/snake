@@ -18,14 +18,14 @@ public class DeepBot extends Bot {
         NeuralNetwork net = new NeuralNetwork(4, 10, 10, 4);
 
         Generation gen;
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 5000; i++) {
             gen = new Generation(100);
             net = gen.run(net);
             netList.add(net);
         }
 
         best = netList.get(netList.size()-1);
-        adapter = new BoardAdapter(best);
+        adapter = new BoardAdapter(GamePanel.getBoard(), best);
     }
 
 
