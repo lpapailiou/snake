@@ -15,16 +15,15 @@
                <Pane fx:id="layerVizualiser" />
                <VBox fx:id="inputNodeConfig">
                <children>
-                   <CheckBox fx:id="node0" mnemonicParsing="false" text="node0" />
-                   <CheckBox fx:id="node1" mnemonicParsing="false" text="node1" />
-                   <CheckBox fx:id="node2" mnemonicParsing="false" text="node2" />
-                   <CheckBox fx:id="node3" mnemonicParsing="false" text="node3" />
-                   <CheckBox fx:id="node4" mnemonicParsing="false" text="node4" />
-                   <CheckBox fx:id="node5" mnemonicParsing="false" text="node5" />
-                   <CheckBox fx:id="node6" mnemonicParsing="false" text="node6" />
-                   <CheckBox fx:id="node7" mnemonicParsing="false" text="node7" />
-                   <CheckBox fx:id="node8" mnemonicParsing="false" text="node8" />
-                   <CheckBox fx:id="node9" mnemonicParsing="false" text="node9" />
+                   <CheckBox fx:id="node0" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node1" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node2" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node3" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node4" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node5" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node6" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node7" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node8" mnemonicParsing="false" text="" selected="true" />
                </children>
             </VBox>
            </children>
