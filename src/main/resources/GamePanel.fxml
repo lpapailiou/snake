@@ -6,20 +6,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane  xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="application.GamePanel"
-            prefHeight="500.0" prefWidth="500.0">
+<!--
+<VBox fx:controller="application.ConfigPanel">
+   <fx:include fx:id="dialog" source="ConfigPanel.fxml"/>
+   ...
+</VBox> -->
 
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GamePanel">
     <children>
-        <Pane fx:id="gamePane" prefHeight="500.0" prefWidth="500.0" />
-        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
+        <StackPane prefHeight="500.0" prefWidth="500.0">
             <children>
-                <Label fx:id="gameOverTitle" text="" textAlignment="CENTER" />
-                <Label fx:id="gameOverText" text="" textAlignment="CENTER" />
-                <Region prefHeight="60.0" prefWidth="200.0" />
+                <Pane fx:id="gamePane" prefHeight="500.0" prefWidth="500.0" />
+                <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
+                    <children>
+                        <Label fx:id="gameOverTitle" text="" textAlignment="CENTER" />
+                        <Label fx:id="gameOverText" text="" textAlignment="CENTER" />
+                        <Region prefHeight="60.0" prefWidth="200.0" />
+                    </children>
+                </VBox>
             </children>
-        </VBox>
+        </StackPane>
+        <Pane prefHeight="500.0" prefWidth="500.0">
+           <children>
+               <fx:include fx:id="dialog" source="ConfigPanel.fxml"/>
+           </children>
+        </Pane>
     </children>
-
-</StackPane>
+</HBox>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
+
+    <children>
+        <HBox fx:id="layerConfig" />
+        <StackPane>
+           <children>
+               <Pane fx:id="layerVizualiser" />
+               <VBox fx:id="inputNodeConfig">
+               <children>
+                   <CheckBox fx:id="node0" mnemonicParsing="false" text="node0" />
+                   <CheckBox fx:id="node1" mnemonicParsing="false" text="node1" />
+                   <CheckBox fx:id="node2" mnemonicParsing="false" text="node2" />
+                   <CheckBox fx:id="node3" mnemonicParsing="false" text="node3" />
+                   <CheckBox fx:id="node4" mnemonicParsing="false" text="node4" />
+                   <CheckBox fx:id="node5" mnemonicParsing="false" text="node5" />
+                   <CheckBox fx:id="node6" mnemonicParsing="false" text="node6" />
+                   <CheckBox fx:id="node7" mnemonicParsing="false" text="node7" />
+                   <CheckBox fx:id="node8" mnemonicParsing="false" text="node8" />
+                   <CheckBox fx:id="node9" mnemonicParsing="false" text="node9" />
+               </children>
+            </VBox>
+           </children>
+        </StackPane>
+    </children>
+
+</VBox>
