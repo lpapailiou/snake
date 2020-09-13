@@ -24,22 +24,20 @@ public class Driver extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root, 1000, 500);
             scene.getStylesheets().add(Driver.class.getClassLoader().getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(Driver.class.getClassLoader().getResource(Setting.getSettings().getColorScheme().getCss()).toExternalForm());
             scene.setFill(Setting.getSettings().getColorScheme().getBackground());
             root.setStyle("-fx-text-fill: red;");
             stage.setScene(scene);
             stage.setMinHeight(539);
-            //stage.setMinWidth(516);
             stage.setMinWidth(1016);
             stage.setMaxHeight(539);
-            //stage.setMaxWidth(516);
             stage.setMaxWidth(1016);
             stage.setTitle("Snake");
             stage.getIcons().add(new Image("snake.png"));
             setUpKeyParser(scene);
             stage.show();
-            //GamePanel.getPanel().setDimensions(scene.getWidth(), scene.getHeight());
             GamePanel.getPanel().setDimensions();
-            GamePanel.getPanel().startBot();
+            //GamePanel.getPanel().startBot();
 
         } catch (Exception e) {
             e.printStackTrace();

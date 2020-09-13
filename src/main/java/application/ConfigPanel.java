@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -29,9 +26,9 @@ import static util.Setting.*;
 public class ConfigPanel implements Initializable {
 
     GraphicsContext context;
-    private int width = 480;
+    private int width = 500;
     private int height = 221;
-    private int offset = 50;
+    private int offset = 0;
     private int radius = 20;
     private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
     private List<List<NetNode>> nodes = new ArrayList<>();
@@ -39,6 +36,7 @@ public class ConfigPanel implements Initializable {
     private ObservableList<String> colorList = FXCollections.observableArrayList();
     private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private int hiddenLayerNodeCount = 4;
+    boolean init = true;
 
     @FXML
     private VBox configPanel;
@@ -94,6 +92,9 @@ public class ConfigPanel implements Initializable {
     @FXML
     private HBox genConfig;
 
+    @FXML
+    private Button startButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
@@ -135,11 +136,20 @@ public class ConfigPanel implements Initializable {
                 paintNetwork();
             });
         }
+
+        startButton.setOnAction(e -> {
+            if (init) {
+                GamePanel.getPanel().startBot();
+                init = false;
+            } else {
+                GamePanel.getPanel().restart();
+            }
+        });
     }
 
     private void setUpModeControl() {
         modeChooser.setItems(modeList);
-        modeChooser.getSelectionModel().select(0);
+        modeChooser.getSelectionModel().select(1);
         modeChooser.setOnAction( e -> {
             updateMode();
         });
@@ -239,10 +249,18 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateColorScheme() {
+        List<String> cssList = Arrays.asList(ColorScheme.values()).stream().map(s -> s.getCss()).collect(Collectors.toList());
+        for (Object str : cssList) {
+            String sheet = (String) str;
+            configPanel.getScene().getStylesheets().removeIf(s -> s.matches(Driver.class.getClassLoader().getResource(sheet).toExternalForm()));
+        }
         String selection = colorSchemeChooser.getValue().toString();
-        Setting.getSettings().setColorScheme(ColorScheme.valueOf(selection));
+        ColorScheme scheme = ColorScheme.valueOf(selection);
+        configPanel.getScene().getStylesheets().remove(Setting.getSettings().getColorScheme().getCss());
+        Setting.getSettings().setColorScheme(scheme);
         GamePanel.getPanel().paint();
         configPanel.getScene().setFill(Setting.getSettings().getColorScheme().getBackground());
+        configPanel.getScene().getStylesheets().add(Driver.class.getClassLoader().getResource(scheme.getCss()).toExternalForm());
         updateNetwork();
     }
 

@@ -24,8 +24,7 @@
       </HBox>
       <HBox spacing="20" prefHeight="28.0" prefWidth="500.0">
          <children>
-            <ComboBox fx:id="modeChooser" prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="modeChooser" prefWidth="310.0" />
          </children>
       </HBox>
         <HBox fx:id="layerConfig" spacing="20">
@@ -63,7 +62,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="500.0" spacing="20">
          <children>
-            <Button mnemonicParsing="false" text="start" />
+            <Button fx:id="startButton" mnemonicParsing="false" text="start" />
             <Button mnemonicParsing="false" text="statistics" />
          </children></HBox>
     </children>

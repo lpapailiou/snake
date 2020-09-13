@@ -1,19 +1,9 @@
 .root {
-    -fx-font-family: "Courier New";
-    -fx-font-size: 12pt;
-    -fx-font-weight: bold;
-    -fx-background-color: transparent;
     -fx-base: limegreen;                        /* combobox color */
     -fx-text-fill: black;                       /* no idea but seems important */
     -fx-text-background-color: black;           /* text in combobox */
     -fx-control-inner-background: lightgreen;   /* combobox list background */
     -fx-accent: limegreen;                      /* combobox selected background */
+    -fx-focus-color: darkseagreen;              /* focus color */
 }
 
-#gameOverTitle {
-    -fx-font-size: 28pt;
-}
-
-#gameOverText {
-    -fx-font-size: 18pt;
-}

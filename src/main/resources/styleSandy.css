@@ -1,0 +1,8 @@
+.root {
+    -fx-base: rgba(210, 136, 22, 0.69);                        /* combobox color */
+    -fx-text-fill: black;                                      /* no idea but seems important */
+    -fx-text-background-color: black;                          /* text in combobox */
+    -fx-control-inner-background: rgba(212, 137, 23, 0.45);    /* combobox list background */
+    -fx-accent: rgba(210, 136, 22, 0.69);                      /* combobox selected background */
+    -fx-focus-color: coral;                                    /* focus color */
+}
