@@ -9,21 +9,28 @@
 <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
 
     <children>
-        <HBox fx:id="layerConfig" />
+        <HBox fx:id="layerConfig">
+         <children>
+            <ComboBox fx:id="hiddenLayerCount" prefWidth="150.0" />
+            <TextField fx:id="hiddenLayer0"/>
+            <TextField fx:id="hiddenLayer1"/>
+            <TextField fx:id="hiddenLayer2"/>
+            <TextField fx:id="hiddenLayer3"/>
+         </children></HBox>
         <StackPane>
            <children>
-               <Pane fx:id="layerVizualiser" />
+               <Pane fx:id="layerVizualiser"></Pane>
                <VBox fx:id="inputNodeConfig">
                <children>
-                   <CheckBox fx:id="node0" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node1" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node2" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node3" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node4" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node5" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node6" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node7" mnemonicParsing="false" text="" selected="true" />
-                   <CheckBox fx:id="node8" mnemonicParsing="false" text="" selected="true" />
+                   <CheckBox fx:id="node0" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node1" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node2" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node3" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node4" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node5" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node6" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node7" mnemonicParsing="false" selected="true" text="" />
+                   <CheckBox fx:id="node8" mnemonicParsing="false" selected="true" text="" />
                </children>
             </VBox>
            </children>
