@@ -16,7 +16,7 @@ public class Setting {
     public static final int SPEED = 200;
     public static final int BOT_SPEED = 20;
 
-    public static final boolean HASBOT = false;
+    public static final boolean HASBOT = true;
     public static final Random RANDOM = new Random();
 
     public static Supplier<Bot> BOT = DeepBot::new;

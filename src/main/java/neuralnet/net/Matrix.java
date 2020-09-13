@@ -187,4 +187,23 @@ public class Matrix {
         return tmp;
     }
 
+    @Override
+    public Matrix clone() {
+        Matrix m = new Matrix(rows, cols);
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
+                m.data[i][j] = this.data[i][j];
+            }
+        }
+        return m;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
 }

@@ -13,4 +13,12 @@ class Layer {
         weight.randomize();
         bias.randomize();
     }
+
+    @Override
+    protected Layer clone() {
+        Layer layer = new Layer(this.weight.getRows(), this.weight.getCols());
+        layer.weight = this.weight.clone();
+        layer.bias = this.bias.clone();
+        return layer;
+    }
 }

@@ -1,6 +1,8 @@
 package neuralnet.net;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class NeuralNetwork {
@@ -25,7 +27,11 @@ public class NeuralNetwork {
     }
 
     private NeuralNetwork(List<Layer> layers) {
-        this.layers = new ArrayList<>(layers);
+        List<Layer> newLayerSet = new ArrayList<>();
+        for (Layer layer : layers) {
+            newLayerSet.add(layer.clone());
+        }
+        this.layers = newLayerSet;
     }
 
     // forward pass
@@ -54,7 +60,22 @@ public class NeuralNetwork {
             steps.add(tmp);
         }
 
-        Matrix target = (expectedOutputNodes == null) ? tmp: Matrix.fromArray(expectedOutputNodes);
+        Matrix target;
+        if (expectedOutputNodes == null) {
+            List<Double> prediction = Matrix.toArray(tmp);
+            int maxIndex = prediction.indexOf(Collections.max(prediction));
+            double[] array = new double[prediction.size()];
+            for (int i = 0; i < prediction.size(); i++) {
+                if (i == maxIndex) {
+                    array[i] = 1.0;
+                } else {
+                    array[i] = 0.0;
+                }
+            }
+            target = Matrix.fromArray(array);
+        } else {
+            target = Matrix.fromArray(expectedOutputNodes);
+        }
 
         // backward propagate to adjust weights
         Matrix error = null;
@@ -91,6 +112,7 @@ public class NeuralNetwork {
         return a;
     }
 
+    @Override
     public NeuralNetwork clone() {
         NeuralNetwork net = new NeuralNetwork(layers);
         net.randomize(0.1);

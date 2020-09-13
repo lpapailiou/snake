@@ -46,6 +46,7 @@ public class BoardAdapter {
             inputValues[i] = InputNode.values()[ordinals.get(i)].getInputValue(snake, goodie);
         }
         List<Double> out = net.predict(inputValues);
+        //List<Double> out = net.learn(inputValues, null);
         //System.out.println("NETWORK RESULT IS: " + out);
         int maxIndex = out.indexOf(Collections.max(out));
 
