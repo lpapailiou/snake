@@ -93,6 +93,12 @@ public class ConfigPanel implements Initializable {
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
             RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
             box.setOnAction(e -> {
+                if (!box.isSelected()) {
+                    int activeNodes = (int) nodes.get(0).stream().filter(n -> n.active).count();
+                    if (activeNodes == 1) {
+                        box.setSelected(true);
+                    }
+                }
                 int index = inputNodeConfig.getChildren().indexOf(box);
                 nodes.get(0).get(index).active = box.isSelected();
                 paintNetwork();
