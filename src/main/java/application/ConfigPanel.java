@@ -69,7 +69,6 @@ public class ConfigPanel implements Initializable {
             updateComboBox();
         });
         updateComboBox();
-        updateNetwork();
 
 
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
@@ -84,10 +83,10 @@ public class ConfigPanel implements Initializable {
 
     private void setupLayerSetter() {
         hiddenLayer0.textProperty().addListener((o, oldValue, newValue) -> {
-            System.out.println("listener");
             try {
                 int result = Integer.parseInt(newValue);
-                if (result >= 0 && result < 21) {
+                if (result > 0 && result < 21) {
+                    hiddenLayer0.setText(result + "");
                     updateNetwork();
                 } else {
                     hiddenLayer0.setText(oldValue);
@@ -99,7 +98,8 @@ public class ConfigPanel implements Initializable {
         hiddenLayer1.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result >= 0 && result < 21) {
+                if (result > 0 && result < 21) {
+                    hiddenLayer1.setText(result + "");
                     updateNetwork();
                 } else {
                     hiddenLayer1.setText(oldValue);
@@ -111,7 +111,8 @@ public class ConfigPanel implements Initializable {
         hiddenLayer2.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result >= 0 && result < 21) {
+                if (result > 0 && result < 21) {
+                    hiddenLayer2.setText(result + "");
                     updateNetwork();
                 } else {
                     hiddenLayer2.setText(oldValue);
@@ -123,7 +124,8 @@ public class ConfigPanel implements Initializable {
         hiddenLayer3.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result >= 0 && result < 21) {
+                if (result > 0 && result < 21) {
+                    hiddenLayer3.setText(result + "");
                     updateNetwork();
                 } else {
                     hiddenLayer3.setText(oldValue);
@@ -143,20 +145,19 @@ public class ConfigPanel implements Initializable {
         int last = 4;
         List<Integer> newNet = new ArrayList<>();
         newNet.add(first);
-        if (hidden0 > 0) {
+        if (hidden0 > 0 && hiddenLayer0.isVisible()) {
             newNet.add(hidden0);
         }
-        if (hidden1 > 0) {
+        if (hidden1 > 0 && hiddenLayer1.isVisible()) {
             newNet.add(hidden1);
         }
-        if (hidden2 > 0) {
+        if (hidden2 > 0 && hiddenLayer2.isVisible()) {
             newNet.add(hidden2);
         }
-        if (hidden3 > 0) {
+        if (hidden3 > 0 && hiddenLayer3.isVisible()) {
             newNet.add(hidden3);
         }
         newNet.add(last);
-        System.out.println(newNet);
         network = newNet;
         updateNodes();
         paintNetwork();
@@ -167,75 +168,66 @@ public class ConfigPanel implements Initializable {
         switch (selection) {
             case 0:
                 hiddenLayer0.setVisible(false);
-                hiddenLayer0.setText("0");
                 hiddenLayer1.setVisible(false);
-                hiddenLayer1.setText("0");
                 hiddenLayer2.setVisible(false);
-                hiddenLayer2.setText("0");
                 hiddenLayer3.setVisible(false);
-                hiddenLayer3.setText("0");
                 break;
             case 1:
-                hiddenLayer0.setVisible(true);
-                if (hiddenLayer0.getText().equals("0")) {
+                if (!hiddenLayer0.isVisible()) {
                     hiddenLayer0.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer0.setVisible(true);
                 }
                 hiddenLayer1.setVisible(false);
-                hiddenLayer1.setText("0");
                 hiddenLayer2.setVisible(false);
-                hiddenLayer2.setText("0");
                 hiddenLayer3.setVisible(false);
-                hiddenLayer3.setText("0");
                 break;
             case 2:
-                hiddenLayer0.setVisible(true);
-                if (hiddenLayer0.getText().equals("0")) {
+                if (!hiddenLayer0.isVisible()) {
                     hiddenLayer0.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer0.setVisible(true);
                 }
-                hiddenLayer1.setVisible(true);
-                if (hiddenLayer1.getText().equals("0")) {
+                if (!hiddenLayer1.isVisible()) {
                     hiddenLayer1.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer1.setVisible(true);
                 }
                 hiddenLayer2.setVisible(false);
-                hiddenLayer2.setText("0");
                 hiddenLayer3.setVisible(false);
-                hiddenLayer3.setText("0");
                 break;
             case 3:
-                hiddenLayer0.setVisible(true);
-                if (hiddenLayer0.getText().equals("0")) {
+                if (!hiddenLayer0.isVisible()) {
                     hiddenLayer0.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer0.setVisible(true);
                 }
-                hiddenLayer1.setVisible(true);
-                if (hiddenLayer1.getText().equals("0")) {
+                if (!hiddenLayer1.isVisible()) {
                     hiddenLayer1.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer1.setVisible(true);
                 }
-                hiddenLayer2.setVisible(true);
-                if (hiddenLayer2.getText().equals("0")) {
+                if (!hiddenLayer2.isVisible()) {
                     hiddenLayer2.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer2.setVisible(true);
                 }
                 hiddenLayer3.setVisible(false);
-                hiddenLayer3.setText("0");
                 break;
             case 4:
-                hiddenLayer0.setVisible(true);
-                if (hiddenLayer0.getText().equals("0")) {
+                if (!hiddenLayer0.isVisible()) {
                     hiddenLayer0.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer0.setVisible(true);
                 }
-                hiddenLayer1.setVisible(true);
-                if (hiddenLayer1.getText().equals("0")) {
+                if (!hiddenLayer1.isVisible()) {
                     hiddenLayer1.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer1.setVisible(true);
                 }
-                hiddenLayer2.setVisible(true);
-                if (hiddenLayer2.getText().equals("0")) {
+                if (!hiddenLayer2.isVisible()) {
                     hiddenLayer2.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer2.setVisible(true);
                 }
-                hiddenLayer3.setVisible(true);
-                if (hiddenLayer3.getText().equals("0")) {
+                if (!hiddenLayer3.isVisible()) {
                     hiddenLayer3.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer3.setVisible(true);
                 }
                 break;
         }
+        updateNetwork();
     }
 
     private void paintNetwork() {
