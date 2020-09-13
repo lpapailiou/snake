@@ -16,10 +16,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import util.ColorScheme;
+import util.Mode;
 import util.Setting;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static util.Setting.*;
 
@@ -33,7 +35,8 @@ public class ConfigPanel implements Initializable {
     private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
     private List<List<NetNode>> nodes = new ArrayList<>();
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4");
-    ObservableList<String> colorList = FXCollections.observableArrayList();
+    private ObservableList<String> colorList = FXCollections.observableArrayList();
+    private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private int hiddenLayerNodeCount = 4;
 
     @FXML
@@ -78,6 +81,9 @@ public class ConfigPanel implements Initializable {
     @FXML
     private TextField learningRate;
 
+    @FXML
+    private ComboBox modeChooser;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
@@ -92,6 +98,8 @@ public class ConfigPanel implements Initializable {
         populationSize.setText(Setting.getSettings().getPopulationSize() + "");
         learningRate.setText(Setting.getSettings().getLearningRate() + "");
         setupLayerSetter();
+        setUpModeControl();
+        updateMode();
         Canvas canvas = new Canvas(width, height);
         layerVizualiser.getChildren().add(canvas);
         context = canvas.getGraphicsContext2D();
@@ -117,6 +125,20 @@ public class ConfigPanel implements Initializable {
                 paintNetwork();
             });
         }
+    }
+
+    private void setUpModeControl() {
+        modeChooser.setItems(modeList);
+        modeChooser.getSelectionModel().select(0);
+        modeChooser.setOnAction( e -> {
+            updateMode();
+        });
+    }
+
+    private void updateMode() {
+        Mode mode = Mode.valueOf((String) modeChooser.getValue());
+        Setting.getSettings().isBot(mode.isBot());
+        Setting.getSettings().setBot(mode.getBotTemplate());
     }
 
     private void setupGenerationConfiguration() {

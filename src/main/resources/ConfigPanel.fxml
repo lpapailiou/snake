@@ -24,7 +24,7 @@
       </HBox>
       <HBox spacing="20" prefHeight="28.0" prefWidth="500.0">
          <children>
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="modeChooser" prefWidth="150.0" />
             <ComboBox prefWidth="150.0" />
          </children>
       </HBox>

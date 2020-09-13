@@ -67,9 +67,13 @@ public class Setting {
 
     public boolean hasBot() { return hasBot; }
 
+    public void isBot(boolean isBot) { this.hasBot = isBot; }
+
     public Random getRandom() { return random; }
 
     public Bot getBot() { return botTemplate.get(); }
+
+    public void setBot(Supplier<Bot> bot) { botTemplate = bot; }
 
     public int getGenerationCount() {
         return generationCount;
