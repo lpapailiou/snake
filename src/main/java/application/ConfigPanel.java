@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -72,7 +73,7 @@ public class ConfigPanel implements Initializable {
 
 
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
-            CheckBox box = (CheckBox) inputNodeConfig.getChildren().get(i);
+            RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
             box.setOnAction(e -> {
                 int index = inputNodeConfig.getChildren().indexOf(box);
                 nodes.get(0).get(index).active = box.isSelected();
@@ -280,7 +281,7 @@ public class ConfigPanel implements Initializable {
                 NetNode node =  new NetNode((w * i) + offset, (h * j) + hOffset);
                 layer.add(node);
                 if (i == 0) {
-                    CheckBox box = (CheckBox) inputNodeConfig.getChildren().get(j);
+                    RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(j);
                     if (!box.isSelected()) {
                         node.active = false;
                     }

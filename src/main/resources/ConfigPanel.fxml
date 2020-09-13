@@ -22,15 +22,15 @@
                <Pane fx:id="layerVizualiser"></Pane>
                <VBox fx:id="inputNodeConfig">
                <children>
-                   <CheckBox fx:id="node0" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node1" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node2" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node3" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node4" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node5" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node6" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node7" mnemonicParsing="false" selected="true" text="" />
-                   <CheckBox fx:id="node8" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node0" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node1" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node2" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node3" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node4" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node5" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node6" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node7" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node8" mnemonicParsing="false" selected="true" text="" />
                </children>
             </VBox>
            </children>
