@@ -1,5 +1,7 @@
 package neuralnet.net;
 
+import util.Setting;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,7 +10,6 @@ import java.util.List;
 public class NeuralNetwork {
 
     private List<Layer> layers = new ArrayList<>();
-    private double learningRate = 0.1;
 
     /**
      * parameter list for matrix sizes.
@@ -87,7 +88,7 @@ public class NeuralNetwork {
             }
             Matrix gradient = steps.get(i).dsigmoid();
             gradient.multiplyElementwise(error);
-            gradient.multiply(learningRate);
+            gradient.multiply(Setting.getSettings().getLearningRate());
             Matrix delta = Matrix.multiply(gradient, Matrix.transponse((i == 0) ? input : steps.get(i-1)));
             layers.get(i).weight.add(delta);
             layers.get(i).bias.addBias(gradient);

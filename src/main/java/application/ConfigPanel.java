@@ -26,7 +26,7 @@ import static util.Setting.*;
 public class ConfigPanel implements Initializable {
 
     GraphicsContext context;
-    private int width = 500;
+    private int width = 480;
     private int height = 221;
     private int offset = 50;
     private int radius = 20;
@@ -69,15 +69,28 @@ public class ConfigPanel implements Initializable {
     @FXML
     private VBox inputNodeConfig;
 
+    @FXML
+    private TextField generationCount;
+
+    @FXML
+    private TextField populationSize;
+
+    @FXML
+    private TextField learningRate;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
         boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
         setUpMainControl();
-        hiddenLayer0.setText("10");
-        hiddenLayer1.setText("4");
-        hiddenLayer2.setText("7");
-        hiddenLayer3.setText("0");
+        setupGenerationConfiguration();
+        hiddenLayer0.setText(network.get(1) + "");
+        hiddenLayer1.setText(network.get(2) + "");
+        hiddenLayer2.setText(network.get(3) + "");
+        hiddenLayer3.setText(network.get(4) + "");
+        generationCount.setText(Setting.getSettings().getGenerationCount() + "");
+        populationSize.setText(Setting.getSettings().getPopulationSize() + "");
+        learningRate.setText(Setting.getSettings().getLearningRate() + "");
         setupLayerSetter();
         Canvas canvas = new Canvas(width, height);
         layerVizualiser.getChildren().add(canvas);
@@ -104,6 +117,48 @@ public class ConfigPanel implements Initializable {
                 paintNetwork();
             });
         }
+    }
+
+    private void setupGenerationConfiguration() {
+        generationCount.textProperty().addListener((o, oldValue, newValue) -> {
+            try {
+                int result = Integer.parseInt(newValue);
+                if (result > 1 && result <= 200) {
+                    generationCount.setText(result + "");
+                    Setting.getSettings().setGenerationCount(result);
+                } else {
+                    generationCount.setText(oldValue);
+                }
+            } catch (Exception e) {
+                boardWithControl.setText(oldValue);
+            }
+        });
+        populationSize.textProperty().addListener((o, oldValue, newValue) -> {
+            try {
+                int result = Integer.parseInt(newValue);
+                if (result > 1 && result <= 200) {
+                    populationSize.setText(result + "");
+                    Setting.getSettings().setPopulationSize(result);
+                } else {
+                    populationSize.setText(oldValue);
+                }
+            } catch (Exception e) {
+                populationSize.setText(oldValue);
+            }
+        });
+        learningRate.textProperty().addListener((o, oldValue, newValue) -> {
+            try {
+                double result = Double.parseDouble(newValue);
+                if (result > 1 && result <= 200) {
+                    learningRate.setText(result + "");
+                    Setting.getSettings().setLearningRate(result);
+                } else {
+                    learningRate.setText(oldValue);
+                }
+            } catch (Exception e) {
+                learningRate.setText(oldValue);
+            }
+        });
     }
 
     private void setUpMainControl() {
@@ -325,11 +380,7 @@ public class ConfigPanel implements Initializable {
         }
     }
 
-    private void paintLine(NetNode a, NetNode b) {
-        context.setStroke(Setting.getSettings().getColorScheme().getSnake().darker());
-        context.setLineWidth(2);
-        context.strokeLine(a.x+(radius/2), a.y+(radius/2), b.x+(radius/2), b.y+(radius/2));
-    }
+
 
     private void paintDots() {
         for (int i = 0; i < nodes.size(); i++) {
@@ -364,8 +415,14 @@ public class ConfigPanel implements Initializable {
     }
 
     private void paintDot(int x, int y, int radius) {
-        context.setFill(Setting.getSettings().getColorScheme().getSnake());
+        context.setFill(Setting.getSettings().getColorScheme().getBackgroundFrame());
         context.fillOval(x, y, radius, radius);
+    }
+
+    private void paintLine(NetNode a, NetNode b) {
+        context.setStroke(Setting.getSettings().getColorScheme().getBackgroundFrame().darker());
+        context.setLineWidth(2);
+        context.strokeLine(a.x+(radius/2), a.y+(radius/2), b.x+(radius/2), b.y+(radius/2));
     }
 
 

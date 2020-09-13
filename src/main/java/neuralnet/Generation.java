@@ -28,6 +28,9 @@ public class Generation {
         }
 
         NeuralNetwork best = getBest(generations);
+        if (generations.isEmpty()) {
+            return best;
+        }
         NeuralNetwork secondBest = getBest(generations);
         return NeuralNetwork.merge(best, secondBest);
     }

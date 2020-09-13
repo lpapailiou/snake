@@ -15,9 +15,12 @@ public class Setting {
     private int speed = 200;
     private int botSpeed = 100;
     private int neuralBotTimeout = 500;
-    private boolean hasBot = false;
+    private boolean hasBot = true;
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;
+    private int generationCount = 1;
+    private int populationSize = 1;
+    private double learningRate = 0.1;
 
     private Setting() {}
 
@@ -67,5 +70,23 @@ public class Setting {
     public Random getRandom() { return random; }
 
     public Bot getBot() { return botTemplate.get(); }
+
+    public int getGenerationCount() {
+        return generationCount;
+    }
+
+    public void setGenerationCount(int count) { generationCount = count; }
+
+    public int getPopulationSize() {
+        return populationSize;
+    }
+
+    public void setPopulationSize(int count) { populationSize = count; }
+
+    public double getLearningRate() {
+        return learningRate;
+    }
+
+    public void setLearningRate(double rate) { learningRate = rate; }
 
 }

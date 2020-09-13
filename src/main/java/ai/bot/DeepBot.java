@@ -5,6 +5,7 @@ import neuralnet.BoardAdapter;
 import neuralnet.Generation;
 import neuralnet.net.NeuralNetwork;
 import util.Direction;
+import util.Setting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,8 @@ public class DeepBot extends Bot {
         NeuralNetwork net = new NeuralNetwork(4, 10, 10, 4);
 
         Generation gen;
-        for (int i = 0; i < 50; i++) {
-            gen = new Generation(10);
+        for (int i = 0; i < Setting.getSettings().getGenerationCount(); i++) {
+            gen = new Generation(Setting.getSettings().getPopulationSize());
             net = gen.run(net);
             netList.add(net);
         }
