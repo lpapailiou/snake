@@ -36,7 +36,7 @@
             <TextField fx:id="hiddenLayer2" prefWidth="50.0" />
             <TextField fx:id="hiddenLayer3" prefWidth="50.0" />
          </children></HBox>
-        <StackPane>
+        <StackPane fx:id="netConfig">
            <children>
                <Pane fx:id="layerVizualiser" />
                <VBox fx:id="inputNodeConfig" alignment="CENTER_LEFT" spacing="2">
@@ -54,7 +54,7 @@
             </VBox>
            </children>
         </StackPane>
-      <HBox spacing="20" prefHeight="33.0" prefWidth="100.0">
+      <HBox fx:id="genConfig" spacing="20" prefHeight="33.0" prefWidth="100.0">
          <children>
             <TextField fx:id="generationCount" text="1" />
             <TextField fx:id="populationSize" text="1" />

@@ -13,6 +13,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import util.ColorScheme;
@@ -84,6 +85,15 @@ public class ConfigPanel implements Initializable {
     @FXML
     private ComboBox modeChooser;
 
+    @FXML
+    private HBox layerConfig;
+
+    @FXML
+    private StackPane netConfig;
+
+    @FXML
+    private HBox genConfig;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
@@ -139,6 +149,9 @@ public class ConfigPanel implements Initializable {
         Mode mode = Mode.valueOf((String) modeChooser.getValue());
         Setting.getSettings().isBot(mode.isBot());
         Setting.getSettings().setBot(mode.getBotTemplate());
+        layerConfig.setVisible((mode == Mode.NEURAL_NETWORK));
+        netConfig.setVisible((mode == Mode.NEURAL_NETWORK));
+        genConfig.setVisible((mode == Mode.NEURAL_NETWORK));
     }
 
     private void setupGenerationConfiguration() {
