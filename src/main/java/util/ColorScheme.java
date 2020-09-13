@@ -5,7 +5,8 @@ import javafx.scene.paint.Color;
 public enum ColorScheme {
 
     CLASSIC(Color.BLACK, Color.LIME, Color.RED, Color.LIME, Color.LIME, Color.RED),
-    MODERN(Color.WHITE, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.DARKGRAY, Color.BLACK, Color.MEDIUMVIOLETRED);
+    MODERN(Color.WHITE, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.DARKGRAY, Color.BLACK, Color.MEDIUMVIOLETRED),
+    SANDY(Color.BURLYWOOD, Color.SIENNA, Color.RED, Color.SIENNA, Color.SIENNA, Color.RED);
 
     private Color background;
     private Color backgroundFrame;

@@ -6,10 +6,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
-
+<?import javafx.geometry.Insets?>
+<VBox fx:id="configPanel" alignment="CENTER" spacing="10" prefHeight="500.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
     <children>
-        <HBox spacing="20" fx:id="layerConfig">
+      <HBox spacing="20" prefHeight="31.0" prefWidth="500.0">
+         <children>
+            <TextField fx:id="boardWithControl" text="[board width]" />
+            <TextField fx:id="boardHeightControl" text="[board height]" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <ComboBox fx:id="colorSchemeChooser" prefWidth="250.0" />
+         </children>
+      </HBox>
+      <HBox prefHeight="18.0" prefWidth="500.0">
+         <children>
+            <Slider />
+         </children>
+      </HBox>
+      <HBox spacing="20" prefHeight="28.0" prefWidth="500.0">
+         <children>
+            <ComboBox prefWidth="150.0" />
+            <ComboBox prefWidth="150.0" />
+         </children>
+      </HBox>
+        <HBox fx:id="layerConfig" spacing="20">
          <children>
             <ComboBox fx:id="hiddenLayerCount" prefWidth="100.0" />
             <TextField fx:id="hiddenLayer0" prefWidth="50.0" />
@@ -19,8 +38,8 @@
          </children></HBox>
         <StackPane>
            <children>
-               <Pane fx:id="layerVizualiser"></Pane>
-               <VBox alignment="CENTER_LEFT" spacing="2" fx:id="inputNodeConfig">
+               <Pane fx:id="layerVizualiser" />
+               <VBox fx:id="inputNodeConfig" alignment="CENTER_LEFT" spacing="2">
                <children>
                    <RadioButton fx:id="node0" mnemonicParsing="false" selected="true" text="" />
                    <RadioButton fx:id="node1" mnemonicParsing="false" selected="true" text="" />
@@ -35,6 +54,19 @@
             </VBox>
            </children>
         </StackPane>
+      <HBox spacing="20" prefHeight="33.0" prefWidth="100.0">
+         <children>
+            <TextField fx:id="generationCount" text="[generation count]" />
+            <TextField fx:id="populationSize" text="[population size]" />
+            <TextField fx:id="learningRate" text="[learning rate]" />
+            <RadioButton mnemonicParsing="false" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="31.0" prefWidth="500.0" spacing="20">
+         <children>
+            <Button mnemonicParsing="false" text="start" />
+            <Button mnemonicParsing="false" text="statistics" />
+         </children></HBox>
     </children>
 
 </VBox>

@@ -1,6 +1,8 @@
 package game;
 
 import util.Direction;
+import util.Setting;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +16,7 @@ public class Snake {
     private boolean isWinner = false;
 
     public Snake() {
-        snake.add(new int[] {BOARD_WIDTH/2, BOARD_HEIGHT/2});
+        snake.add(new int[] {Setting.getSettings().getBoardWidth()/2, Setting.getSettings().getBoardHeight()/2});
     }
 
     public boolean move(Direction dir, int[] goodie) {
@@ -45,7 +47,7 @@ public class Snake {
         if (!Arrays.equals(coord, goodie)) {
             snake.remove(snake.size() - 1);
         } else {
-            if (snake.size() < BOARD_WIDTH*BOARD_HEIGHT) {
+            if (snake.size() < Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight()) {
                 return true;
             } else {
                 isWinner = true;
@@ -68,20 +70,10 @@ public class Snake {
         return snake;
     }
 
-    private void setNewGoodie(int[] goodie) {
-        int[] newGoodie = new int[] {RANDOM.nextInt(BOARD_WIDTH), RANDOM.nextInt(BOARD_HEIGHT)};
-        if (isPartOfSnake(newGoodie)) {
-            setNewGoodie(goodie);
-        } else {
-            goodie[0] = newGoodie[0];
-            goodie[1] = newGoodie[1];
-        }
-    }
-
     private boolean isOnBoard(int[] coord) {
-        if (coord[0] < 0 || coord[0] >= BOARD_WIDTH) {
+        if (coord[0] < 0 || coord[0] >= Setting.getSettings().getBoardWidth()) {
             return false;
-        } else return coord[1] >= 0 && coord[1] < BOARD_HEIGHT;
+        } else return coord[1] >= 0 && coord[1] < Setting.getSettings().getBoardHeight();
     }
 
     private boolean isGoingBackwards(int[] coord) {

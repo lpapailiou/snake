@@ -2,8 +2,6 @@ package util;
 
 import java.util.Random;
 
-import static util.Setting.RANDOM;
-
 public enum Direction {
 
     NONE(0, 0),
@@ -31,7 +29,7 @@ public enum Direction {
     }
 
     public static Direction getRandomDirection() {
-        int random = RANDOM.nextInt(dirList.length);
+        int random = Setting.getSettings().getRandom().nextInt(dirList.length);
         return dirList[random];
     }
 

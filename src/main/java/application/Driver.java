@@ -9,9 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.Direction;
 import util.KeyParser;
-
-import static util.Setting.COLOR_SCHEME;
-import static util.Setting.HASBOT;
+import util.Setting;
 
 public class Driver extends Application {
 
@@ -26,7 +24,7 @@ public class Driver extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root, 1000, 500);
             scene.getStylesheets().add(Driver.class.getClassLoader().getResource("style.css").toExternalForm());
-            scene.setFill(COLOR_SCHEME.getBackground());
+            scene.setFill(Setting.getSettings().getColorScheme().getBackground());
             root.setStyle("-fx-text-fill: red;");
             stage.setScene(scene);
             stage.setMinHeight(539);
@@ -40,7 +38,8 @@ public class Driver extends Application {
             setUpKeyParser(scene);
             stage.show();
             //GamePanel.getPanel().setDimensions(scene.getWidth(), scene.getHeight());
-            GamePanel.getPanel().setDimensions(500, 500);
+            GamePanel.getPanel().setDimensions();
+            GamePanel.getPanel().startBot();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +54,7 @@ public class Driver extends Application {
             } else if (dir.name().equals("NONE")) {
                 GamePanel.restart();
             } else {
-                if (!HASBOT) {
+                if (!Setting.getSettings().hasBot()) {
                     GamePanel.setDirection(dir);
                 }
             }

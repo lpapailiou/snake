@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<!--
-<VBox fx:controller="application.ConfigPanel">
-   <fx:include fx:id="dialog" source="ConfigPanel.fxml"/>
-   ...
-</VBox> -->
+<?import javafx.geometry.Insets?>
 
 <HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GamePanel">
     <children>
@@ -26,10 +22,10 @@
                 </VBox>
             </children>
         </StackPane>
-        <Pane prefHeight="500.0" prefWidth="500.0">
+        <HBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
            <children>
-               <fx:include fx:id="dialog" source="ConfigPanel.fxml"/>
+               <fx:include fx:id="dialog" source="ConfigPanel.fxml" />
            </children>
-        </Pane>
+        </HBox>
     </children>
 </HBox>

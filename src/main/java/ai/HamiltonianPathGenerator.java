@@ -1,6 +1,7 @@
 package ai;
 
 import util.Direction;
+import util.Setting;
 
 import java.util.*;
 
@@ -13,12 +14,12 @@ public class HamiltonianPathGenerator extends PathGenerator {
     private static final int PHASE_THRESHOLD = 10;
     private static final int SEARCH_SCOPE = 6;
     private static final int PATIENCE = 3;
-    private static int boardCenterX = BOARD_WIDTH/2;
-    private static int boardCenterY = BOARD_HEIGHT/2;
+    private static int boardCenterX = Setting.getSettings().getBoardWidth() /2;
+    private static int boardCenterY = Setting.getSettings().getBoardHeight()/2;
     private static int boardX1 = 0;
     private static int boardY1 = 0;
-    private static int boardX2 = BOARD_WIDTH;
-    private static int boardY2 = BOARD_HEIGHT;
+    private static int boardX2 = Setting.getSettings().getBoardWidth();
+    private static int boardY2 = Setting.getSettings().getBoardHeight();
     private static int PREV_SNAKE_SIZE = 0;
 
     private static List<int[]> tempPath = null;     // TODO: remove tempPath when testing is done
@@ -33,7 +34,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
     }
 
     private static void resetBoardDimensions() {
-        setBoardDimensions(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
+        setBoardDimensions(0, 0, Setting.getSettings().getBoardWidth(), Setting.getSettings().getBoardHeight());
     }
 
     private static void setBoardDimensions(int x1, int y1, int x2, int y2) {
@@ -46,8 +47,8 @@ public class HamiltonianPathGenerator extends PathGenerator {
     private static void incrementBoardDimensions() {
         boardX1 = (boardX1 > 2) ? boardX1-2 : 0;
         boardY1 = (boardY1 > 2) ? boardY1-2 : 0;
-        boardX2 = (boardX2 < BOARD_WIDTH-1) ? boardX2+2 : BOARD_WIDTH;
-        boardY2 = (boardY2 < BOARD_HEIGHT-1) ? boardY2+2 : BOARD_HEIGHT;
+        boardX2 = (boardX2 < Setting.getSettings().getBoardWidth()-1) ? boardX2+2 : Setting.getSettings().getBoardWidth();
+        boardY2 = (boardY2 < Setting.getSettings().getBoardHeight()-1) ? boardY2+2 : Setting.getSettings().getBoardHeight();
     }
 
     private static void decrementBoardDimensions() {
@@ -265,7 +266,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
         List<int[]> path = PathGenerator.getPathFromDirections(start, getStartCircle());
         path.add(0, start);
 
-        int phases = (int) Math.sqrt(BOARD_WIDTH*BOARD_HEIGHT) / PHASE_THRESHOLD;
+        int phases = (int) Math.sqrt(Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight()) / PHASE_THRESHOLD;
         phases = (phases == 0) ? 1 : phases;
         int threshold ;
         int counter;
@@ -273,8 +274,8 @@ public class HamiltonianPathGenerator extends PathGenerator {
         int patienceThreshold = PATIENCE;
         List<List<int[]>> pathHistory = new ArrayList();
         pathHistory.add(0, new ArrayList<>(path));
-        setBoardDimensions(boardCenterX-((BOARD_WIDTH / phases)/2), boardCenterY-((BOARD_HEIGHT / phases)/2), boardCenterX+((BOARD_WIDTH / phases)/2), boardCenterY+((BOARD_HEIGHT / phases)/2));
-        while (path.size() < (BOARD_WIDTH*BOARD_HEIGHT)) {
+        setBoardDimensions(boardCenterX-((Setting.getSettings().getBoardWidth() / phases)/2), boardCenterY-((Setting.getSettings().getBoardHeight() / phases)/2), boardCenterX+((Setting.getSettings().getBoardWidth() / phases)/2), boardCenterY+((Setting.getSettings().getBoardHeight() / phases)/2));
+        while (path.size() < (Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight())) {
             checkCounter++;
             //System.out.println("-----------------------------------------round " + checkCounter);
             incrementBoardDimensions();
@@ -346,7 +347,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
 
 
     public static void stretchCircle(List<int[]> path) {
-        int index = RANDOM.nextInt(path.size()-1);  // prevents taking the last element
+        int index = Setting.getSettings().getRandom().nextInt(path.size()-1);  // prevents taking the last element
         int[] coord1 = path.get(index);
         int[] coord2 = path.get(index+1);
         boolean horizontal = false;

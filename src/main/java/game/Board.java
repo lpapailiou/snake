@@ -1,6 +1,9 @@
 package game;
 
+import ai.bot.DeepBot;
 import util.Direction;
+import util.Setting;
+
 import java.util.List;
 
 import static ai.PathGenerator.exists;
@@ -20,7 +23,7 @@ public class Board {
     private void setGoodie() {
         int[] newGoodie = null;
         while (newGoodie == null || exists(snake.getBody(), newGoodie)) {
-            newGoodie = new int[] {RANDOM.nextInt(BOARD_WIDTH), RANDOM.nextInt(BOARD_HEIGHT)};
+            newGoodie = new int[] {Setting.getSettings().getRandom().nextInt(Setting.getSettings().getBoardWidth()), Setting.getSettings().getRandom().nextInt(Setting.getSettings().getBoardHeight())};
         }
         goodie = newGoodie;
     }
@@ -34,9 +37,11 @@ public class Board {
     }
 
     private boolean validateMove(boolean isNewGoodieRequired) {
-        if (moveCounter > 500) {
-            snake.kill();
-            System.out.println("killed snake because time limit is over");
+        if (moveCounter > Setting.getSettings().getNeuralBotTimeout()) {
+            if (Setting.getSettings().getBot() instanceof DeepBot) {
+                snake.kill();
+                System.out.println("killed snake because time limit is over");
+            }
         }
         if (snake.isAlive() && !snake.isWinner()) {
             moveCounter++;

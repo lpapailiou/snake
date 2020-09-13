@@ -16,7 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import util.ColorScheme;
 import util.Direction;
+import util.Setting;
 
 import java.net.URL;
 import java.util.List;
@@ -54,12 +56,12 @@ public class GamePanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        gameOverTitle.setTextFill(COLOR_SCHEME.getText());
-        gameOverText.setTextFill(COLOR_SCHEME.getText());
+        gameOverTitle.setTextFill(Setting.getSettings().getColorScheme().getText());
+        gameOverText.setTextFill(Setting.getSettings().getColorScheme().getText());
     }
 
     private void setUpTimer() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(SPEED), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getSpeed()), event -> {
             if (!isTimerStopped) {
                 move(direction);
             }
@@ -84,24 +86,27 @@ public class GamePanel implements Initializable {
         instance.direction = dir;
     }
 
-    public void setDimensions(double width, double height) {
-        WINDOW_WIDTH = width;
-        WINDOW_HEIGHT = height;
+    public void setDimensions() {
+        WINDOW_WIDTH = 500;
+        WINDOW_HEIGHT = 500;
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         context = canvas.getGraphicsContext2D();
         gamePane.getChildren().add(canvas);
 
-        if (BOARD_WIDTH >= BOARD_HEIGHT) {
-            CELL_WIDTH = (int) (WINDOW_WIDTH-BASE_PADDING*2)/BOARD_WIDTH;
+        if (Setting.getSettings().getBoardWidth() >= Setting.getSettings().getBoardHeight()) {
+            CELL_WIDTH = (int) (WINDOW_WIDTH-BASE_PADDING*2)/Setting.getSettings().getBoardWidth();
         } else {
-            CELL_WIDTH = (int) (WINDOW_HEIGHT-BASE_PADDING*2)/BOARD_HEIGHT;
+            CELL_WIDTH = (int) (WINDOW_HEIGHT-BASE_PADDING*2)/Setting.getSettings().getBoardHeight();
         }
         STROKE_WIDTH = CELL_WIDTH/5*4;
-        PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*BOARD_WIDTH))/2;
-        PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*BOARD_HEIGHT))/2;
-
+        PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*Setting.getSettings().getBoardWidth()))/2;
+        PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*Setting.getSettings().getBoardHeight()))/2;
         paint();
-        if (!HASBOT) {
+
+    }
+
+    public void startBot() {
+        if (!Setting.getSettings().hasBot()) {
             setUpTimer();
         } else {
             setUpBot();
@@ -190,8 +195,8 @@ public class GamePanel implements Initializable {
     }
 
     private static void setUpBot() {
-        if (HASBOT) {
-            BOT.get().start();
+        if (Setting.getSettings().hasBot()) {
+            Setting.getSettings().getBot().start();
         }
     }
 
@@ -206,14 +211,14 @@ public class GamePanel implements Initializable {
         }
     }
 
-    private void paint() {
-        paintBackground(COLOR_SCHEME.getBackgroundFrame());
+    public void paint() {
+        paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrame());
         paintSnake();
         paintGoodie();
     }
 
     private void paint(List<int[]> pathgoodie, List<int[]> path) {
-        paintBackground(COLOR_SCHEME.getBackgroundFrame());
+        paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrame());
         paintPath(pathgoodie, Color.BLUE);
         paintPath(path, Color.YELLOW);
         paintSnake();
@@ -223,28 +228,30 @@ public class GamePanel implements Initializable {
 
 
     private void repaint() {
-        paintBackground(COLOR_SCHEME.getBackgroundFrameEnd());
+        paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrameEnd());
         paintSnake();
         paintGoodie();
     }
 
     private void paintBackground(Color backgroundFrameColor) {
-        context.clearRect(0, 0, BOARD_WIDTH*CELL_WIDTH, BOARD_HEIGHT*CELL_WIDTH);
+        context.clearRect(0, 0, 500, 500);
+        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.fillRect(0, 0, 500, 500);
         int offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
         context.setFill(backgroundFrameColor);
-        context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*BOARD_WIDTH)+offset*2, (CELL_WIDTH*BOARD_HEIGHT)+offset*2);
-        context.setFill(COLOR_SCHEME.getBackground());
-        context.fillRect(PADDING_WIDTH, PADDING_HEIGHT, (CELL_WIDTH*BOARD_WIDTH), (CELL_WIDTH*BOARD_HEIGHT));
+        context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*Setting.getSettings().getBoardWidth())+offset*2, (CELL_WIDTH*Setting.getSettings().getBoardHeight())+offset*2);
+        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.fillRect(PADDING_WIDTH, PADDING_HEIGHT, (CELL_WIDTH*Setting.getSettings().getBoardWidth()), (CELL_WIDTH*Setting.getSettings().getBoardHeight()));
     }
 
     private void paintGameOverBackground() {
-        context.setFill(COLOR_SCHEME.getBackground());
-        context.fillRect(PADDING_WIDTH, WINDOW_HEIGHT/2-80, (CELL_WIDTH*BOARD_WIDTH), 110);
+        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.fillRect(PADDING_WIDTH, WINDOW_HEIGHT/2-80, (CELL_WIDTH*Setting.getSettings().getBoardWidth()), 110);
     }
 
     private void paintGoodie() {
         int[] goodie = board.getGoodie();
-        drawCell(goodie[0], goodie[1], COLOR_SCHEME.getGoodie());
+        drawCell(goodie[0], goodie[1], Setting.getSettings().getColorScheme().getGoodie());
     }
 
     private void paintSnake() {
@@ -258,10 +265,10 @@ public class GamePanel implements Initializable {
                 } else {
                     partNext = snake.get(i);
                 }
-                drawLine(part[0], part[1], partNext[0], partNext[1], COLOR_SCHEME.getSnake());
+                drawLine(part[0], part[1], partNext[0], partNext[1], Setting.getSettings().getColorScheme().getSnake());
             }
         } else {
-            drawCell(snake.get(0)[0], snake.get(0)[1], COLOR_SCHEME.getSnake());
+            drawCell(snake.get(0)[0], snake.get(0)[1], Setting.getSettings().getColorScheme().getSnake());
         }
     }
 

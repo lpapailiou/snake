@@ -4,13 +4,11 @@ import ai.PathGenerator;
 import game.Board;
 import neuralnet.net.NeuralNetwork;
 import util.Direction;
+import util.Setting;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static util.Setting.BOARD_HEIGHT;
-import static util.Setting.BOARD_WIDTH;
 
 public class BoardAdapter {
 
@@ -70,9 +68,9 @@ public class BoardAdapter {
         int[] goodie = board.getGoodie();
 
         int distWallLeft = snakeHead[0] > 0 ? 1 : -1;
-        int distWallRight = Math.abs(BOARD_WIDTH - snakeHead[0]) > 0 ? 1 : -1;
+        int distWallRight = Math.abs(Setting.getSettings().getBoardWidth() - snakeHead[0]) > 0 ? 1 : -1;
         int distWallUp = snakeHead[1] > 0 ? 1 : -1;
-        int distWallDown = Math.abs(BOARD_HEIGHT - snakeHead[1]) > 0 ? 1 : -1;
+        int distWallDown = Math.abs(Setting.getSettings().getBoardHeight() - snakeHead[1]) > 0 ? 1 : -1;
 
         int left = (PathGenerator.exists(snake, Direction.getNextCoord(snakeHead, Direction.LEFT))) ? -1 : 1;
         int right = (PathGenerator.exists(snake, Direction.getNextCoord(snakeHead, Direction.RIGHT))) ? -1 : 1;

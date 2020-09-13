@@ -2,11 +2,9 @@ package neuralnet;
 
 import ai.PathGenerator;
 import util.Direction;
+import util.Setting;
 
 import java.util.List;
-
-import static util.Setting.BOARD_HEIGHT;
-import static util.Setting.BOARD_WIDTH;
 
 public enum InputNode {
 
@@ -19,7 +17,7 @@ public enum InputNode {
     WALL_RIGHT{
         @Override
         public int getInputValue(List<int[]> snake, int[] goodie) {
-            return Math.abs(BOARD_WIDTH - snake.get(0)[0]) > 0 ? 1 : -1;
+            return Math.abs(Setting.getSettings().getBoardWidth() - snake.get(0)[0]) > 0 ? 1 : -1;
         }
     },
     WALL_UP{
@@ -31,7 +29,7 @@ public enum InputNode {
     WALL_DOWN{
         @Override
         public int getInputValue(List<int[]> snake, int[] goodie) {
-            return Math.abs(BOARD_HEIGHT - snake.get(0)[1]) > 0 ? 1 : -1;
+            return Math.abs(Setting.getSettings().getBoardHeight() - snake.get(0)[1]) > 0 ? 1 : -1;
         }
     },
     BODY_LEFT{

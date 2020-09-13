@@ -4,8 +4,6 @@ import util.Direction;
 
 import java.util.*;
 
-import static util.Setting.RANDOM;
-
 public class AStarPathGenerator extends PathGenerator{
 
     public static List<int[]> getAStarPath(List<int[]> availableNodes, int[] start, int[] end, boolean minimize) {

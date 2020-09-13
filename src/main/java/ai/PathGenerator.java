@@ -2,14 +2,12 @@ package ai;
 
 import javafx.scene.Node;
 import util.Direction;
+import util.Setting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static util.Setting.BOARD_HEIGHT;
-import static util.Setting.BOARD_WIDTH;
 
 public class PathGenerator {
 
@@ -84,9 +82,9 @@ public class PathGenerator {
     }
 
     static boolean isValid(int[] next) {
-        if (next[0] < 0 || next[0] >= BOARD_WIDTH) {
+        if (next[0] < 0 || next[0] >= Setting.getSettings().getBoardWidth()) {
             return false;
-        } else return next[1] >= 0 && next[1] < BOARD_HEIGHT;
+        } else return next[1] >= 0 && next[1] < Setting.getSettings().getBoardHeight();
     }
 
     public static boolean exists(List<int[]> list, int[] block) {

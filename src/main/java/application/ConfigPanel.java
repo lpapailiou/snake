@@ -15,6 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import util.ColorScheme;
+import util.Setting;
 
 import java.net.URL;
 import java.util.*;
@@ -31,7 +33,20 @@ public class ConfigPanel implements Initializable {
     private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
     private List<List<NetNode>> nodes = new ArrayList<>();
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4");
+    ObservableList<String> colorList = FXCollections.observableArrayList();
     private int hiddenLayerNodeCount = 4;
+
+    @FXML
+    private VBox configPanel;
+
+    @FXML
+    private TextField boardWithControl;
+
+    @FXML
+    private TextField boardHeightControl;
+
+    @FXML
+    private ComboBox colorSchemeChooser;
 
     @FXML
     private ComboBox hiddenLayerCount;
@@ -56,6 +71,9 @@ public class ConfigPanel implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
+        boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
+        setUpMainControl();
         hiddenLayer0.setText("10");
         hiddenLayer1.setText("4");
         hiddenLayer2.setText("7");
@@ -82,11 +100,59 @@ public class ConfigPanel implements Initializable {
         }
     }
 
+    private void setUpMainControl() {
+        boardWithControl.textProperty().addListener((o, oldValue, newValue) -> {
+            try {
+                int result = Integer.parseInt(newValue);
+                if (result > 1 && result <= 200) {
+                    boardWithControl.setText(result + "");
+                    Setting.getSettings().setBoardWidth(result);
+                    GamePanel.getPanel().setDimensions();
+                } else {
+                    boardWithControl.setText(oldValue);
+                }
+            } catch (Exception e) {
+                boardWithControl.setText(oldValue);
+            }
+        });
+        boardHeightControl.textProperty().addListener((o, oldValue, newValue) -> {
+            try {
+                int result = Integer.parseInt(newValue);
+                if (result > 1 && result <= 200) {
+                    boardHeightControl.setText(result + "");
+                    Setting.getSettings().setBoardHeight(result);
+                    GamePanel.getPanel().setDimensions();
+                } else {
+                    boardHeightControl.setText(oldValue);
+                }
+            } catch (Exception e) {
+                boardHeightControl.setText(oldValue);
+            }
+        });
+
+        for (ColorScheme scheme : ColorScheme.values()) {
+            colorList.add(scheme.name());
+        }
+        colorSchemeChooser.setItems(colorList);
+        colorSchemeChooser.getSelectionModel().select(0);
+        colorSchemeChooser.setOnAction( e -> {
+            updateColorScheme();
+        });
+    }
+
+    private void updateColorScheme() {
+        String selection = colorSchemeChooser.getValue().toString();
+        Setting.getSettings().setColorScheme(ColorScheme.valueOf(selection));
+        GamePanel.getPanel().paint();
+        configPanel.getScene().setFill(Setting.getSettings().getColorScheme().getBackground());
+        updateNetwork();
+    }
+
     private void setupLayerSetter() {
         hiddenLayer0.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 0 && result < 21) {
+                if (result > 0 && result <= 20) {
                     hiddenLayer0.setText(result + "");
                     updateNetwork();
                 } else {
@@ -99,7 +165,7 @@ public class ConfigPanel implements Initializable {
         hiddenLayer1.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 0 && result < 21) {
+                if (result > 0 && result <= 20) {
                     hiddenLayer1.setText(result + "");
                     updateNetwork();
                 } else {
@@ -112,7 +178,7 @@ public class ConfigPanel implements Initializable {
         hiddenLayer2.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 0 && result < 21) {
+                if (result > 0 && result <= 20) {
                     hiddenLayer2.setText(result + "");
                     updateNetwork();
                 } else {
@@ -125,7 +191,7 @@ public class ConfigPanel implements Initializable {
         hiddenLayer3.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 0 && result < 21) {
+                if (result > 0 && result <= 20) {
                     hiddenLayer3.setText(result + "");
                     updateNetwork();
                 } else {
@@ -254,7 +320,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void paintLine(NetNode a, NetNode b) {
-        context.setStroke(COLOR_SCHEME.getSnake().darker());
+        context.setStroke(Setting.getSettings().getColorScheme().getSnake().darker());
         context.setLineWidth(2);
         context.strokeLine(a.x+(radius/2), a.y+(radius/2), b.x+(radius/2), b.y+(radius/2));
     }
@@ -292,14 +358,14 @@ public class ConfigPanel implements Initializable {
     }
 
     private void paintDot(int x, int y, int radius) {
-        context.setFill(COLOR_SCHEME.getSnake());
+        context.setFill(Setting.getSettings().getColorScheme().getSnake());
         context.fillOval(x, y, radius, radius);
     }
 
 
     private void paintBackground() {
         context.clearRect(0, 0, width, height);
-        context.setFill(COLOR_SCHEME.getBackground());
+        context.setFill(Setting.getSettings().getColorScheme().getBackground());
         context.fillRect(0, 0, width,height);
     }
 
