@@ -1,9 +1,6 @@
 package util;
 
-import ai.bot.AStarBot;
-import ai.bot.Bot;
-import ai.bot.DeepBot;
-import ai.bot.HamiltonianBot;
+import ai.bot.*;
 
 import java.util.function.Supplier;
 
@@ -12,6 +9,7 @@ public enum Mode {
     MANUAL(false, null),
     NEURAL_NETWORK(true, DeepBot::new),
     HAMILTONIAN(true, HamiltonianBot::new),
+    HAMILTONIAN_SHORTCUT(true, HamiltonianShortcutBot::new),
     AStar(true, AStarBot::new);
 
     private boolean isBot;

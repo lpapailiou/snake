@@ -25,7 +25,6 @@ public class Snake {
     }
 
     public boolean move(int[] coord, int[] goodie) {
-
         if (!isAlive) {
             return false;
         } else if (!isOnBoard(coord)) {

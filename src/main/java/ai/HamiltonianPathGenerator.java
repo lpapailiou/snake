@@ -22,8 +22,6 @@ public class HamiltonianPathGenerator extends PathGenerator {
     private static int boardY2 = Setting.getSettings().getBoardHeight();
     private static int PREV_SNAKE_SIZE = 0;
 
-    private static List<int[]> tempPath = null;     // TODO: remove tempPath when testing is done
-
     static {
         if (boardCenterX%2 == 0) {
             --boardCenterX;
@@ -62,10 +60,10 @@ public class HamiltonianPathGenerator extends PathGenerator {
 
     public static List<Direction> getStartCircle() {
         List<Direction> circle = new ArrayList();
-        circle.add(Direction.UP);   // clockwise
-        circle.add(Direction.RIGHT);
-        circle.add(Direction.DOWN);
+        circle.add(Direction.UP);
         circle.add(Direction.LEFT);
+        circle.add(Direction.DOWN);
+        circle.add(Direction.RIGHT);
         return circle;
     }
 
@@ -259,14 +257,16 @@ public class HamiltonianPathGenerator extends PathGenerator {
 
     public static List<int[]> getHamilton(int[] start) {    // TODO: backtracking may not be optimal yet
         PREV_SNAKE_SIZE = 1;
-        if (tempPath != null) {
-            return tempPath;
-        }
+        int boardWith = Setting.getSettings().getBoardWidth();
+        int boardHeight = Setting.getSettings().getBoardHeight();
+
         resetBoardDimensions();
         List<int[]> path = PathGenerator.getPathFromDirections(start, getStartCircle());
         path.add(0, start);
 
-        int phases = (int) Math.sqrt(Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight()) / PHASE_THRESHOLD;
+        //printArray("base path: " , path, false);
+
+        int phases = (int) Math.sqrt(boardWith*boardHeight) / PHASE_THRESHOLD;
         phases = (phases == 0) ? 1 : phases;
         int threshold ;
         int counter;
@@ -274,8 +274,8 @@ public class HamiltonianPathGenerator extends PathGenerator {
         int patienceThreshold = PATIENCE;
         List<List<int[]>> pathHistory = new ArrayList();
         pathHistory.add(0, new ArrayList<>(path));
-        setBoardDimensions(boardCenterX-((Setting.getSettings().getBoardWidth() / phases)/2), boardCenterY-((Setting.getSettings().getBoardHeight() / phases)/2), boardCenterX+((Setting.getSettings().getBoardWidth() / phases)/2), boardCenterY+((Setting.getSettings().getBoardHeight() / phases)/2));
-        while (path.size() < (Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight())) {
+        setBoardDimensions(boardCenterX-((boardWith / phases)/2), boardCenterY-((boardHeight / phases)/2), boardCenterX+((boardWith / phases)/2), boardCenterY+((boardHeight / phases)/2));
+        while (path.size() < (boardWith*boardHeight)) {
             checkCounter++;
             //System.out.println("-----------------------------------------round " + checkCounter);
             incrementBoardDimensions();
@@ -316,7 +316,6 @@ public class HamiltonianPathGenerator extends PathGenerator {
         //tempPath = PathUtils.getDirectionsFromPath(new int[]{2, 2}, Arrays.asList(new int[][] {{2, 1}, {3, 1}, {3, 0}, {2, 0}, {1, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 2}, {0, 2}, {0, 3}, {1, 3}, {2, 3}, {3, 3}, {3, 2}, {2, 2}}));
         //initial array: : {{4, 5}, {4, 6}, {4, 7}, {3, 7}, {2, 7}, {2, 8}, {2, 9}, {1, 9}, {0, 9}, {0, 8}, {1, 8}, {1, 7}, {0, 7}, {0, 6}, {1, 6}, {1, 5}, {0, 5}, {0, 4}, {1, 4}, {2, 4}, {2, 5}, {2, 6}, {3, 6}, {3, 5}, {3, 4}, {4, 4}, {5, 4}, {6, 4}, {6, 3}, {5, 3}, {4, 3}, {3, 3}, {2, 3}, {1, 3}, {0, 3}, {0, 2}, {1, 2}, {2, 2}, {2, 1}, {1, 1}, {0, 1}, {0, 0}, {1, 0}, {2, 0}, {3, 0}, {3, 1}, {3, 2}, {4, 2}, {5, 2}, {5, 1}, {4, 1}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {9, 1}, {8, 1}, {7, 1}, {6, 1}, {6, 2}, {7, 2}, {8, 2}, {9, 2}, {9, 3}, {8, 3}, {7, 3}, {7, 4}, {8, 4}, {9, 4}, {9, 5}, {8, 5}, {8, 6}, {9, 6}, {9, 7}, {8, 7}, {8, 8}, {9, 8}, {9, 9}, {8, 9}, {7, 9}, {7, 8}, {7, 7}, {7, 6}, {7, 5}, {6, 5}, {6, 6}, {6, 7}, {6, 8}, {6, 9}, {5, 9}, {4, 9}, {3, 9}, {3, 8}, {4, 8}, {5, 8}, {5, 7}, {5, 6}, {5, 5}};
 
-        tempPath = path;
         printArray("initial array: ", path, false);
         return path;
         //return tempPath;

@@ -190,6 +190,7 @@ public class ConfigPanel implements Initializable {
                 if (result > 1 && result <= 200) {
                     boardWithControl.setText(result + "");
                     Setting.getSettings().setBoardWidth(result);
+                    System.out.println("board with is: " + Setting.getSettings().getBoardWidth());
                     GamePanel.getPanel().setDimensions();
                 } else {
                     boardWithControl.setText(oldValue);
@@ -204,6 +205,7 @@ public class ConfigPanel implements Initializable {
                 if (result > 1 && result <= 200) {
                     boardHeightControl.setText(result + "");
                     Setting.getSettings().setBoardHeight(result);
+                    System.out.println("board height is: " + Setting.getSettings().getBoardHeight());
                     GamePanel.getPanel().setDimensions();
                 } else {
                     boardHeightControl.setText(oldValue);

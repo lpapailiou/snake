@@ -62,7 +62,7 @@ public class GamePanel implements Initializable {
 
     private void setUpTimer() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getSpeed()), event -> {
-            if (!isTimerStopped) {
+            if (!isTimerStopped && !Setting.getSettings().hasBot()) {
                 move(direction);
             }
         }));
