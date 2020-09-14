@@ -3,6 +3,8 @@ package neuralnet;
 import neuralnet.net.NeuralNetwork;
 import org.junit.Test;
 
+import java.util.List;
+
 public class IntegrationTest {
 
     @Test
@@ -14,5 +16,14 @@ public class IntegrationTest {
             gen = new Generation(50);
             net = gen.run(net);
         }
+
+        double[] testSet = new double[]{1, 1, 1, 1, 1, 1, 1, 1, 15};
+        List<Double> result = net.predict(testSet);
+
+        //System.out.println("result: " + result);
+        System.out.println("left:   " + result.get(0));
+        System.out.println("right:  " + result.get(1));
+        System.out.println("up:     " + result.get(2));
+        System.out.println("down:   " + result.get(3));
     }
 }

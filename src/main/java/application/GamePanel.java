@@ -123,7 +123,10 @@ public class GamePanel implements Initializable {
     }
 
     public static Board getBoard() {
-        return instance.board;
+        if (instance != null) {
+            return instance.board;
+        }
+        return new Board();
     }
 
     public static boolean move(int[] coord) {

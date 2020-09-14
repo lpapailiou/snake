@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import neuralnet.InputNode;
 import util.ColorScheme;
 import util.Mode;
 import util.Setting;
@@ -369,6 +370,7 @@ public class ConfigPanel implements Initializable {
         updateComboBox();
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
             RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
+            box.setTooltip(new Tooltip(InputNode.values()[i].getTooltip()));
             box.setOnAction(e -> {
                 if (!box.isSelected()) {
                     int activeNodes = (int) nodes.get(0).stream().filter(n -> n.active).count();

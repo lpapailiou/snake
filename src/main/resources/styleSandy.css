@@ -7,3 +7,11 @@
     -fx-focus-color: coral;                                    /* focus color */
     -fx-cell-focus-inner-border: coral;
 }
+
+.label {
+    -fx-text-fill: black;
+}
+
+.tooltip {
+    -fx-text-fill: coral;
+}

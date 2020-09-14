@@ -8,3 +8,10 @@
     -fx-cell-focus-inner-border: pink;
 }
 
+.label {
+    -fx-text-fill: black;
+}
+
+.tooltip {
+    -fx-text-fill: pink;
+}
