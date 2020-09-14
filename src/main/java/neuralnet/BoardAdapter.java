@@ -20,6 +20,11 @@ public class BoardAdapter {
         ordinals.add(1);
         ordinals.add(2);
         ordinals.add(3);
+        ordinals.add(4);
+        ordinals.add(5);
+        ordinals.add(6);
+        ordinals.add(7);
+        ordinals.add(8);
     }
 
     public BoardAdapter(NeuralNetwork net) {
@@ -39,8 +44,8 @@ public class BoardAdapter {
         List<int[]> snake = board.getSnake();
         int[] goodie = board.getGoodie();
 
-        double[] inputValues = new double[ordinals.size()];
-        for (int i = 0; i < ordinals.size(); i++) {
+        double[] inputValues = new double[4]; //new double[ordinals.size()]; // TODO: add back in
+        for (int i = 0; i < inputValues.length; i++) {
             inputValues[i] = InputNode.values()[ordinals.get(i)].getInputValue(snake, goodie);
         }
         List<Double> out = net.predict(inputValues);
@@ -67,11 +72,11 @@ public class BoardAdapter {
         int[] snakeHead = snake.get(0);
         int[] goodie = board.getGoodie();
 
-        int distWallLeft = snakeHead[0] > 0 ? 1 : -1;
-        int distWallRight = Math.abs(Setting.getSettings().getBoardWidth() - snakeHead[0]) > 0 ? 1 : -1;
-        int distWallUp = snakeHead[1] > 0 ? 1 : -1;
-        int distWallDown = Math.abs(Setting.getSettings().getBoardHeight() - snakeHead[1]) > 0 ? 1 : -1;
-
+        int distWallLeft = InputNode.values()[ordinals.get(4)].getInputValue(snake, goodie);
+        int distWallRight = InputNode.values()[ordinals.get(5)].getInputValue(snake, goodie);
+        int distWallUp = InputNode.values()[ordinals.get(6)].getInputValue(snake, goodie);
+        int distWallDown = InputNode.values()[ordinals.get(8)].getInputValue(snake, goodie);
+        System.out.println("Node 0 = " + distWallLeft + " / " + distWallRight+ " / " + distWallUp+ " / " + distWallDown);
         int left = (PathGenerator.exists(snake, Direction.getNextCoord(snakeHead, Direction.LEFT))) ? -1 : 1;
         int right = (PathGenerator.exists(snake, Direction.getNextCoord(snakeHead, Direction.RIGHT))) ? -1 : 1;
         int up = (PathGenerator.exists(snake, Direction.getNextCoord(snakeHead, Direction.UP))) ? -1 : 1;

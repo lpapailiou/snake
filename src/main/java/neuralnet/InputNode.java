@@ -17,7 +17,7 @@ public enum InputNode {
     WALL_RIGHT{
         @Override
         public int getInputValue(List<int[]> snake, int[] goodie) {
-            return Math.abs(Setting.getSettings().getBoardWidth() - snake.get(0)[0]) > 0 ? 1 : -1;
+            return Math.abs(Setting.getSettings().getBoardWidth()-1 - snake.get(0)[0]) > 0 ? 1 : -1;
         }
     },
     WALL_UP{
@@ -29,7 +29,7 @@ public enum InputNode {
     WALL_DOWN{
         @Override
         public int getInputValue(List<int[]> snake, int[] goodie) {
-            return Math.abs(Setting.getSettings().getBoardHeight() - snake.get(0)[1]) > 0 ? 1 : -1;
+            return Math.abs(Setting.getSettings().getBoardHeight()-1 - snake.get(0)[1]) > 0 ? 1 : -1;
         }
     },
     BODY_LEFT{

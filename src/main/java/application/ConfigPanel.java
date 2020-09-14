@@ -34,7 +34,7 @@ public class ConfigPanel implements Initializable {
     //private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
     private List<Integer> network = new ArrayList<>(Setting.getSettings().getNetParamsAsList());
     private List<List<NetNode>> nodes = new ArrayList<>();
-    private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4");
+    private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5");
     private ObservableList<String> colorList = FXCollections.observableArrayList();
     private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private int hiddenLayerNodeCount = 4;
@@ -66,6 +66,9 @@ public class ConfigPanel implements Initializable {
 
     @FXML
     private TextField hiddenLayer3;
+
+    @FXML
+    private TextField hiddenLayer4;
 
     @FXML
     private Pane layerVizualiser;
@@ -256,6 +259,9 @@ public class ConfigPanel implements Initializable {
         if (network.size() > 4) {
             hiddenLayer3.setText(network.get(4) + "");
         }
+        if (network.size() > 5) {
+            hiddenLayer4.setText(network.get(5) + "");
+        }
         hiddenLayer0.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
@@ -308,6 +314,19 @@ public class ConfigPanel implements Initializable {
                 hiddenLayer3.setText(oldValue);
             }
         });
+        hiddenLayer4.textProperty().addListener((o, oldValue, newValue) -> {
+            try {
+                int result = Integer.parseInt(newValue);
+                if (result > 0 && result <= 20) {
+                    hiddenLayer4.setText(result + "");
+                    updateNetwork();
+                } else {
+                    hiddenLayer4.setText(oldValue);
+                }
+            } catch (Exception e) {
+                hiddenLayer4.setText(oldValue);
+            }
+        });
         hiddenLayerCount.setItems(layerCount);
         hiddenLayerCount.getSelectionModel().select((Setting.getSettings().getNetParamsAsList().size()-2));
         hiddenLayerCount.setOnAction( e -> {
@@ -336,6 +355,7 @@ public class ConfigPanel implements Initializable {
         int hidden1 = Integer.parseInt(hiddenLayer1.getText());
         int hidden2 = Integer.parseInt(hiddenLayer2.getText());
         int hidden3 = Integer.parseInt(hiddenLayer3.getText());
+        int hidden4 = Integer.parseInt(hiddenLayer4.getText());
         int last = 4;
         List<Integer> newNet = new ArrayList<>();
         newNet.add(first);
@@ -350,6 +370,9 @@ public class ConfigPanel implements Initializable {
         }
         if (hidden3 > 0 && hiddenLayer3.isVisible()) {
             newNet.add(hidden3);
+        }
+        if (hidden4 > 0 && hiddenLayer4.isVisible()) {
+            newNet.add(hidden4);
         }
         newNet.add(last);
         network = newNet;
@@ -370,6 +393,7 @@ public class ConfigPanel implements Initializable {
                 hiddenLayer1.setVisible(false);
                 hiddenLayer2.setVisible(false);
                 hiddenLayer3.setVisible(false);
+                hiddenLayer4.setVisible(false);
                 break;
             case 1:
                 if (!hiddenLayer0.isVisible()) {
@@ -379,6 +403,7 @@ public class ConfigPanel implements Initializable {
                 hiddenLayer1.setVisible(false);
                 hiddenLayer2.setVisible(false);
                 hiddenLayer3.setVisible(false);
+                hiddenLayer4.setVisible(false);
                 break;
             case 2:
                 if (!hiddenLayer0.isVisible()) {
@@ -391,6 +416,7 @@ public class ConfigPanel implements Initializable {
                 }
                 hiddenLayer2.setVisible(false);
                 hiddenLayer3.setVisible(false);
+                hiddenLayer4.setVisible(false);
                 break;
             case 3:
                 if (!hiddenLayer0.isVisible()) {
@@ -406,6 +432,7 @@ public class ConfigPanel implements Initializable {
                     hiddenLayer2.setVisible(true);
                 }
                 hiddenLayer3.setVisible(false);
+                hiddenLayer4.setVisible(false);
                 break;
             case 4:
                 if (!hiddenLayer0.isVisible()) {
@@ -423,6 +450,29 @@ public class ConfigPanel implements Initializable {
                 if (!hiddenLayer3.isVisible()) {
                     hiddenLayer3.setText(hiddenLayerNodeCount + "");
                     hiddenLayer3.setVisible(true);
+                }
+                hiddenLayer4.setVisible(false);
+                break;
+            case 5:
+                if (!hiddenLayer0.isVisible()) {
+                    hiddenLayer0.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer0.setVisible(true);
+                }
+                if (!hiddenLayer1.isVisible()) {
+                    hiddenLayer1.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer1.setVisible(true);
+                }
+                if (!hiddenLayer2.isVisible()) {
+                    hiddenLayer2.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer2.setVisible(true);
+                }
+                if (!hiddenLayer3.isVisible()) {
+                    hiddenLayer3.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer3.setVisible(true);
+                }
+                if (!hiddenLayer4.isVisible()) {
+                    hiddenLayer4.setText(hiddenLayerNodeCount + "");
+                    hiddenLayer4.setVisible(true);
                 }
                 break;
         }
