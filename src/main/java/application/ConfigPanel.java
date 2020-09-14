@@ -45,10 +45,10 @@ public class ConfigPanel implements Initializable {
     private TextField boardHeightControl;
 
     @FXML
-    private ComboBox colorSchemeChooser;
+    private ComboBox<String> colorSchemeChooser;
 
     @FXML
-    private ComboBox hiddenLayerCount;
+    private ComboBox<String> hiddenLayerCount;
 
     @FXML
     private Pane layerVizualiser;
@@ -66,7 +66,7 @@ public class ConfigPanel implements Initializable {
     private TextField learningRate;
 
     @FXML
-    private ComboBox modeChooser;
+    private ComboBox<String> modeChooser;
 
     @FXML
     private HBox layerConfig;
@@ -153,7 +153,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateMode() {
-        Mode mode = Mode.valueOf((String) modeChooser.getValue());
+        Mode mode = Mode.valueOf(modeChooser.getValue());
         Setting.getSettings().isBot(mode.isBot());
         Setting.getSettings().setBot(mode.getBotTemplate());
         layerConfig.setVisible((mode == Mode.NEURAL_NETWORK));
@@ -224,7 +224,7 @@ public class ConfigPanel implements Initializable {
             String sheet = (String) str;
             configPanel.getScene().getStylesheets().removeIf(s -> s.matches(Objects.requireNonNull(Driver.class.getClassLoader().getResource(sheet)).toExternalForm()));
         }
-        String selection = colorSchemeChooser.getValue().toString();
+        String selection = colorSchemeChooser.getValue();
         ColorScheme scheme = ColorScheme.valueOf(selection);
         configPanel.getScene().getStylesheets().remove(Setting.getSettings().getColorScheme().getCss());
         Setting.getSettings().setColorScheme(scheme);
@@ -305,7 +305,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateComboBox() {
-        int selection = Integer.parseInt(hiddenLayerCount.getValue().toString());
+        int selection = Integer.parseInt(hiddenLayerCount.getValue());
         for (int i = 1; i < layerConfig.getChildren().size(); i++) {
             TextField field = (TextField) layerConfig.getChildren().get(i);
             if (i <= selection) {
@@ -346,9 +346,8 @@ public class ConfigPanel implements Initializable {
 
 
     private void paintDots() {
-        for (int i = 0; i < nodes.size(); i++) {
-            for (int j = 0; j < nodes.get(i).size(); j++) {
-                NetNode node = nodes.get(i).get(j);
+        for (List<NetNode> netNodes : nodes) {
+            for (NetNode node : netNodes) {
                 if (node.active) {
                     paintDot(node.x, node.y, radius);
                 }
