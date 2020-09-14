@@ -190,7 +190,7 @@ public class GamePanel implements Initializable {
             instance.paint();
             instance.direction = Direction.getRandomDirection();
             instance.isTimerStopped = false;
-            setUpBot();
+            instance.startBot();
         }
     }
 

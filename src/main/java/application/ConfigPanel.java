@@ -31,7 +31,8 @@ public class ConfigPanel implements Initializable {
 
     private int radius = 20;
     private int offset = 0;
-    private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
+    //private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
+    private List<Integer> network = new ArrayList<>(Setting.getSettings().getNetParamsAsList());
     private List<List<NetNode>> nodes = new ArrayList<>();
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4");
     private ObservableList<String> colorList = FXCollections.observableArrayList();
@@ -102,10 +103,27 @@ public class ConfigPanel implements Initializable {
         boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
         setUpMainControl();
         setupGenerationConfiguration();
-        hiddenLayer0.setText(network.get(1) + "");
-        hiddenLayer1.setText(network.get(2) + "");
-        hiddenLayer2.setText(network.get(3) + "");
-        hiddenLayer3.setText(network.get(4) + "");
+        if (network.size() > 1) {
+            hiddenLayer0.setText(network.get(1) + "");
+        } else {
+            hiddenLayer0.setVisible(false);
+        }
+        if (network.size() > 2) {
+            hiddenLayer1.setText(network.get(2) + "");
+        } else {
+            hiddenLayer1.setVisible(false);
+        }
+        if (network.size() > 3) {
+            hiddenLayer2.setText(network.get(3) + "");
+        } else {
+            hiddenLayer2.setVisible(false);
+        }
+        if (network.size() > 4) {
+            hiddenLayer3.setText(network.get(4) + "");
+        } else {
+            hiddenLayer3.setVisible(false);
+        }
+
         generationCount.setText(Setting.getSettings().getGenerationCount() + "");
         populationSize.setText(Setting.getSettings().getPopulationSize() + "");
         learningRate.setText(Setting.getSettings().getLearningRate() + "");
@@ -116,12 +134,11 @@ public class ConfigPanel implements Initializable {
         layerVizualiser.getChildren().add(canvas);
         context = canvas.getGraphicsContext2D();
         hiddenLayerCount.setItems(layerCount);
-        hiddenLayerCount.getSelectionModel().select(3);
+        hiddenLayerCount.getSelectionModel().select((Setting.getSettings().getNetParamsAsList().size()-2));
         hiddenLayerCount.setOnAction( e -> {
             updateComboBox();
         });
         updateComboBox();
-
 
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
             RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
@@ -343,6 +360,11 @@ public class ConfigPanel implements Initializable {
         }
         newNet.add(last);
         network = newNet;
+        int[] params = new int[newNet.size()];
+        for (int i = 0; i < newNet.size(); i++) {
+            params[i] = newNet.get(i);
+        }
+        Setting.getSettings().setNetParams(params);
         updateNodes();
         paintNetwork();
     }

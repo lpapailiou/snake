@@ -2,6 +2,9 @@ package util;
 
 import ai.bot.Bot;
 import ai.bot.DeepBot;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -21,6 +24,7 @@ public class Setting {
     private int generationCount = 1;
     private int populationSize = 1;
     private double learningRate = 0.1;
+    private int[] netParams = {9, 10, 3, 7, 4};
 
     private Setting() {}
 
@@ -97,5 +101,17 @@ public class Setting {
     }
 
     public void setLearningRate(double rate) { learningRate = rate; }
+
+    public int[] getNetParams() { return netParams; }
+
+    public List<Integer> getNetParamsAsList() {
+        List<Integer> list = new ArrayList<>();
+        for (int param : netParams) {
+            list.add(param);
+        }
+        return list;
+    }
+
+    public void setNetParams(int[] params) { this.netParams = params; }
 
 }
