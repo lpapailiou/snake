@@ -40,13 +40,13 @@ public class GamePanel implements Initializable {
     private static GamePanel instance;
     private GraphicsContext context;
     private Board board = new Board();
-    private int CELL_WIDTH = 10;
-    private int STROKE_WIDTH = 5;
-    double WINDOW_WIDTH;
-    double WINDOW_HEIGHT;
-    int BASE_PADDING = 20;
-    int PADDING_WIDTH = BASE_PADDING;
-    int PADDING_HEIGHT = BASE_PADDING;
+    private double CELL_WIDTH = 10;
+    private double STROKE_WIDTH = 5;
+    private double WINDOW_WIDTH;
+    private double WINDOW_HEIGHT;
+    private double BASE_PADDING = 20;
+    private double PADDING_WIDTH = BASE_PADDING;
+    private double PADDING_HEIGHT = BASE_PADDING;
     private FadeTransition transitionGameOverTitle = null;
     private FadeTransition transitionGameOverText = null;
     private Direction direction = Direction.getRandomDirection();
@@ -89,21 +89,25 @@ public class GamePanel implements Initializable {
     public void setDimensions() {
         WINDOW_WIDTH = 500;
         WINDOW_HEIGHT = 500;
+        int width = Setting.getSettings().getBoardWidth();
+        int height = Setting.getSettings().getBoardHeight();
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         context = canvas.getGraphicsContext2D();
         gamePane.getChildren().add(canvas);
 
-        if (Setting.getSettings().getBoardWidth() >= Setting.getSettings().getBoardHeight()) {
-            CELL_WIDTH = (int) (WINDOW_WIDTH-BASE_PADDING*2)/Setting.getSettings().getBoardWidth();
+        if (width >= height) {
+            CELL_WIDTH = (WINDOW_WIDTH-BASE_PADDING*2)/width;
         } else {
-            CELL_WIDTH = (int) (WINDOW_HEIGHT-BASE_PADDING*2)/Setting.getSettings().getBoardHeight();
+            CELL_WIDTH = (WINDOW_HEIGHT-BASE_PADDING*2)/height;
         }
         STROKE_WIDTH = CELL_WIDTH/5*4;
-        PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*Setting.getSettings().getBoardWidth()))/2;
-        PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*Setting.getSettings().getBoardHeight()))/2;
+        if (STROKE_WIDTH < 2) {
+            STROKE_WIDTH = 2;
+        }
+        PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*width))/2;
+        PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*height))/2;
         fitBoard();
         paint();
-
     }
 
     public void startBot() {
@@ -252,14 +256,17 @@ public class GamePanel implements Initializable {
     }
 
     private void paintBackground(Color backgroundFrameColor) {
+        int width = Setting.getSettings().getBoardWidth();
+        int height = Setting.getSettings().getBoardHeight();
         context.clearRect(0, 0, 500, 500);
         context.setFill(Setting.getSettings().getColorScheme().getBackground());
         context.fillRect(0, 0, 500, 500);
-        int offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
+        //int offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
+        int offset = 3;
         context.setFill(backgroundFrameColor);
-        context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*Setting.getSettings().getBoardWidth())+offset*2, (CELL_WIDTH*Setting.getSettings().getBoardHeight())+offset*2);
+        context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*width)+offset*2, (CELL_WIDTH*height)+offset*2);
         context.setFill(Setting.getSettings().getColorScheme().getBackground());
-        context.fillRect(PADDING_WIDTH, PADDING_HEIGHT, (CELL_WIDTH*Setting.getSettings().getBoardWidth()), (CELL_WIDTH*Setting.getSettings().getBoardHeight()));
+        context.fillRect(PADDING_WIDTH, PADDING_HEIGHT, (CELL_WIDTH*width), (CELL_WIDTH*height));
     }
 
     private void paintGameOverBackground() {

@@ -12,11 +12,11 @@
       <HBox prefHeight="31.0" prefWidth="500.0" spacing="20">
          <children>
             <Label prefWidth="15.0" text="w:" />
-            <TextField prefWidth="150.0" fx:id="boardWithControl" text="20" />
+            <TextField prefWidth="200.0" fx:id="boardWithControl" text="20" />
             <Label prefWidth="15.0" text="h:" />
-            <TextField prefWidth="150.0" fx:id="boardHeightControl" text="15" />
+            <TextField prefWidth="200.0" fx:id="boardHeightControl" text="15" />
             <Region prefHeight="100.0" prefWidth="200.0" />
-            <ComboBox fx:id="colorSchemeChooser" prefWidth="250.0" />
+            <ComboBox fx:id="colorSchemeChooser" prefWidth="300.0" />
          </children>
       </HBox>
       <HBox prefHeight="28.0" prefWidth="500.0" spacing="20">
@@ -38,17 +38,6 @@
                <Pane fx:id="layerVizualiser" />
                <VBox fx:id="inputNodeConfig" alignment="CENTER_LEFT" spacing="2">
                <children>
-                   <!--
-                   <RadioButton fx:id="node0" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node1" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node2" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node3" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node4" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node5" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node6" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node7" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node8" mnemonicParsing="false" selected="true" text="" />
-                   <RadioButton fx:id="node9" mnemonicParsing="false" selected="true" text="" />-->
                </children>
             </VBox>
            </children>

@@ -37,8 +37,6 @@ public class Driver extends Application {
             setUpKeyParser(scene);
             stage.show();
             GamePanel.getPanel().setDimensions();
-            //GamePanel.getPanel().startBot();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

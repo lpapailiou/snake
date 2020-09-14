@@ -223,13 +223,13 @@ public class ConfigPanel implements Initializable {
         boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
         boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
         boardWithControl.textProperty().addListener((o, oldValue, newValue) -> {
-            if (configureTextField(boardWithControl, 1, 200, newValue, oldValue)) {
+            if (configureTextField(boardWithControl, 1, 100, newValue, oldValue)) {
                 Setting.getSettings().setBoardWidth(Integer.parseInt(newValue));
                 GamePanel.getPanel().setDimensions();
             }
         });
         boardHeightControl.textProperty().addListener((o, oldValue, newValue) -> {
-            if (configureTextField(boardHeightControl, 1, 200, newValue, oldValue)) {
+            if (configureTextField(boardHeightControl, 1, 100, newValue, oldValue)) {
                 Setting.getSettings().setBoardHeight(Integer.parseInt(newValue));
                 GamePanel.getPanel().setDimensions();
             }
