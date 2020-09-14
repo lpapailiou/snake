@@ -28,8 +28,9 @@ public class ConfigPanel implements Initializable {
     GraphicsContext context;
     private int width = 500;
     private int height = 221;
-    private int offset = 0;
+
     private int radius = 20;
+    private int offset = 0;
     private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
     private List<List<NetNode>> nodes = new ArrayList<>();
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4");

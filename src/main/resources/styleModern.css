@@ -1,9 +1,10 @@
-.root {
+* {
     -fx-base: beige;                                /* combobox color */
     -fx-text-fill: black;                           /* no idea but seems important */
     -fx-text-background-color: black;               /* text in combobox */
     -fx-control-inner-background: beige;            /* combobox list background */
     -fx-accent: bisque;                             /* combobox selected background */
     -fx-focus-color: pink;                          /* focus color */
+    -fx-cell-focus-inner-border: pink;
 }
 

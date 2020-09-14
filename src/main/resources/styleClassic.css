@@ -1,9 +1,14 @@
-.root {
+* {
     -fx-base: limegreen;                        /* combobox color */
-    -fx-text-fill: black;                       /* no idea but seems important */
+    -fx-text-fill: black;                       /* text color */
     -fx-text-background-color: black;           /* text in combobox */
     -fx-control-inner-background: lightgreen;   /* combobox list background */
     -fx-accent: limegreen;                      /* combobox selected background */
     -fx-focus-color: darkseagreen;              /* focus color */
+    -fx-cell-focus-inner-border: darkseagreen;
+}
+
+.label {
+    -fx-text-fill: limegreen;
 }
 

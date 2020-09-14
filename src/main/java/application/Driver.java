@@ -48,9 +48,9 @@ public class Driver extends Application {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             Direction dir = KeyParser.handleKeyPress(e);
             if (dir.name().equals("GONE")) {
-                GamePanel.terminate();
+                //GamePanel.terminate();
             } else if (dir.name().equals("NONE")) {
-                GamePanel.restart();
+                //GamePanel.restart();
             } else {
                 if (!Setting.getSettings().hasBot()) {
                     GamePanel.setDirection(dir);

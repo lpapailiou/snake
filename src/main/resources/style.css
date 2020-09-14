@@ -3,6 +3,7 @@
     -fx-font-size: 12pt;
     -fx-font-weight: bold;
     -fx-background-color: transparent;
+    -fx-accent:white;
     -fx-base: limegreen;                        /* combobox color */
     -fx-text-fill: black;                       /* no idea but seems important */
     -fx-text-background-color: black;           /* text in combobox */

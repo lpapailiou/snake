@@ -5,15 +5,17 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<VBox fx:id="configPanel" alignment="CENTER" spacing="10" prefHeight="500.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
+
+<VBox fx:id="configPanel" alignment="CENTER" prefHeight="500.0" prefWidth="480.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
     <children>
-      <HBox spacing="20" prefHeight="31.0" prefWidth="500.0">
+      <HBox prefHeight="31.0" prefWidth="500.0" spacing="20">
          <children>
-            <TextField fx:id="boardWithControl" text="[board width]" />
-            <TextField fx:id="boardHeightControl" text="[board height]" />
-            <Region prefHeight="200.0" prefWidth="200.0" />
+            <Label prefWidth="15.0" text="w:" />
+            <TextField prefWidth="150.0" fx:id="boardWithControl" text="20" />
+            <Label prefWidth="15.0" text="h:" />
+            <TextField prefWidth="150.0" fx:id="boardHeightControl" text="15" />
+            <Region prefHeight="100.0" prefWidth="200.0" />
             <ComboBox fx:id="colorSchemeChooser" prefWidth="250.0" />
          </children>
       </HBox>
@@ -22,7 +24,7 @@
             <Slider />
          </children>
       </HBox>
-      <HBox spacing="20" prefHeight="28.0" prefWidth="500.0">
+      <HBox prefHeight="28.0" prefWidth="500.0" spacing="20">
          <children>
             <ComboBox fx:id="modeChooser" prefWidth="310.0" />
          </children>
@@ -53,7 +55,7 @@
             </VBox>
            </children>
         </StackPane>
-      <HBox fx:id="genConfig" spacing="20" prefHeight="33.0" prefWidth="100.0">
+      <HBox fx:id="genConfig" prefHeight="33.0" prefWidth="100.0" spacing="20">
          <children>
             <TextField fx:id="generationCount" text="1" />
             <TextField fx:id="populationSize" text="1" />
