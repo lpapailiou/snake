@@ -21,7 +21,7 @@ public class Setting {
     private Supplier<Bot> botTemplate = DeepBot::new;
     private int generationCount = 30;
     private int populationSize = 200;
-    private double learningRate = 0.3;
+    private double learningRate = 0.35;
     private int[] netParams = {10, 10, 8, 7, 4};
     private Set<Integer> nodeSelection = new HashSet<>();
 
@@ -35,6 +35,7 @@ public class Setting {
         nodeSelection.add(6);
         nodeSelection.add(7);
         nodeSelection.add(8);
+        nodeSelection.add(9);
     }
 
     public static Setting getSettings() {
