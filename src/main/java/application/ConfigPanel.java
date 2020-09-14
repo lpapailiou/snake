@@ -26,15 +26,13 @@ public class ConfigPanel implements Initializable {
     private int width = 500;
     private int height = 240;
     private int radius = 20;
-    private int offset = 0;
 
     private List<Integer> network = new ArrayList<>(Setting.getSettings().getNetParamsAsList());
     private List<List<NetNode>> nodes = new ArrayList<>();
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5");
-    private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.asList(ColorScheme.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
-    private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
-    private final int hiddenLayerNodeCount = 4;
-    boolean init = true;
+    private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.stream(ColorScheme.values()).map(Enum::name).collect(Collectors.toList()));
+    private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.stream(Mode.values()).map(Enum::name).collect(Collectors.toList()));
+    private boolean init = true;
     private static ConfigPanel instance;
 
     @FXML
@@ -107,7 +105,7 @@ public class ConfigPanel implements Initializable {
         return instance;
     }
 
-    public void lockInput(boolean lock) {
+    void lockInput(boolean lock) {
         boardWithControl.setDisable(lock);
         boardHeightControl.setDisable(lock);
         colorSchemeChooser.setDisable(lock);
@@ -126,7 +124,6 @@ public class ConfigPanel implements Initializable {
         statisticsButton.setDisable(lock);
     }
 
-
     public void incGenCounter() {
         int counter = Integer.parseInt(genCounter.getText());
         counter++;
@@ -143,7 +140,7 @@ public class ConfigPanel implements Initializable {
                 GamePanel.getPanel().startBot();
                 init = false;
             } else {
-                GamePanel.getPanel().restart();
+                GamePanel.restart();
             }
         });
     }
@@ -151,9 +148,7 @@ public class ConfigPanel implements Initializable {
     private void setUpModeControl() {
         modeChooser.setItems(modeList);
         modeChooser.getSelectionModel().select(1);
-        modeChooser.setOnAction( e -> {
-            updateMode();
-        });
+        modeChooser.setOnAction( e -> updateMode());
         updateMode();
     }
 
@@ -220,16 +215,14 @@ public class ConfigPanel implements Initializable {
 
         colorSchemeChooser.setItems(colorList);
         colorSchemeChooser.getSelectionModel().select(0);
-        colorSchemeChooser.setOnAction( e -> {
-            updateColorScheme();
-        });
+        colorSchemeChooser.setOnAction( e -> updateColorScheme());
     }
 
     private void updateColorScheme() {
-        List<String> cssList = Arrays.asList(ColorScheme.values()).stream().map(s -> s.getCss()).collect(Collectors.toList());
+        List<String> cssList = Arrays.stream(ColorScheme.values()).map(ColorScheme::getCss).collect(Collectors.toList());
         for (Object str : cssList) {
             String sheet = (String) str;
-            configPanel.getScene().getStylesheets().removeIf(s -> s.matches(Driver.class.getClassLoader().getResource(sheet).toExternalForm()));
+            configPanel.getScene().getStylesheets().removeIf(s -> s.matches(Objects.requireNonNull(Driver.class.getClassLoader().getResource(sheet)).toExternalForm()));
         }
         String selection = colorSchemeChooser.getValue().toString();
         ColorScheme scheme = ColorScheme.valueOf(selection);
@@ -237,7 +230,7 @@ public class ConfigPanel implements Initializable {
         Setting.getSettings().setColorScheme(scheme);
         GamePanel.getPanel().paint();
         configPanel.getScene().setFill(Setting.getSettings().getColorScheme().getBackground());
-        configPanel.getScene().getStylesheets().add(Driver.class.getClassLoader().getResource(scheme.getCss()).toExternalForm());
+        configPanel.getScene().getStylesheets().add(Objects.requireNonNull(Driver.class.getClassLoader().getResource(scheme.getCss())).toExternalForm());
         updateNetwork();
     }
 
@@ -261,9 +254,7 @@ public class ConfigPanel implements Initializable {
         }
         hiddenLayerCount.setItems(layerCount);
         hiddenLayerCount.getSelectionModel().select((Setting.getSettings().getNetParamsAsList().size()-2));
-        hiddenLayerCount.setOnAction( e -> {
-            updateComboBox();
-        });
+        hiddenLayerCount.setOnAction( e -> updateComboBox());
         updateComboBox();
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
             RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
@@ -280,7 +271,7 @@ public class ConfigPanel implements Initializable {
                 if (box.isSelected()) {
                     Setting.getSettings().addNodeSelectionNode(index);
                 } else {
-                    Setting.getSettings().removeNodeSelectionNode(index);;
+                    Setting.getSettings().removeNodeSelectionNode(index);
                 }
                 int[] netParams = Setting.getSettings().getNetParams();
                 int activeNodes = (int) nodes.get(0).stream().filter(n -> n.active).count();
@@ -319,6 +310,7 @@ public class ConfigPanel implements Initializable {
             TextField field = (TextField) layerConfig.getChildren().get(i);
             if (i <= selection) {
                 if (!field.isVisible()) {
+                    int hiddenLayerNodeCount = 4;
                     field.setText(hiddenLayerNodeCount + "");
                     field.setVisible(true);
                 }
@@ -372,7 +364,8 @@ public class ConfigPanel implements Initializable {
             int h = height/network.get(i);
             int hOffset = (height - ((network.get(i)-1)*h)-20)/2;
             for (int j = 0; j < network.get(i); j++) {
-                NetNode node =  new NetNode((w * i) + offset, (h * j) + hOffset);
+                int offset = 0;
+                NetNode node = new NetNode((w * i) + offset, (h * j) + hOffset);
                 layer.add(node);
                 if (i == 0) {
                     RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(j);
@@ -403,7 +396,7 @@ public class ConfigPanel implements Initializable {
         context.fillRect(0, 0, width,height);
     }
 
-    private class NetNode {
+    private static class NetNode {
         int x;
         int y;
         boolean active = true;
