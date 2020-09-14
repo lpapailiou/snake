@@ -112,7 +112,7 @@ public class Matrix {
 
     public static Matrix multiply(Matrix a, Matrix b) {
         if (a.cols != b.rows) {
-            throw new IllegalArgumentException("wrong input matrix dimensions for multiplication!");
+            throw new IllegalArgumentException("wrong input matrix dimensions for multiplication! " + a.getType() + " " + b.getType());
         }
         Matrix tmp = new Matrix(a.rows, b.cols);
         for (int i = 0; i < tmp.rows; i++) {

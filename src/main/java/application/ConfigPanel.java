@@ -99,62 +99,17 @@ public class ConfigPanel implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
-        boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
-        setUpMainControl();
-        setupGenerationConfiguration();
-        if (network.size() > 1) {
-            hiddenLayer0.setText(network.get(1) + "");
-        } else {
-            hiddenLayer0.setVisible(false);
-        }
-        if (network.size() > 2) {
-            hiddenLayer1.setText(network.get(2) + "");
-        } else {
-            hiddenLayer1.setVisible(false);
-        }
-        if (network.size() > 3) {
-            hiddenLayer2.setText(network.get(3) + "");
-        } else {
-            hiddenLayer2.setVisible(false);
-        }
-        if (network.size() > 4) {
-            hiddenLayer3.setText(network.get(4) + "");
-        } else {
-            hiddenLayer3.setVisible(false);
-        }
-
-        generationCount.setText(Setting.getSettings().getGenerationCount() + "");
-        populationSize.setText(Setting.getSettings().getPopulationSize() + "");
-        learningRate.setText(Setting.getSettings().getLearningRate() + "");
-        setupLayerSetter();
-        setUpModeControl();
-        updateMode();
         Canvas canvas = new Canvas(width, height);
         layerVizualiser.getChildren().add(canvas);
         context = canvas.getGraphicsContext2D();
-        hiddenLayerCount.setItems(layerCount);
-        hiddenLayerCount.getSelectionModel().select((Setting.getSettings().getNetParamsAsList().size()-2));
-        hiddenLayerCount.setOnAction( e -> {
-            updateComboBox();
-        });
-        updateComboBox();
+        setUpMainControl();
+        setUpModeControl();
+        setUpLayerSetter();
+        setUpGenerationConfiguration();
+        setUpButtons();
+    }
 
-        for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
-            RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
-            box.setOnAction(e -> {
-                if (!box.isSelected()) {
-                    int activeNodes = (int) nodes.get(0).stream().filter(n -> n.active).count();
-                    if (activeNodes == 1) {
-                        box.setSelected(true);
-                    }
-                }
-                int index = inputNodeConfig.getChildren().indexOf(box);
-                nodes.get(0).get(index).active = box.isSelected();
-                paintNetwork();
-            });
-        }
-
+    private void setUpButtons() {
         startButton.setOnAction(e -> {
             if (init) {
                 GamePanel.getPanel().startBot();
@@ -171,6 +126,7 @@ public class ConfigPanel implements Initializable {
         modeChooser.setOnAction( e -> {
             updateMode();
         });
+        updateMode();
     }
 
     private void updateMode() {
@@ -182,7 +138,10 @@ public class ConfigPanel implements Initializable {
         genConfig.setVisible((mode == Mode.NEURAL_NETWORK));
     }
 
-    private void setupGenerationConfiguration() {
+    private void setUpGenerationConfiguration() {
+        generationCount.setText(Setting.getSettings().getGenerationCount() + "");
+        populationSize.setText(Setting.getSettings().getPopulationSize() + "");
+        learningRate.setText(Setting.getSettings().getLearningRate() + "");
         generationCount.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
@@ -225,6 +184,8 @@ public class ConfigPanel implements Initializable {
     }
 
     private void setUpMainControl() {
+        boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
+        boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
         boardWithControl.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
@@ -282,7 +243,19 @@ public class ConfigPanel implements Initializable {
         updateNetwork();
     }
 
-    private void setupLayerSetter() {
+    private void setUpLayerSetter() {
+        if (network.size() > 1) {
+            hiddenLayer0.setText(network.get(1) + "");
+        }
+        if (network.size() > 2) {
+            hiddenLayer1.setText(network.get(2) + "");
+        }
+        if (network.size() > 3) {
+            hiddenLayer2.setText(network.get(3) + "");
+        }
+        if (network.size() > 4) {
+            hiddenLayer3.setText(network.get(4) + "");
+        }
         hiddenLayer0.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
@@ -335,6 +308,26 @@ public class ConfigPanel implements Initializable {
                 hiddenLayer3.setText(oldValue);
             }
         });
+        hiddenLayerCount.setItems(layerCount);
+        hiddenLayerCount.getSelectionModel().select((Setting.getSettings().getNetParamsAsList().size()-2));
+        hiddenLayerCount.setOnAction( e -> {
+            updateComboBox();
+        });
+        updateComboBox();
+        for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
+            RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
+            box.setOnAction(e -> {
+                if (!box.isSelected()) {
+                    int activeNodes = (int) nodes.get(0).stream().filter(n -> n.active).count();
+                    if (activeNodes == 1) {
+                        box.setSelected(true);
+                    }
+                }
+                int index = inputNodeConfig.getChildren().indexOf(box);
+                nodes.get(0).get(index).active = box.isSelected();
+                paintNetwork();
+            });
+        }
     }
 
     private void updateNetwork() {
