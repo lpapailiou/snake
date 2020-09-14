@@ -57,9 +57,9 @@
         </StackPane>
       <HBox fx:id="genConfig" prefHeight="33.0" prefWidth="100.0" spacing="20">
          <children>
-            <TextField fx:id="generationCount" text="1" />
-            <TextField fx:id="populationSize" text="1" />
-            <TextField fx:id="learningRate" text="0.1" />
+            <TextField fx:id="generationCount" text="1" maxWidth="80.0" />
+            <TextField fx:id="populationSize" text="1" maxWidth="80.0" />
+            <TextField fx:id="learningRate" text="0.1" maxWidth="80.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="500.0" spacing="20">

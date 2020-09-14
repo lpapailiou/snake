@@ -71,7 +71,12 @@ public class Setting {
 
     public Random getRandom() { return random; }
 
-    public Bot getBot() { return botTemplate.get(); }
+    public Bot getBot() {
+        if (botTemplate != null) {
+            return botTemplate.get();
+        }
+        return null;
+    }
 
     public void setBot(Supplier<Bot> bot) { botTemplate = bot; }
 
