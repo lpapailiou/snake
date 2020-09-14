@@ -15,7 +15,7 @@ public class Setting {
     private int boardHeight = 15;
     private int speed = 200;
     private int botSpeed = 100;
-    private int neuralBotTimeout = 200;
+    private int neuralBotTimeout = 100;
     private boolean hasBot = true;
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;

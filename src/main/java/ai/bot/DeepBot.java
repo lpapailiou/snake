@@ -16,9 +16,6 @@ public class DeepBot extends Bot {
     private NeuralNetwork best = new NeuralNetwork(Setting.getSettings().getNetParams());
     private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), best);
     private int generationCount = Setting.getSettings().getGenerationCount();
-    {
-        ConfigPanel.getPanel().incGenCounter();
-    }
 
     private NeuralNetwork getBest() {
         Generation gen = new Generation(Setting.getSettings().getPopulationSize());
