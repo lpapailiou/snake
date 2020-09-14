@@ -26,16 +26,9 @@ public class Setting {
     private Set<Integer> nodeSelection = new HashSet<>();
 
     private Setting() {
-        nodeSelection.add(0);
-        nodeSelection.add(1);
-        nodeSelection.add(2);
-        nodeSelection.add(3);
-        nodeSelection.add(4);
-        nodeSelection.add(5);
-        nodeSelection.add(6);
-        nodeSelection.add(7);
-        nodeSelection.add(8);
-        nodeSelection.add(9);
+        for (int i = 0; i < netParams[0]; i++) {
+            nodeSelection.add(i);
+        }
     }
 
     public static Setting getSettings() {

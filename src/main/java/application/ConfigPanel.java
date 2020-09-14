@@ -32,7 +32,7 @@ public class ConfigPanel implements Initializable {
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5");
     private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.asList(ColorScheme.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
-    private int hiddenLayerNodeCount = 4;
+    private final int hiddenLayerNodeCount = 4;
     boolean init = true;
     private static ConfigPanel instance;
 
@@ -108,9 +108,11 @@ public class ConfigPanel implements Initializable {
         Canvas canvas = new Canvas(width, height);
         layerVizualiser.getChildren().add(canvas);
         context = canvas.getGraphicsContext2D();
-        setUpMainControl();
-        setUpModeControl();
         setUpLayerSetter();
+        setUpMainControl();
+
+        setUpModeControl();
+
         setUpGenerationConfiguration();
         setUpButtons();
     }
@@ -181,47 +183,38 @@ public class ConfigPanel implements Initializable {
         genConfig.setVisible((mode == Mode.NEURAL_NETWORK));
     }
 
+    private boolean configureTextField (TextField field, int min, int max, String newValue, String oldValue) {
+        try {
+            int result = Integer.parseInt(newValue);
+            if (result >= min && result <= max) {
+                field.setText(result + "");
+                return true;
+            } else {
+                field.setText(oldValue);
+            }
+        } catch (Exception e) {
+            field.setText(oldValue);
+        }
+        return false;
+    }
+
     private void setUpGenerationConfiguration() {
         generationCount.setText(Setting.getSettings().getGenerationCount() + "");
         populationSize.setText(Setting.getSettings().getPopulationSize() + "");
         learningRate.setText(Setting.getSettings().getLearningRate() + "");
         generationCount.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 1000) {
-                    generationCount.setText(result + "");
-                    Setting.getSettings().setGenerationCount(result);
-                } else {
-                    generationCount.setText(oldValue);
-                }
-            } catch (Exception e) {
-                boardWithControl.setText(oldValue);
+            if (configureTextField(generationCount, 1, 1000, newValue, oldValue)) {
+                Setting.getSettings().setGenerationCount(Integer.parseInt(newValue));
             }
         });
         populationSize.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 1000) {
-                    populationSize.setText(result + "");
-                    Setting.getSettings().setPopulationSize(result);
-                } else {
-                    populationSize.setText(oldValue);
-                }
-            } catch (Exception e) {
-                populationSize.setText(oldValue);
+            if (configureTextField(populationSize, 1, 2000, newValue, oldValue)) {
+                Setting.getSettings().setPopulationSize(Integer.parseInt(newValue));
             }
         });
         learningRate.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                double result = Double.parseDouble(newValue);
-                if (result >= 0 && result <= 1) {
-                    learningRate.setText(result + "");
-                    Setting.getSettings().setLearningRate(result);
-                } else {
-                    learningRate.setText(oldValue);
-                }
-            } catch (Exception e) {
-                learningRate.setText(oldValue);
+            if (configureTextField(learningRate, 0, 1, newValue, oldValue)) {
+                Setting.getSettings().setLearningRate(Integer.parseInt(newValue));
             }
         });
     }
@@ -230,31 +223,15 @@ public class ConfigPanel implements Initializable {
         boardWithControl.setText(Setting.getSettings().getBoardWidth() + "");
         boardHeightControl.setText(Setting.getSettings().getBoardHeight() + "");
         boardWithControl.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 1 && result <= 200) {
-                    boardWithControl.setText(result + "");
-                    Setting.getSettings().setBoardWidth(result);
-                    GamePanel.getPanel().setDimensions();
-                } else {
-                    boardWithControl.setText(oldValue);
-                }
-            } catch (Exception e) {
-                boardWithControl.setText(oldValue);
+            if (configureTextField(boardWithControl, 1, 200, newValue, oldValue)) {
+                Setting.getSettings().setBoardWidth(Integer.parseInt(newValue));
+                GamePanel.getPanel().setDimensions();
             }
         });
         boardHeightControl.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 1 && result <= 200) {
-                    boardHeightControl.setText(result + "");
-                    Setting.getSettings().setBoardHeight(result);
-                    GamePanel.getPanel().setDimensions();
-                } else {
-                    boardHeightControl.setText(oldValue);
-                }
-            } catch (Exception e) {
-                boardHeightControl.setText(oldValue);
+            if (configureTextField(boardHeightControl, 1, 200, newValue, oldValue)) {
+                Setting.getSettings().setBoardHeight(Integer.parseInt(newValue));
+                GamePanel.getPanel().setDimensions();
             }
         });
 
@@ -282,6 +259,11 @@ public class ConfigPanel implements Initializable {
     }
 
     private void setUpLayerSetter() {
+        for (int i = 0; i < Setting.getSettings().getNetParams()[0]; i++) {
+            RadioButton but = new RadioButton();
+            but.setSelected(true);
+            inputNodeConfig.getChildren().add(but);
+        }
         if (network.size() > 1) {
             hiddenLayer0.setText(network.get(1) + "");
         }
@@ -298,68 +280,28 @@ public class ConfigPanel implements Initializable {
             hiddenLayer4.setText(network.get(5) + "");
         }
         hiddenLayer0.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 20) {
-                    hiddenLayer0.setText(result + "");
-                    updateNetwork();
-                } else {
-                    hiddenLayer0.setText(oldValue);
-                }
-            } catch (Exception e) {
-                hiddenLayer0.setText(oldValue);
+            if (configureTextField(hiddenLayer0, 1, 20, newValue, oldValue)) {
+                updateNetwork();
             }
         });
         hiddenLayer1.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 20) {
-                    hiddenLayer1.setText(result + "");
-                    updateNetwork();
-                } else {
-                    hiddenLayer1.setText(oldValue);
-                }
-            } catch (Exception e) {
-                hiddenLayer1.setText(oldValue);
+            if (configureTextField(hiddenLayer1, 1, 20, newValue, oldValue)) {
+                updateNetwork();
             }
         });
         hiddenLayer2.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 20) {
-                    hiddenLayer2.setText(result + "");
-                    updateNetwork();
-                } else {
-                    hiddenLayer2.setText(oldValue);
-                }
-            } catch (Exception e) {
-                hiddenLayer2.setText(oldValue);
+            if (configureTextField(hiddenLayer2, 1, 20, newValue, oldValue)) {
+                updateNetwork();
             }
         });
         hiddenLayer3.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 20) {
-                    hiddenLayer3.setText(result + "");
-                    updateNetwork();
-                } else {
-                    hiddenLayer3.setText(oldValue);
-                }
-            } catch (Exception e) {
-                hiddenLayer3.setText(oldValue);
+            if (configureTextField(hiddenLayer3, 1, 20, newValue, oldValue)) {
+                updateNetwork();
             }
         });
         hiddenLayer4.textProperty().addListener((o, oldValue, newValue) -> {
-            try {
-                int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 20) {
-                    hiddenLayer4.setText(result + "");
-                    updateNetwork();
-                } else {
-                    hiddenLayer4.setText(oldValue);
-                }
-            } catch (Exception e) {
-                hiddenLayer4.setText(oldValue);
+            if (configureTextField(hiddenLayer4, 1, 20, newValue, oldValue)) {
+                updateNetwork();
             }
         });
         hiddenLayerCount.setItems(layerCount);
@@ -395,7 +337,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateNetwork() {
-        int first = 10;
+        int first = network.get(0);
         int hidden0 = Integer.parseInt(hiddenLayer0.getText());
         int hidden1 = Integer.parseInt(hiddenLayer1.getText());
         int hidden2 = Integer.parseInt(hiddenLayer2.getText());
@@ -426,9 +368,6 @@ public class ConfigPanel implements Initializable {
         for (int i = 0; i < newNet.size(); i++) {
             params[i] = newNet.get(i);
         }
-        //int inputLayerCount = (int) Arrays.asList(nodes.get(0)).stream().filter(n -> n.get(0).active).count();
-        //System.out.println("input laayer count: "+inputLayerCount);
-        //params[0] = inputLayerCount;
         Setting.getSettings().setNetParams(params);
         paintNetwork();
     }
