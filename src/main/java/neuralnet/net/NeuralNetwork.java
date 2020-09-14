@@ -116,7 +116,7 @@ public class NeuralNetwork {
     @Override
     public NeuralNetwork clone() {
         NeuralNetwork net = new NeuralNetwork(layers);
-        net.randomize(0.1);
+        net.randomize(Setting.getSettings().getLearningRate());
         return net;
     }
 

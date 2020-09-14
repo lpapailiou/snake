@@ -65,6 +65,8 @@ public class Snake {
         return false;
     }
 
+    public int getTimeout() { return moveCounter; }
+
     public boolean isAlive() {
         return isAlive;
     }

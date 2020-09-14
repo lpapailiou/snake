@@ -23,7 +23,7 @@ public class ConfigPanel implements Initializable {
 
     private GraphicsContext context;
     private int width = 500;
-    private int height = 221;
+    private int height = 240;
     private int radius = 20;
     private int offset = 0;
 
@@ -188,7 +188,7 @@ public class ConfigPanel implements Initializable {
         generationCount.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 200) {
+                if (result > 0 && result <= 1000) {
                     generationCount.setText(result + "");
                     Setting.getSettings().setGenerationCount(result);
                 } else {
@@ -201,7 +201,7 @@ public class ConfigPanel implements Initializable {
         populationSize.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 0 && result <= 200) {
+                if (result > 0 && result <= 1000) {
                     populationSize.setText(result + "");
                     Setting.getSettings().setPopulationSize(result);
                 } else {
@@ -395,7 +395,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateNetwork() {
-        int first = 9;
+        int first = 10;
         int hidden0 = Integer.parseInt(hiddenLayer0.getText());
         int hidden1 = Integer.parseInt(hiddenLayer1.getText());
         int hidden2 = Integer.parseInt(hiddenLayer2.getText());

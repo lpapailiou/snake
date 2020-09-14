@@ -2,6 +2,7 @@ package neuralnet;
 
 import ai.PathGenerator;
 import game.Board;
+import game.Snake;
 import neuralnet.net.NeuralNetwork;
 import util.Direction;
 import util.Setting;
@@ -26,7 +27,7 @@ public class BoardAdapter {
     }
 
     public boolean moveSnake() {    // used by Generation
-        List<int[]> snake = board.getSnake();
+        Snake snake = board.getRealSnake();
         int[] goodie = board.getGoodie();
         Direction dir = getDirection(snake, goodie);
         boolean result = moveSnake(dir);
@@ -34,12 +35,12 @@ public class BoardAdapter {
     }
 
     public Direction getDirection(Board board) {    // used by bot
-        List<int[]> snake = board.getSnake();
+        Snake snake = board.getRealSnake();
         int[] goodie = board.getGoodie();
         return getDirection(snake, goodie);
     }
 
-    public Direction getDirection(List<int[]> snake, int[] goodie) {
+    public Direction getDirection(Snake snake, int[] goodie) {
         int arrayIndex = 0;
         for (Integer index : nodeSelection) {
             inputValues[arrayIndex] = InputNode.values()[index].getInputValue(snake, goodie);

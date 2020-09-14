@@ -47,6 +47,7 @@
                    <RadioButton fx:id="node6" mnemonicParsing="false" selected="true" text="" />
                    <RadioButton fx:id="node7" mnemonicParsing="false" selected="true" text="" />
                    <RadioButton fx:id="node8" mnemonicParsing="false" selected="true" text="" />
+                   <RadioButton fx:id="node9" mnemonicParsing="false" selected="true" text="" />
                </children>
             </VBox>
            </children>

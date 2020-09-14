@@ -67,6 +67,8 @@ public class Board {
         return snake.getBody();
     }
 
+    public Snake getRealSnake() {return snake; }
+
     public int[] getGoodie() {
         return goodie;
     }
