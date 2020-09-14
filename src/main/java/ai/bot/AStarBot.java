@@ -18,10 +18,13 @@ public class AStarBot extends Bot {
     @Override
     protected void run() {
         if (!_path.isEmpty()) {
-            running = GamePanel.move(_path.get(0), _goodiepath , _path);
+            boolean isRunning = GamePanel.move(_path.get(0), _goodiepath , _path);
+            if (!isRunning) {
+                stop();
+            }
             _path.remove(0);
         } else {
-            running = false;
+            stop();
         }
         if (_path.isEmpty()) {
             _path = getMyPath();

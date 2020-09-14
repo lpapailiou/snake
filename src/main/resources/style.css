@@ -10,6 +10,16 @@
     -fx-control-inner-background: lightgreen;   /* combobox list background */
     -fx-accent: limegreen;                      /* combobox selected background */
 }
+/*
+.radio-button .radio {
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+    -fx-padding: 4px;
+}
+.radio-button .dot {
+    -fx-background-radius: 12px;
+    -fx-padding: 6px;
+}*/
 
 #gameOverTitle {
     -fx-font-size: 28pt;

@@ -64,7 +64,7 @@
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="500.0" spacing="20">
          <children>
             <Button fx:id="startButton" mnemonicParsing="false" text="start" />
-            <Button mnemonicParsing="false" text="statistics" />
+            <Button fx:id="statisticsButton" mnemonicParsing="false" text="statistics" />
          </children></HBox>
     </children>
 

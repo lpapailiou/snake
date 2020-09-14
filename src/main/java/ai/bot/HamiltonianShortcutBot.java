@@ -20,11 +20,14 @@ public class HamiltonianShortcutBot extends Bot {
 
         if (!_path.isEmpty()) {
             //_path = HamiltonianPathGenerator.getShortcut(_path, GamePanel.getPanel().getSnake().get(0), GamePanel.getPanel().getGoodie());
-            running = GamePanel.move(_path.get(0));
+            boolean isRunning = GamePanel.move(_path.get(0));
             _path.remove(0);
             counter--;
+            if (!isRunning) {
+                stop();
+            }
         } else {
-            running = false;
+            stop();
         }
         if (_path.isEmpty()) {
             //_path = new ArrayList(staticPath);

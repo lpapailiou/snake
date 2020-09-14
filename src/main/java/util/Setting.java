@@ -22,7 +22,7 @@ public class Setting {
     private int generationCount = 1;
     private int populationSize = 1;
     private double learningRate = 0.1;
-    private int[] netParams = {9, 10, 3, 7, 4};
+    private int[] netParams = {9, 10, 8, 7, 4};
     private Set<Integer> nodeSelection = new HashSet<>();
 
     private Setting() {

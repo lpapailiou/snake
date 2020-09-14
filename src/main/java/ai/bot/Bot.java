@@ -1,5 +1,6 @@
 package ai.bot;
 
+import application.ConfigPanel;
 import application.GamePanel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Bot {
-    boolean running = true;
-    long id = System.currentTimeMillis();
-    Timeline timeline;
+    private boolean running = true;
+    private long id = System.currentTimeMillis();
+    private Timeline timeline;
 
     public void start() {
         timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getBotSpeed()), event -> {
@@ -29,7 +30,10 @@ public abstract class Bot {
         timeline.play();
     }
 
-
+    protected boolean isRunning() { return running; }
+    protected void stop() {
+        running = false;
+    }
     protected abstract void run();
     protected abstract List<Direction> getPath();
 }

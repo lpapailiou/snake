@@ -25,22 +25,21 @@ public class DeepBot extends Bot {
 
     @Override
     protected void run() {
-        if (running) {
-            Direction d = adapter.getDirection(GamePanel.getBoard());
-            boolean gameActive =  GamePanel.move(d);
-            if (!gameActive) {
-                generationCount--;
-                if (generationCount != 0) {
-                    GamePanel.getPanel().prepareNextGeneration();
-                    best = getBest();
-                    adapter = new BoardAdapter(GamePanel.getBoard(), best);
-                    ConfigPanel.getPanel().incGenCounter();
-                } else {
-                    ConfigPanel.getPanel().resetGenCounter();
-                    running = false;
-                }
+        Direction d = adapter.getDirection(GamePanel.getBoard());
+        boolean gameActive =  GamePanel.move(d);
+        if (!gameActive) {
+            generationCount--;
+            if (generationCount != 0) {
+                GamePanel.getPanel().prepareNextGeneration();
+                best = getBest();
+                adapter = new BoardAdapter(GamePanel.getBoard(), best);
+                ConfigPanel.getPanel().incGenCounter();
+            } else {
+                ConfigPanel.getPanel().resetGenCounter();
+                stop();
             }
         }
+
     }
 
     @Override

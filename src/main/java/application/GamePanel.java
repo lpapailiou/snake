@@ -101,11 +101,13 @@ public class GamePanel implements Initializable {
         STROKE_WIDTH = CELL_WIDTH/5*4;
         PADDING_WIDTH = (int) (WINDOW_WIDTH-(CELL_WIDTH*Setting.getSettings().getBoardWidth()))/2;
         PADDING_HEIGHT = (int) (WINDOW_HEIGHT-(CELL_WIDTH*Setting.getSettings().getBoardHeight()))/2;
+        fitBoard();
         paint();
 
     }
 
     public void startBot() {
+        ConfigPanel.getPanel().lockInput(true);
         if (!Setting.getSettings().hasBot()) {
             setUpTimer();
         } else {
@@ -195,6 +197,7 @@ public class GamePanel implements Initializable {
     }
 
     public static void prepareNextGeneration() {
+        ConfigPanel.getPanel().lockInput(true);
         instance.board = new Board();
         instance.paint();
         instance.isTimerStopped = false;
@@ -217,6 +220,11 @@ public class GamePanel implements Initializable {
         }
     }
 
+    public void fitBoard() {
+        board = new Board();
+        paint();
+    }
+
     public void paint() {
         paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrame());
         paintSnake();
@@ -237,6 +245,7 @@ public class GamePanel implements Initializable {
         paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrameEnd());
         paintSnake();
         paintGoodie();
+        ConfigPanel.getPanel().lockInput(false);
     }
 
     private void paintBackground(Color backgroundFrameColor) {

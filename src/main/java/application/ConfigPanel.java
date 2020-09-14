@@ -96,6 +96,9 @@ public class ConfigPanel implements Initializable {
     private Button startButton;
 
     @FXML
+    private Button statisticsButton;
+
+    @FXML
     private Label genCounter;
 
     @Override
@@ -114,6 +117,29 @@ public class ConfigPanel implements Initializable {
     public static ConfigPanel getPanel() {
         return instance;
     }
+
+    public void lockInput(boolean lock) {
+        boardWithControl.setDisable(lock);
+        boardHeightControl.setDisable(lock);
+        colorSchemeChooser.setDisable(lock);
+        modeChooser.setDisable(lock);
+        hiddenLayerCount.setDisable(lock);
+        hiddenLayer0.setDisable(lock);
+        hiddenLayer1.setDisable(lock);
+        hiddenLayer2.setDisable(lock);
+        hiddenLayer3.setDisable(lock);
+        hiddenLayer4.setDisable(lock);
+        for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
+            RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
+            box.setDisable(lock);
+        }
+        generationCount.setDisable(lock);
+        populationSize.setDisable(lock);
+        learningRate.setDisable(lock);
+        startButton.setDisable(lock);
+        statisticsButton.setDisable(lock);
+    }
+
 
     public void incGenCounter() {
         int counter = Integer.parseInt(genCounter.getText());
@@ -208,7 +234,6 @@ public class ConfigPanel implements Initializable {
                 if (result > 1 && result <= 200) {
                     boardWithControl.setText(result + "");
                     Setting.getSettings().setBoardWidth(result);
-                    System.out.println("board with is: " + Setting.getSettings().getBoardWidth());
                     GamePanel.getPanel().setDimensions();
                 } else {
                     boardWithControl.setText(oldValue);
@@ -223,7 +248,6 @@ public class ConfigPanel implements Initializable {
                 if (result > 1 && result <= 200) {
                     boardHeightControl.setText(result + "");
                     Setting.getSettings().setBoardHeight(result);
-                    System.out.println("board height is: " + Setting.getSettings().getBoardHeight());
                     GamePanel.getPanel().setDimensions();
                 } else {
                     boardHeightControl.setText(oldValue);
