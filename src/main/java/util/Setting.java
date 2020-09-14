@@ -3,9 +3,7 @@ package util;
 import ai.bot.Bot;
 import ai.bot.DeepBot;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class Setting {
@@ -25,8 +23,19 @@ public class Setting {
     private int populationSize = 1;
     private double learningRate = 0.1;
     private int[] netParams = {9, 10, 3, 7, 4};
+    private Set<Integer> nodeSelection = new HashSet<>();
 
-    private Setting() {}
+    private Setting() {
+        nodeSelection.add(0);
+        nodeSelection.add(1);
+        nodeSelection.add(2);
+        nodeSelection.add(3);
+        nodeSelection.add(4);
+        nodeSelection.add(5);
+        nodeSelection.add(6);
+        nodeSelection.add(7);
+        nodeSelection.add(8);
+    }
 
     public static Setting getSettings() {
         if (instance == null) {
@@ -102,7 +111,7 @@ public class Setting {
 
     public void setLearningRate(double rate) { learningRate = rate; }
 
-    public int[] getNetParams() { return netParams; }
+    public int[] getNetParams() { return netParams; }   // TODO: make list? proper encapsulation?
 
     public List<Integer> getNetParamsAsList() {
         List<Integer> list = new ArrayList<>();
@@ -113,5 +122,11 @@ public class Setting {
     }
 
     public void setNetParams(int[] params) { this.netParams = params; }
+
+    public Set<Integer> getNodeSelection() { return new HashSet<>(nodeSelection); }
+
+    public void addNodeSelectionNode(int selection) { this.nodeSelection.add(selection); }
+
+    public void removeNodeSelectionNode(int selection) { this.nodeSelection.remove(new Integer(selection)); }
 
 }

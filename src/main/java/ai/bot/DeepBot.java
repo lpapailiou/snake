@@ -16,8 +16,8 @@ public class DeepBot extends Bot {
     NeuralNetwork best = null;
     BoardAdapter adapter = null;
     {
-        //NeuralNetwork net = new NeuralNetwork(Setting.getSettings().getNetParams());  // TODO: connect
-        NeuralNetwork net = new NeuralNetwork(4, 10, 3, 7, 4);
+        NeuralNetwork net = new NeuralNetwork(Setting.getSettings().getNetParams());  // TODO: connect
+        //NeuralNetwork net = new NeuralNetwork(4, 10, 3, 7, 4);
 
         Generation gen;
         for (int i = 0; i < Setting.getSettings().getGenerationCount(); i++) {

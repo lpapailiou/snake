@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -12,30 +11,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import util.ColorScheme;
 import util.Mode;
 import util.Setting;
-
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static util.Setting.*;
-
 public class ConfigPanel implements Initializable {
 
-    GraphicsContext context;
+    private GraphicsContext context;
     private int width = 500;
     private int height = 221;
-
     private int radius = 20;
     private int offset = 0;
-    //private List<Integer> network = new ArrayList<>(Arrays.asList(9, 10, 3, 7, 4));
+
     private List<Integer> network = new ArrayList<>(Setting.getSettings().getNetParamsAsList());
     private List<List<NetNode>> nodes = new ArrayList<>();
     private ObservableList<String> layerCount = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5");
-    private ObservableList<String> colorList = FXCollections.observableArrayList();
+    private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.asList(ColorScheme.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private int hiddenLayerNodeCount = 4;
     boolean init = true;
@@ -220,9 +214,6 @@ public class ConfigPanel implements Initializable {
             }
         });
 
-        for (ColorScheme scheme : ColorScheme.values()) {
-            colorList.add(scheme.name());
-        }
         colorSchemeChooser.setItems(colorList);
         colorSchemeChooser.getSelectionModel().select(0);
         colorSchemeChooser.setOnAction( e -> {
@@ -344,13 +335,22 @@ public class ConfigPanel implements Initializable {
                 }
                 int index = inputNodeConfig.getChildren().indexOf(box);
                 nodes.get(0).get(index).active = box.isSelected();
+                if (box.isSelected()) {
+                    Setting.getSettings().addNodeSelectionNode(index);
+                } else {
+                    Setting.getSettings().removeNodeSelectionNode(index);;
+                }
+                int[] netParams = Setting.getSettings().getNetParams();
+                int activeNodes = (int) nodes.get(0).stream().filter(n -> n.active).count();
+                netParams[0] = activeNodes;
+                Setting.getSettings().setNetParams(netParams);
                 paintNetwork();
             });
         }
     }
 
     private void updateNetwork() {
-        int first = 9; //(int) nodes.get(0).stream().filter(n -> n.active).count();
+        int first = 9;
         int hidden0 = Integer.parseInt(hiddenLayer0.getText());
         int hidden1 = Integer.parseInt(hiddenLayer1.getText());
         int hidden2 = Integer.parseInt(hiddenLayer2.getText());
@@ -376,12 +376,15 @@ public class ConfigPanel implements Initializable {
         }
         newNet.add(last);
         network = newNet;
+        updateNodes();
         int[] params = new int[newNet.size()];
         for (int i = 0; i < newNet.size(); i++) {
             params[i] = newNet.get(i);
         }
+        //int inputLayerCount = (int) Arrays.asList(nodes.get(0)).stream().filter(n -> n.get(0).active).count();
+        //System.out.println("input laayer count: "+inputLayerCount);
+        //params[0] = inputLayerCount;
         Setting.getSettings().setNetParams(params);
-        updateNodes();
         paintNetwork();
     }
 
