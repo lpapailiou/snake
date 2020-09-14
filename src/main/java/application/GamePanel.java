@@ -1,7 +1,5 @@
 package application;
 
-import ai.bot.Bot;
-import ai.bot.DeepBot;
 import game.Board;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -16,15 +14,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import util.ColorScheme;
 import util.Direction;
 import util.Setting;
-
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static util.Setting.*;
 
 public class GamePanel implements Initializable {
 
@@ -246,8 +240,6 @@ public class GamePanel implements Initializable {
         paintGoodie();
     }
 
-
-
     private void repaint() {
         paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrameEnd());
         paintSnake();
@@ -261,8 +253,7 @@ public class GamePanel implements Initializable {
         context.clearRect(0, 0, 500, 500);
         context.setFill(Setting.getSettings().getColorScheme().getBackground());
         context.fillRect(0, 0, 500, 500);
-        //int offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
-        int offset = 3;
+        double offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
         context.setFill(backgroundFrameColor);
         context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*width)+offset*2, (CELL_WIDTH*height)+offset*2);
         context.setFill(Setting.getSettings().getColorScheme().getBackground());

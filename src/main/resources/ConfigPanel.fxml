@@ -27,11 +27,11 @@
         <HBox fx:id="layerConfig" spacing="20">
          <children>
             <ComboBox fx:id="hiddenLayerCount" prefWidth="100.0" />
-            <TextField fx:id="hiddenLayer0" prefWidth="50.0" text="1"/>
-            <TextField fx:id="hiddenLayer1" prefWidth="50.0" text="1"/>
-            <TextField fx:id="hiddenLayer2" prefWidth="50.0" text="1"/>
-            <TextField fx:id="hiddenLayer3" prefWidth="50.0" text="1"/>
-            <TextField fx:id="hiddenLayer4" prefWidth="50.0" text="1"/>
+            <TextField prefWidth="50.0" text="1"/>
+            <TextField prefWidth="50.0" text="1"/>
+            <TextField prefWidth="50.0" text="1"/>
+            <TextField prefWidth="50.0" text="1"/>
+            <TextField prefWidth="50.0" text="1"/>
          </children></HBox>
         <StackPane fx:id="netConfig">
            <children>
