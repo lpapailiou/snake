@@ -19,9 +19,9 @@ public class Setting {
     private boolean hasBot = true;
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;
-    private int generationCount = 1;
-    private int populationSize = 1;
-    private double learningRate = 0.1;
+    private int generationCount = 30;
+    private int populationSize = 200;
+    private double learningRate = 0.3;
     private int[] netParams = {10, 10, 8, 7, 4};
     private Set<Integer> nodeSelection = new HashSet<>();
 
