@@ -12,6 +12,7 @@ import java.util.List;
 
 public abstract class Bot {
     boolean running = true;
+    long id = System.currentTimeMillis();
     Timeline timeline;
 
     public void start() {

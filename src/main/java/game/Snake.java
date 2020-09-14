@@ -1,5 +1,6 @@
 package game;
 
+import ai.bot.DeepBot;
 import util.Direction;
 import util.Setting;
 
@@ -14,6 +15,7 @@ public class Snake {
     private List<int[]> snake = new ArrayList<>();
     private boolean isAlive = true;
     private boolean isWinner = false;
+    private int moveCounter = 0;
 
     public Snake() {
         snake.add(new int[] {Setting.getSettings().getBoardWidth()/2, Setting.getSettings().getBoardHeight()/2});
@@ -25,6 +27,13 @@ public class Snake {
     }
 
     public boolean move(int[] coord, int[] goodie) {
+        moveCounter++;
+        if (moveCounter > Setting.getSettings().getNeuralBotTimeout()) {
+            if (Setting.getSettings().getBot() instanceof DeepBot) {
+                isAlive = false;
+                System.out.println("killed snake because time limit is over");
+            }
+        }
         if (!isAlive) {
             return false;
         } else if (!isOnBoard(coord)) {
@@ -46,6 +55,7 @@ public class Snake {
         if (!Arrays.equals(coord, goodie)) {
             snake.remove(snake.size() - 1);
         } else {
+            moveCounter = 0;
             if (snake.size() < Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight()) {
                 return true;
             } else {
@@ -58,8 +68,6 @@ public class Snake {
     public boolean isAlive() {
         return isAlive;
     }
-
-    public void kill() { isAlive = false; }
 
     public boolean isWinner() {
         return isWinner;

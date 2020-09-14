@@ -33,6 +33,7 @@ public class ConfigPanel implements Initializable {
     private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.asList(Mode.values()).stream().map(m -> m.name()).collect(Collectors.toList()));
     private int hiddenLayerNodeCount = 4;
     boolean init = true;
+    private static ConfigPanel instance;
 
     @FXML
     private VBox configPanel;
@@ -94,8 +95,12 @@ public class ConfigPanel implements Initializable {
     @FXML
     private Button startButton;
 
+    @FXML
+    private Label genCounter;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        instance = this;
         Canvas canvas = new Canvas(width, height);
         layerVizualiser.getChildren().add(canvas);
         context = canvas.getGraphicsContext2D();
@@ -104,6 +109,20 @@ public class ConfigPanel implements Initializable {
         setUpLayerSetter();
         setUpGenerationConfiguration();
         setUpButtons();
+    }
+
+    public static ConfigPanel getPanel() {
+        return instance;
+    }
+
+    public void incGenCounter() {
+        int counter = Integer.parseInt(genCounter.getText());
+        counter++;
+        genCounter.setText(counter+"");
+    }
+
+    public void resetGenCounter() {
+        genCounter.setText("0");
     }
 
     private void setUpButtons() {
@@ -142,7 +161,7 @@ public class ConfigPanel implements Initializable {
         generationCount.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 1 && result <= 200) {
+                if (result > 0 && result <= 200) {
                     generationCount.setText(result + "");
                     Setting.getSettings().setGenerationCount(result);
                 } else {
@@ -155,7 +174,7 @@ public class ConfigPanel implements Initializable {
         populationSize.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 int result = Integer.parseInt(newValue);
-                if (result > 1 && result <= 200) {
+                if (result > 0 && result <= 200) {
                     populationSize.setText(result + "");
                     Setting.getSettings().setPopulationSize(result);
                 } else {
@@ -168,7 +187,7 @@ public class ConfigPanel implements Initializable {
         learningRate.textProperty().addListener((o, oldValue, newValue) -> {
             try {
                 double result = Double.parseDouble(newValue);
-                if (result > 1 && result <= 200) {
+                if (result >= 0 && result <= 1) {
                     learningRate.setText(result + "");
                     Setting.getSettings().setLearningRate(result);
                 } else {

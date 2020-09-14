@@ -13,8 +13,8 @@ public class Board {
 
     private Snake snake = new Snake();
     private int[] goodie;
-    private int moveCounter;
     private int result = 0;
+    private int moveCounter = 0;
 
     public Board() {
         setGoodie();
@@ -37,12 +37,6 @@ public class Board {
     }
 
     private boolean validateMove(boolean isNewGoodieRequired) {
-        if (moveCounter > Setting.getSettings().getNeuralBotTimeout()) {
-            if (Setting.getSettings().getBot() instanceof DeepBot) {
-                snake.kill();
-                System.out.println("killed snake because time limit is over");
-            }
-        }
         if (snake.isAlive() && !snake.isWinner()) {
             moveCounter++;
             if (isNewGoodieRequired) {
@@ -62,8 +56,7 @@ public class Board {
         int winnerPoints = result * 100;
         int snakeLength = snake.getBody().size();
         int movePoints = moveCounter;
-        //return winnerPoints + snakeLength - movePoints;
-        return winnerPoints + snakeLength + moveCounter;
+        return winnerPoints + snakeLength*10 + moveCounter;
     }
 
     public boolean isGameFinished() {

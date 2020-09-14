@@ -1,5 +1,6 @@
 package ai.bot;
 
+import application.ConfigPanel;
 import application.GamePanel;
 import neuralnet.BoardAdapter;
 import neuralnet.Generation;
@@ -12,29 +13,37 @@ import java.util.List;
 
 public class DeepBot extends Bot {
 
-    List<NeuralNetwork> netList = new ArrayList<>();
-    NeuralNetwork best = null;
-    BoardAdapter adapter = null;
+    private NeuralNetwork best = new NeuralNetwork(Setting.getSettings().getNetParams());
+    private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), best);
+    private int generationCount = Setting.getSettings().getGenerationCount();
     {
-        NeuralNetwork net = new NeuralNetwork(Setting.getSettings().getNetParams());  // TODO: connect
-        //NeuralNetwork net = new NeuralNetwork(4, 10, 3, 7, 4);
+        ConfigPanel.getPanel().incGenCounter();
+    }
 
-        Generation gen;
-        for (int i = 0; i < Setting.getSettings().getGenerationCount(); i++) {
-            gen = new Generation(Setting.getSettings().getPopulationSize());
-            net = gen.run(net);
-            netList.add(net);
-        }
-
-        best = netList.get(netList.size()-1);
-        adapter = new BoardAdapter(GamePanel.getBoard(), best);
+    private NeuralNetwork getBest() {
+        Generation gen = new Generation(Setting.getSettings().getPopulationSize());
+        return gen.run(best);
     }
 
 
     @Override
     protected void run() {
-        Direction d = adapter.getDirection(GamePanel.getBoard());
-        running = GamePanel.move(d);
+        if (running) {
+            Direction d = adapter.getDirection(GamePanel.getBoard());
+            boolean gameActive =  GamePanel.move(d);
+            if (!gameActive) {
+                generationCount--;
+                if (generationCount != 0) {
+                    GamePanel.getPanel().prepareNextGeneration();
+                    best = getBest();
+                    adapter = new BoardAdapter(GamePanel.getBoard(), best);
+                    ConfigPanel.getPanel().incGenCounter();
+                } else {
+                    ConfigPanel.getPanel().resetGenCounter();
+                    running = false;
+                }
+            }
+        }
     }
 
     @Override

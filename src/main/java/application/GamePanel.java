@@ -194,6 +194,12 @@ public class GamePanel implements Initializable {
         }
     }
 
+    public static void prepareNextGeneration() {
+        instance.board = new Board();
+        instance.paint();
+        instance.isTimerStopped = false;
+    }
+
     private static void setUpBot() {
         if (Setting.getSettings().hasBot()) {
             Setting.getSettings().getBot().start();
