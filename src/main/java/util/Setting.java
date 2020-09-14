@@ -20,8 +20,8 @@ public class Setting {
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;
     private int generationCount = 30;
-    private int populationSize = 200;
-    private double learningRate = 0.35;
+    private int populationSize = 300;
+    private double learningRate = 0.25;
     private int[] netParams = {10, 10, 8, 7, 4};
     private Set<Integer> nodeSelection = new HashSet<>();
 

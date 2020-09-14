@@ -6,6 +6,17 @@ import org.junit.Test;
 public class MatrixTest {
 
     @Test
+    public void mutationTest() {
+        double[][] d = new double[][] {{1,1},{1,1},{1,1}};
+        Matrix a = new Matrix(d);
+        a.print();
+        a.randomize(0.9);
+        a.print();
+        a.randomize();
+        a.print();
+    }
+
+
     public void transponseTest() {
         double[][] d = new double[][] {{2,1},{3,5},{7,4}};
         Matrix a = new Matrix(d);

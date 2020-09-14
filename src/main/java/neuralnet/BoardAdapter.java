@@ -47,6 +47,7 @@ public class BoardAdapter {
             arrayIndex++;
         }
         List<Double> out = net.predict(inputValues);
+        //List<Double> out = net.learn(inputValues, null);
         int maxIndex = out.indexOf(Collections.max(out));
 
         Direction result;
