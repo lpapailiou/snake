@@ -32,7 +32,7 @@ public class Matrix {
     public void randomize(double factor) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                data[i][j] = data[i][j] * (1-factor) + (Math.random() * 2 - 1) * factor;
+                data[i][j] = data[i][j] + (Math.random() * 2 - 1) * factor;
             }
         }
     }

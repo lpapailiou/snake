@@ -55,7 +55,6 @@ public class Board {
     public int getFitness() {
         int winnerPoints = result * 100;
         int snakeLength = snake.getBody().size();
-        int movePoints = moveCounter;
         return winnerPoints + snakeLength*50 + moveCounter;
     }
 
