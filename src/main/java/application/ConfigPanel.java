@@ -13,8 +13,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import neuralnet.InputNode;
 import util.ColorScheme;
+import util.Direction;
 import util.Mode;
 import util.Setting;
 import java.net.URL;
@@ -372,10 +374,15 @@ public class ConfigPanel implements Initializable {
     }
 
     private void paintDots() {
-        for (List<NetNode> netNodes : nodes) {
-            for (NetNode node : netNodes) {
+        for (int i = 0; i < nodes.size(); i++) {
+            for (int j = 0; j < nodes.get(i).size(); j++) {
+                NetNode node = nodes.get(i).get(j);
                 if (node.active) {
                     paintDot(node.x, node.y, radius);
+                    if (i == nodes.size()-1) {
+                        context.setLineWidth(1);
+                        context.strokeText(Direction.values()[j].name(), node.x+1.2*radius, node.y+radius/2);   //TODO: make pretty
+                    }
                 }
             }
         }
