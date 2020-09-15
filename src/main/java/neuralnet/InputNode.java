@@ -190,26 +190,53 @@ public enum InputNode {
         }
     },
 
-    // ============================ DISTANCE TO BODY ============================
-    BODY_LEFT("body not blocking left"){
+
+    // ============================ DISTANCE TO BODY NEW ============================
+
+
+    BODY_UP("distance to body up"){
+        @Override
+        public double getInputValue(Snake snake, int[] goodie) {
+            return 1/(snake.getBody().get(0)[1]+0.001);
+        }
+    },
+    BODY_UP_RIGHT("distance to body diagonally up/right"){
+        @Override
+        public double getInputValue(Snake snake, int[] goodie) {
+            int[] snakeHead = snake.getBody().get(0);
+            int x = Setting.getSettings().getBoardWidth()-1-snakeHead[0];
+            int y = snakeHead[1];
+            return 1/(x + y + 0.001);
+        }
+    },
+
+
+
+
+
+
+
+
+    // ============================ DISTANCE TO BODY OLD ============================
+    DISTANCE_BODY_LEFT("body not blocking left"){
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.LEFT))) ? -1 : 1;
         }
     },
-    BODY_RIGHT("body not blocking right"){
+    DISTANCE_BODY_RIGHT("body not blocking right"){
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.RIGHT))) ? -1 : 1;
         }
     },
-    BODY_UP("body not blocking up"){
+    DISTANCE_BODY_UP("body not blocking up"){
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.UP))) ? -1 : 1;
         }
     },
-    BODY_DOWN("body not blocking down"){
+    DISTANCE_BODY_DOWN("body not blocking down"){
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.DOWN))) ? -1 : 1;

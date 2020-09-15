@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import neuralnet.InputNode;
 import util.ColorScheme;
@@ -380,8 +381,9 @@ public class ConfigPanel implements Initializable {
                 if (node.active) {
                     paintDot(node.x, node.y, radius);
                     if (i == nodes.size()-1) {
-                        context.setLineWidth(1);
-                        context.strokeText(Direction.values()[j].name(), node.x+1.2*radius, node.y+radius/2);   //TODO: make pretty
+                        context.setLineWidth(0.7);
+                        context.setFont(new Font("Courier New", 12));
+                        context.strokeText(Direction.values()[j].name(), node.x+radius*0.5, node.y-radius*0.5);
                     }
                 }
             }
