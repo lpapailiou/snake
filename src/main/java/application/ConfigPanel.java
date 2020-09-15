@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import neuralnet.InputNode;
 import util.ColorScheme;
 import util.Mode;
@@ -161,9 +162,24 @@ public class ConfigPanel implements Initializable {
         genConfig.setVisible((mode == Mode.NEURAL_NETWORK));
     }
 
-    private boolean configureTextField (TextField field, int min, int max, String newValue, String oldValue) {
+    private boolean configureTextField(TextField field, int min, int max, String newValue, String oldValue) {
         try {
             int result = Integer.parseInt(newValue);
+            if (result >= min && result <= max) {
+                field.setText(result + "");
+                return true;
+            } else {
+                field.setText(oldValue);
+            }
+        } catch (Exception e) {
+            field.setText(oldValue);
+        }
+        return false;
+    }
+
+    private boolean configureDoubleTextField(TextField field, int min, int max, String newValue, String oldValue) {
+        try {
+            double result = Double.parseDouble(newValue);
             if (result >= min && result <= max) {
                 field.setText(result + "");
                 return true;
@@ -191,8 +207,8 @@ public class ConfigPanel implements Initializable {
             }
         });
         learningRate.textProperty().addListener((o, oldValue, newValue) -> {
-            if (configureTextField(learningRate, 0, 1, newValue, oldValue)) {
-                Setting.getSettings().setLearningRate(Integer.parseInt(newValue));
+            if (configureDoubleTextField(learningRate, 0, 1, newValue, oldValue)) {
+                Setting.getSettings().setLearningRate(Double.parseDouble(newValue));
             }
         });
     }
@@ -343,7 +359,16 @@ public class ConfigPanel implements Initializable {
         }
     }
 
-
+    public void flashOutput(int flash) {
+        for (int i = 0; i < nodes.get(nodes.size()-1).size(); i++) {
+            NetNode node = nodes.get(nodes.size()-1).get(i);
+            if (i == flash) {
+                paintDot(node.x, node.y, radius, Setting.getSettings().getColorScheme().getGoodie());
+            } else {
+                paintDot(node.x, node.y, radius);
+            }
+        }
+    }
 
     private void paintDots() {
         for (List<NetNode> netNodes : nodes) {
@@ -379,6 +404,11 @@ public class ConfigPanel implements Initializable {
 
     private void paintDot(int x, int y, int radius) {
         context.setFill(Setting.getSettings().getColorScheme().getBackgroundFrame());
+        context.fillOval(x, y, radius, radius);
+    }
+
+    private void paintDot(int x, int y, int radius, Color color) {
+        context.setFill(color);
         context.fillOval(x, y, radius, radius);
     }
 

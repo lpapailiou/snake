@@ -1,6 +1,7 @@
 package neuralnet;
 
 import ai.PathGenerator;
+import application.ConfigPanel;
 import game.Board;
 import game.Snake;
 import neuralnet.net.NeuralNetwork;
@@ -37,7 +38,10 @@ public class BoardAdapter {
     public Direction getDirection(Board board) {    // used by bot
         Snake snake = board.getRealSnake();
         int[] goodie = board.getGoodie();
-        return getDirection(snake, goodie);
+        Direction dir = getDirection(snake, goodie);
+        int ord = Arrays.asList(Direction.values()).stream().filter(d -> d == dir).findFirst().get().ordinal();
+        ConfigPanel.getPanel().flashOutput(ord);
+        return dir;
     }
 
     public Direction getDirection(Snake snake, int[] goodie) {
