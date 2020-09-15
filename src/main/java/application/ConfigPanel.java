@@ -133,6 +133,7 @@ public class ConfigPanel implements Initializable {
 
     public void resetGenCounter() {
         genCounter.setText("0");
+        paintNetwork();
     }
 
     private void setUpButtons() {
