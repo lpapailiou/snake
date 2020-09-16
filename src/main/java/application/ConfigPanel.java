@@ -159,7 +159,6 @@ public class ConfigPanel implements Initializable {
 
     private void updateMode() {
         Mode mode = Mode.valueOf(modeChooser.getValue());
-        Setting.getSettings().isBot(mode.isBot());
         Setting.getSettings().setBot(mode.getBotTemplate());
         layerConfig.setVisible((mode == Mode.NEURAL_NETWORK));
         netConfig.setVisible((mode == Mode.NEURAL_NETWORK));

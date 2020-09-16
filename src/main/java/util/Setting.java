@@ -16,7 +16,6 @@ public class Setting {
     private int speed = 200;
     private int botSpeed = 100;
     private int neuralBotTimeout = 100;
-    private boolean hasBot = true;
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;
     private int generationCount = 10;
@@ -72,9 +71,7 @@ public class Setting {
 
     public int getNeuralBotTimeout() { return neuralBotTimeout; }
 
-    public boolean hasBot() { return hasBot; }
-
-    public void isBot(boolean isBot) { this.hasBot = isBot; }
+    public boolean hasBot() { return !(botTemplate == null); }
 
     public Random getRandom() { return random; }
 
