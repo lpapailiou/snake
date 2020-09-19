@@ -1,7 +1,5 @@
 package neuralnet;
 
-import neuralnet.net.NeuralNetwork;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

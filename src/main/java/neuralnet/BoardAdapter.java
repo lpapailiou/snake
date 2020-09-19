@@ -1,10 +1,8 @@
 package neuralnet;
 
-import ai.PathGenerator;
 import application.ConfigPanel;
 import game.Board;
 import game.Snake;
-import neuralnet.net.NeuralNetwork;
 import util.Direction;
 import util.Setting;
 

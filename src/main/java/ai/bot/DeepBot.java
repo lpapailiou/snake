@@ -4,16 +4,15 @@ import application.ConfigPanel;
 import application.GamePanel;
 import neuralnet.BoardAdapter;
 import neuralnet.Generation;
-import neuralnet.net.NeuralNetwork;
+import neuralnet.NeuralNetwork;
 import util.Direction;
 import util.Setting;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DeepBot extends Bot {
 
-    private NeuralNetwork best = new NeuralNetwork(Setting.getSettings().getNetParams());
+    private NeuralNetwork best = new NeuralNetwork(Setting.getSettings().getLearningRate(), Setting.getSettings().getNetParams());
     private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), best);
     private int generationCount = Setting.getSettings().getGenerationCount();
 

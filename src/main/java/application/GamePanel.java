@@ -187,14 +187,14 @@ public class GamePanel implements Initializable {
     }
 
     public static void restart() {
-        if (instance.board.isGameFinished()) {
+        //if (instance.board.isGameFinished()) {
             instance.stopGameOverAnimation();
             instance.board = new Board();
             instance.paint();
             instance.direction = Direction.getRandomDirection();
             instance.isTimerStopped = false;
             instance.startBot();
-        }
+        //}
     }
 
     public static void prepareNextGeneration() {
