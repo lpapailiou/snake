@@ -1,4 +1,4 @@
-package neuralnet;
+package netadapter;
 
 import ai.PathGenerator;
 import game.Snake;

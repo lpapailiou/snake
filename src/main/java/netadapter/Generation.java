@@ -1,4 +1,6 @@
-package neuralnet;
+package netadapter;
+
+import neuralnet.NeuralNetwork;
 
 import java.util.Collections;
 import java.util.HashMap;

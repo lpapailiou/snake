@@ -14,8 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import neuralnet.InputNode;
+import netadapter.InputNode;
 import util.ColorScheme;
 import util.Direction;
 import util.Mode;
@@ -302,7 +301,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateNetwork() {
-        int first = network.get(0);
+        int first = 10;
         int last = 4;
         List<Integer> newNet = new ArrayList<>();
         newNet.add(first);
@@ -317,7 +316,11 @@ public class ConfigPanel implements Initializable {
         updateNodes();
         int[] params = new int[newNet.size()];
         for (int i = 0; i < newNet.size(); i++) {
-            params[i] = newNet.get(i);
+            if (i == 0) {
+                params[i] = Setting.getSettings().getNodeSelection().size();
+            } else {
+                params[i] = newNet.get(i);
+            }
         }
         Setting.getSettings().setNetParams(params);
         paintNetwork();

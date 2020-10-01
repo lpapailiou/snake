@@ -1,8 +1,9 @@
-package neuralnet;
+package netadapter;
 
 import application.ConfigPanel;
 import game.Board;
 import game.Snake;
+import neuralnet.NeuralNetwork;
 import util.Direction;
 import util.Setting;
 

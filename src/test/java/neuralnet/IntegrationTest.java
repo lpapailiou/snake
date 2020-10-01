@@ -1,5 +1,6 @@
 package neuralnet;
 
+import netadapter.Generation;
 import org.junit.Test;
 
 import java.util.List;

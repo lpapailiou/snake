@@ -52,8 +52,8 @@
         </dependency>
         <dependency>
             <groupId>neuralnetwork</groupId>
-            <artifactId>maven-repo</artifactId>
-            <version>1.1</version>
+            <artifactId>neural-network-repo</artifactId>
+            <version>1.3</version>
         </dependency>
     </dependencies>
 

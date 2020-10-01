@@ -2,6 +2,7 @@ package neuralnet;
 
 import game.Board;
 import game.Snake;
+import netadapter.InputNode;
 import org.junit.Test;
 
 import java.util.Arrays;

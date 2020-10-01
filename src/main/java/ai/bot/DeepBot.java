@@ -2,8 +2,8 @@ package ai.bot;
 
 import application.ConfigPanel;
 import application.GamePanel;
-import neuralnet.BoardAdapter;
-import neuralnet.Generation;
+import netadapter.BoardAdapter;
+import netadapter.Generation;
 import neuralnet.NeuralNetwork;
 import util.Direction;
 import util.Setting;
