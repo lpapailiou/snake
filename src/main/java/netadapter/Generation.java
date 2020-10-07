@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +16,7 @@ public class Generation {
 
     private int populationSize;
     private final static int THREADPOOL = 200;
-    private HashMap<BoardAdapter, Integer> generations = new HashMap<>();
+    private HashMap<BoardAdapter, Long> generations = new HashMap<>();
 
     public Generation(int populationSize) {
         this.populationSize = populationSize;
@@ -27,14 +28,6 @@ public class Generation {
         for (int i = 0; i < populationSize; i++) {
             Runnable worker = new BackgroundGame(i == 0 ? net : net.clone(), generations);
             executor.execute(worker);
-
-
-            /*BoardAdapter adapter = new BoardAdapter(i == 0 ? net : net.clone());
-            boolean running = true;
-            while (running) {
-                running = adapter.moveSnake();
-            }
-            generations.put(adapter, adapter.getFitness());*/
         }
         executor.shutdown();
         try {
@@ -43,6 +36,7 @@ public class Generation {
             System.out.println("executor service interrupted unexpectedly!");
         }
         NeuralNetwork best = getBest(generations);
+        System.out.println(best);
         if (generations.isEmpty()) {
             return best;
         }
@@ -50,8 +44,8 @@ public class Generation {
         return NeuralNetwork.merge(best, secondBest);
     }
 
-    private NeuralNetwork getBest(HashMap<BoardAdapter, Integer> map) {
-        int max = Collections.max(generations.values());
+    private NeuralNetwork getBest(HashMap<BoardAdapter, Long> map) {
+        long max = Collections.max(generations.values());
         List<BoardAdapter> ad = map.entrySet().stream().filter(e -> e.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());
         if (!ad.isEmpty()) {
             System.out.println("----------------------------------------------------------fitness of generation is: " + ad.get(0).getFitness());
@@ -62,8 +56,8 @@ public class Generation {
 
     static class BackgroundGame implements Runnable {
         NeuralNetwork net;
-        HashMap<BoardAdapter, Integer> gen;
-        BackgroundGame(NeuralNetwork net, HashMap<BoardAdapter, Integer> generation) {
+        HashMap<BoardAdapter, Long> gen;
+        BackgroundGame(NeuralNetwork net, HashMap<BoardAdapter, Long> generation) {
             this.net = net;
             this.gen = generation;
         }

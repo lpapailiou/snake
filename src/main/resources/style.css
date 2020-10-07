@@ -10,7 +10,7 @@
     -fx-control-inner-background: lightgreen;   /* combobox list background */
     -fx-accent: limegreen;                      /* combobox selected background */
 }
-/*
+
 .radio-button .radio {
     -fx-border-width: 0px;
     -fx-border-radius: 8px;
@@ -19,7 +19,13 @@
 .radio-button .dot {
     -fx-background-radius: 12px;
     -fx-padding: 6px;
-}*/
+}
+
+.text-field, .combo-box {
+    -fx-min-height: 28;
+    -fx-max-height: 28;
+}
+
 
 #gameOverTitle {
     -fx-font-size: 28pt;

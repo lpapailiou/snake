@@ -44,6 +44,7 @@ public class GamePanel implements Initializable {
     private FadeTransition transitionGameOverTitle = null;
     private FadeTransition transitionGameOverText = null;
     private Direction direction = Direction.getRandomDirection();
+    private Timeline timeline = null;
     private boolean isTimerStopped = false;
 
 
@@ -55,7 +56,7 @@ public class GamePanel implements Initializable {
     }
 
     private void setUpTimer() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getSpeed()), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getSpeed()), event -> {
             if (!isTimerStopped && !Setting.getSettings().hasBot()) {
                 move(direction);
             }
@@ -144,6 +145,7 @@ public class GamePanel implements Initializable {
             instance.paint(goodiepath, path);
         } else {
             instance.isTimerStopped = true;
+            instance.timeline.stop();
             instance.repaint();
             //instance.showEndGameDialog();
         }
@@ -154,6 +156,9 @@ public class GamePanel implements Initializable {
             instance.paint();
         } else {
             instance.isTimerStopped = true;
+            if (instance.timeline != null) {
+                instance.timeline.stop();
+            }
             instance.repaint();
             //instance.showEndGameDialog();
         }

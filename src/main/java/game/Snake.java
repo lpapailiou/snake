@@ -19,6 +19,7 @@ public class Snake {
 
     public Snake() {
         snake.add(new int[] {Setting.getSettings().getBoardWidth()/2, Setting.getSettings().getBoardHeight()/2});
+        snake.add(Direction.getNextCoord(snake.get(0), Direction.getRandomDirection()));
     }
 
     public boolean move(Direction dir, int[] goodie) {

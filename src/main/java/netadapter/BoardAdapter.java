@@ -67,7 +67,7 @@ public class BoardAdapter {
         return result;
     }
 
-    public int getFitness() {
+    public long getFitness() {
         return board.getFitness();
     }
 

@@ -27,8 +27,9 @@ public class ConfigPanel implements Initializable {
 
     private GraphicsContext context;
     private int width = 500;
-    private int height = 240;
-    private int radius = 20;
+    private int height = 288;
+    private double correctionOffset = 1.5;
+    private int radius = 16;
 
     private List<Integer> network = new ArrayList<>(Setting.getSettings().getNetParamsAsList());
     private List<List<NetNode>> nodes = new ArrayList<>();
@@ -301,7 +302,7 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateNetwork() {
-        int first = 10;
+        int first = Setting.getSettings().getInitialInputNodeCount();
         int last = 4;
         List<Integer> newNet = new ArrayList<>();
         newNet.add(first);
@@ -416,18 +417,18 @@ public class ConfigPanel implements Initializable {
 
     private void paintDot(int x, int y, int radius) {
         context.setFill(Setting.getSettings().getColorScheme().getBackgroundFrame());
-        context.fillOval(x, y, radius, radius);
+        context.fillOval(x+correctionOffset, y+correctionOffset, radius, radius);
     }
 
     private void paintDot(int x, int y, int radius, Color color) {
         context.setFill(color);
-        context.fillOval(x, y, radius, radius);
+        context.fillOval(x+correctionOffset, y+correctionOffset, radius, radius);
     }
 
     private void paintLine(NetNode a, NetNode b) {
         context.setStroke(Setting.getSettings().getColorScheme().getBackgroundFrame().darker());
         context.setLineWidth(2);
-        context.strokeLine(a.x+(radius/2), a.y+(radius/2), b.x+(radius/2), b.y+(radius/2));
+        context.strokeLine(a.x+(radius/2)+correctionOffset, a.y+(radius/2)+correctionOffset, b.x+(radius/2)+correctionOffset, b.y+(radius/2)+correctionOffset);
     }
 
 

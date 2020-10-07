@@ -14,20 +14,25 @@ public class Setting {
     private int boardWidth = 20;
     private int boardHeight = 15;
     private int speed = 200;
-    private int botSpeed = 100;
-    private int neuralBotTimeout = 100;
+    private int botSpeed = 50;
+    private int neuralBotTimeout = boardWidth * boardHeight;
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;
-    private int generationCount = 10;
-    private int populationSize = 300;
-    private double learningRate = 0.1;
-    private int[] netParams = {10, 10, 8, 7, 4};
+    private int generationCount = 60;
+    private int populationSize = 1000;
+    private double learningRate = 0.2;
+    private int[] netParams = {13, 16, 16, 12, 4};
+    private int initialnputNodeCount = netParams[0];
     private Set<Integer> nodeSelection = new HashSet<>();
 
     private Setting() {
         for (int i = 0; i < netParams[0]; i++) {
             nodeSelection.add(i);
         }
+    }
+
+    public int getInitialInputNodeCount() {
+        return initialnputNodeCount;
     }
 
     public static Setting getSettings() {
@@ -51,6 +56,7 @@ public class Setting {
 
     public void setBoardWidth(int width) {
         this.boardWidth = width;
+        neuralBotTimeout = boardWidth * boardHeight;
     }
 
     public int getBoardHeight() {
@@ -59,6 +65,7 @@ public class Setting {
 
     public void setBoardHeight(int height) {
         this.boardHeight = height;
+        neuralBotTimeout = boardWidth * boardHeight;
     }
 
     public int getSpeed() {
