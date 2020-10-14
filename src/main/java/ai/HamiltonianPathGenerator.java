@@ -13,7 +13,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
 
     private static final int PHASE_THRESHOLD = 10;
     private static final int SEARCH_SCOPE = 6;
-    private static final int PATIENCE = 3;
+    private static final int PATIENCE = 8;
     private static int boardCenterX = Setting.getSettings().getBoardWidth() /2;
     private static int boardCenterY = Setting.getSettings().getBoardHeight()/2;
     private static int boardX1 = 0;
@@ -75,7 +75,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
 
         List<List<int[]>> pathWays = new ArrayList<>();
         boolean full = false;
-        if (pathToGoodie.size() < 300) {
+        if (pathToGoodie.size() < 200) {
             full = true;
         }
         collectPaths(pathWays, new ArrayList<>(pathToGoodie), 0, full);
@@ -150,6 +150,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
         int breakIndex2 = index;
         boolean pathDone = false;
         for (int i = index; i < path.size(); i++) {
+            System.out.println("collect path");
             if (i > index+1 && (intersect(path.get(i), start))) {
                 if (breakIndex == index) {
                     breakIndex = i;
@@ -277,18 +278,18 @@ public class HamiltonianPathGenerator extends PathGenerator {
         setBoardDimensions(boardCenterX-((boardWith / phases)/2), boardCenterY-((boardHeight / phases)/2), boardCenterX+((boardWith / phases)/2), boardCenterY+((boardHeight / phases)/2));
         while (path.size() < (boardWith*boardHeight)) {
             checkCounter++;
-            //System.out.println("-----------------------------------------round " + checkCounter);
+            System.out.println("-----------------------------------------round " + checkCounter);
             incrementBoardDimensions();
             threshold = (boardX2-boardX1)*(boardY2-boardY1);
             counter = threshold*SEARCH_SCOPE;
             while (path.size() < threshold) {
-                ////System.out.println("inner loop " + counter + " (threshold: " + threshold + ", round: " + checkCounter + ")");
+                System.out.println("inner loop " + counter + " (threshold: " + threshold + ", round: " + checkCounter + ")");
                 counter--;
                 stretchCircle(path);
                 if (counter == 0 && path.size() < threshold) {
                     if (patienceThreshold == 0) { // backtrack
                         --checkCounter;
-                        //System.out.println("======================================================= BACKTRACK AT: " + pathHistory.size() + ", "+pathHistory.get(0).size());
+                        System.out.println("======================================================= BACKTRACK AT: " + pathHistory.size() + ", "+pathHistory.get(0).size());
                         if (pathHistory.size() > 1) {
                             pathHistory.remove(0);
                         }
@@ -299,10 +300,11 @@ public class HamiltonianPathGenerator extends PathGenerator {
                         counter = threshold * SEARCH_SCOPE;
 
                     } else {
-                        path = new ArrayList<>(pathHistory.get(0)); // reset
+                        return getHamilton(start);
+                        /*path = new ArrayList<>(pathHistory.get(0)); // reset
                         patienceThreshold--;
                         counter = threshold * SEARCH_SCOPE;
-                        //System.out.println("reset");
+                        System.out.println("reset");*/
                     }
                 }
                 if (path.size() >= threshold) {

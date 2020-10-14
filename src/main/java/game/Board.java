@@ -53,15 +53,21 @@ public class Board {
     }
 
     public long getFitness() {
-        /*
+
+
+        int snakeLength = snake.getBody().size();
+            return (long) Math.pow(snakeLength, 3.7) + moveCounter;
+/*
+
+
         int winnerPoints = result * 100;
         int snakeLength = snake.getBody().size();
-        return winnerPoints + snakeLength*50 + moveCounter;*/
+        return winnerPoints + snakeLength*50 + moveCounter;
         int snakeLength = snake.getBody().size();
         if (snakeLength < 10) {
             return (long) (moveCounter*moveCounter * Math.pow(2, snakeLength));
         }
-        return (long) (moveCounter*moveCounter*Math.pow(2, 10) * (snakeLength-9));
+        return (long) (moveCounter*moveCounter*Math.pow(2, 10) * (snakeLength-9));*/
     }
 
     public boolean isGameFinished() {

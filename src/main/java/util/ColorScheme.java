@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 
 public enum ColorScheme {
 
-    CLASSIC(Color.BLACK, Color.LIME, Color.RED, Color.LIME, Color.LIME, Color.RED, "styleClassic.css"),
-    MODERN(Color.WHITE, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.DARKGRAY, Color.BLACK, Color.MEDIUMVIOLETRED, "styleModern.css"),
-    SANDY(Color.BURLYWOOD, Color.SIENNA, Color.RED, Color.SIENNA, Color.SIENNA, Color.RED, "styleSandy.css");
+    CLASSIC(Color.BLACK, Color.LIME, Color.RED, Color.LIME, Color.LIME, Color.RED, Color.DARKSLATEGRAY, Color.DARKGREEN,"styleClassic.css"),
+    MODERN(Color.WHITE, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.DARKGRAY, Color.BLACK, Color.MEDIUMVIOLETRED, Color.LIGHTCYAN, Color.PINK, "styleModern.css"),
+    SANDY(Color.BURLYWOOD, Color.SIENNA, Color.RED, Color.SIENNA, Color.SIENNA, Color.RED, Color.GOLDENROD, Color.SANDYBROWN,"styleSandy.css");
 
     private Color background;
     private Color backgroundFrame;
@@ -14,15 +14,19 @@ public enum ColorScheme {
     private Color text;
     private Color snake;
     private Color goodie;
+    private Color pathPrepared;
+    private Color pathHighlighted;
     private String css;
 
-    ColorScheme(Color background, Color backgroundFrame, Color backgroundFrameEnd, Color text, Color snake, Color goodie, String css) {
+    ColorScheme(Color background, Color backgroundFrame, Color backgroundFrameEnd, Color text, Color snake, Color goodie, Color pathPrepared, Color pathHighlighted, String css) {
         this.background = background;
         this.backgroundFrame = backgroundFrame;
         this.backgroundFrameEnd = backgroundFrameEnd;
         this.text = text;
         this.snake = snake;
         this.goodie = goodie;
+        this.pathPrepared = pathPrepared;
+        this.pathHighlighted = pathHighlighted;
         this.css = css;
     }
 
@@ -48,6 +52,14 @@ public enum ColorScheme {
 
     public Color getGoodie() {
         return goodie;
+    }
+
+    public Color getPathPrepared() {
+        return pathPrepared;
+    }
+
+    public Color getPathHighlighted() {
+        return pathHighlighted;
     }
 
     public String getCss() { return css; }

@@ -3,15 +3,13 @@ package ai.bot;
 import ai.AStarPathGenerator;
 import ai.HamiltonianPathGenerator;
 import application.GamePanel;
-import util.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AStarBot extends Bot {
 
-
-    List<int[]> staticPath = getHamPath();
+    List<int[]> staticPath = getPath();
     List<int[]> _goodiepath = getGoodiePath();
     List<int[]> _path = getMyPath();
 
@@ -33,8 +31,8 @@ public class AStarBot extends Bot {
     }
 
     @Override
-    protected List<Direction> getPath() {
-        return null;
+    protected List<int[]> getPath() {
+        return new ArrayList<>(HamiltonianPathGenerator.getHamilton(GamePanel.getPanel().getSnake().get(0)));
     }
 
     private List<int[]> getMyPath() {
@@ -42,10 +40,6 @@ public class AStarBot extends Bot {
         _path = AStarPathGenerator.getAStarPath(_goodiepath, GamePanel.getPanel().getSnake().get(0), GamePanel.getPanel().getGoodie(), true);
         _path.remove(0);
         return _path;
-    }
-
-    protected List<int[]> getHamPath() {
-        return new ArrayList<>(HamiltonianPathGenerator.getHamilton(GamePanel.getPanel().getSnake().get(0)));
     }
 
     protected List<int[]> getGoodiePath() {

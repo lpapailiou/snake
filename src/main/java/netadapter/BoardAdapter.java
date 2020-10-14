@@ -1,15 +1,17 @@
 package netadapter;
 
 import application.ConfigPanel;
+import application.NeuralNetConfigPanel;
 import game.Board;
 import game.Snake;
 import neuralnet.NeuralNetwork;
+import org.jetbrains.annotations.NotNull;
 import util.Direction;
 import util.Setting;
 
 import java.util.*;
 
-public class BoardAdapter {
+public class BoardAdapter implements Comparable<BoardAdapter>{
 
     private NeuralNetwork net;
     private Board board;
@@ -39,7 +41,7 @@ public class BoardAdapter {
         int[] goodie = board.getGoodie();
         Direction dir = getDirection(snake, goodie);
         int ord = Arrays.asList(Direction.values()).stream().filter(d -> d == dir).findFirst().get().ordinal();
-        ConfigPanel.getPanel().flashOutput(ord);
+        NeuralNetConfigPanel.getPanel().flashOutput(ord);
         return dir;
     }
 
@@ -50,25 +52,17 @@ public class BoardAdapter {
             arrayIndex++;
         }
         List<Double> out = net.predict(inputValues);
-        //List<Double> out = net.learn(inputValues, null);
         int maxIndex = out.indexOf(Collections.max(out));
 
-        Direction result;
-        if (maxIndex == 0) {
-            result = Direction.LEFT;
-        } else if (maxIndex == 1) {
-            result = Direction.RIGHT;
-        } else if (maxIndex == 2) {
-            result = Direction.UP;
-        } else {
-            result = Direction.DOWN;
-        }
-
-        return result;
+        return Direction.getDirections()[maxIndex];
     }
 
     public long getFitness() {
         return board.getFitness();
+    }
+
+    public int getSnakeLength() {
+        return board.getSnake().size();
     }
 
     public boolean moveSnake(Direction dir) {
@@ -79,4 +73,15 @@ public class BoardAdapter {
         return net;
     }
 
+    @Override
+    public int compareTo(@NotNull BoardAdapter o) {
+        long thisf = this.getFitness();
+        long of = o.getFitness();
+        if (thisf > of) {
+            return 1;
+        } else if (thisf < of) {
+            return -1;
+        }
+        return 0;
+    }
 }

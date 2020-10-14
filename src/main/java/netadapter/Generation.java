@@ -2,10 +2,7 @@ package netadapter;
 
 import neuralnet.NeuralNetwork;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,7 +13,7 @@ public class Generation {
 
     private int populationSize;
     private final static int THREADPOOL = 200;
-    private HashMap<BoardAdapter, Long> generations = new HashMap<>();
+    private List<BoardAdapter> generations = new ArrayList<>();
 
     public Generation(int populationSize) {
         this.populationSize = populationSize;
@@ -35,29 +32,36 @@ public class Generation {
         } catch (InterruptedException e) {
             System.out.println("executor service interrupted unexpectedly!");
         }
-        NeuralNetwork best = getBest(generations);
-        System.out.println(best);
-        if (generations.isEmpty()) {
-            return best;
-        }
-        NeuralNetwork secondBest = getBest(generations);
-        return NeuralNetwork.merge(best, secondBest);
+
+        return evolve(generations);
     }
 
-    private NeuralNetwork getBest(HashMap<BoardAdapter, Long> map) {
-        long max = Collections.max(generations.values());
-        List<BoardAdapter> ad = map.entrySet().stream().filter(e -> e.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());
-        if (!ad.isEmpty()) {
-            System.out.println("----------------------------------------------------------fitness of generation is: " + ad.get(0).getFitness());
-            map.remove(ad.get(0));
+    private NeuralNetwork evolve(List<BoardAdapter> generations) {
+        generations.sort(Comparator.nullsLast(Collections.reverseOrder()));
+        NeuralNetwork best = generations.get(0).getNet();
+        System.out.println("fitness of generation is: " + generations.get(0).getFitness() + " \t snake length: " + generations.get(0).getSnakeLength());
+        NeuralNetwork secondBest = generations.get(1).getNet();
+
+
+        /*  // TODO: improve or remove
+        // merge together some of the top scorers
+        for (int i = 0; i < bound; i++) {
+          best = NeuralNetwork.merge(best, populationList.get(random.nextInt(bound)).getNeuralNetwork());
         }
-        return ad.isEmpty() ? null : ad.get(0).getNet();
+
+        // seed in some random scorers to break 'eaten in' patterns and avoid local maima
+        for (int i = 0; i < bound/2; i++) {
+          best = NeuralNetwork.merge(best, populationList.get(random.nextInt(populationSize)).getNeuralNetwork());
+        }
+        */
+
+        return NeuralNetwork.merge(best, secondBest);
     }
 
     static class BackgroundGame implements Runnable {
         NeuralNetwork net;
-        HashMap<BoardAdapter, Long> gen;
-        BackgroundGame(NeuralNetwork net, HashMap<BoardAdapter, Long> generation) {
+        List<BoardAdapter> gen;
+        BackgroundGame(NeuralNetwork net, List<BoardAdapter> generation) {
             this.net = net;
             this.gen = generation;
         }
@@ -69,7 +73,7 @@ public class Generation {
             while (running) {
                 running = adapter.moveSnake();
             }
-            gen.put(adapter, adapter.getFitness());
+            gen.add(adapter);
         }
     }
 }

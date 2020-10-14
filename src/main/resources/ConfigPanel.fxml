@@ -9,54 +9,46 @@
 
 <VBox fx:id="configPanel" alignment="CENTER" prefHeight="500.0" prefWidth="480.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
     <children>
-      <HBox prefHeight="31.0" prefWidth="500.0" spacing="20">
+        <Region prefHeight="32.0" />
+      <HBox prefWidth="500.0" spacing="20">
          <children>
-            <Label prefWidth="15.0" text="w:" />
-            <TextField prefWidth="200.0" fx:id="boardWithControl" text="20" />
-            <Label prefWidth="15.0" text="h:" />
-            <TextField prefWidth="200.0" fx:id="boardHeightControl" text="15" />
+            <TextField fx:id="boardWithControl" prefWidth="200.0" text="20">
+               <tooltip>
+                  <Tooltip text="board width" />
+               </tooltip></TextField>
+            <Label prefWidth="15.0" text="x" />
+            <TextField fx:id="boardHeightControl" prefWidth="200.0" text="15">
+               <tooltip>
+                  <Tooltip text="board height" />
+               </tooltip></TextField>
             <Region prefHeight="100.0" prefWidth="200.0" />
-            <ComboBox fx:id="colorSchemeChooser" prefWidth="300.0" />
+            <ComboBox fx:id="colorSchemeChooser" prefWidth="300.0">
+               <tooltip>
+                  <Tooltip text="color scheme" />
+               </tooltip></ComboBox>
          </children>
       </HBox>
       <HBox prefHeight="28.0" prefWidth="500.0" spacing="20">
          <children>
-            <ComboBox fx:id="modeChooser" prefWidth="310.0" />
+            <ComboBox fx:id="modeChooser" prefWidth="310.0">
+               <tooltip>
+                  <Tooltip text="mode choice (ai selection or manual game)" />
+               </tooltip></ComboBox>
          </children>
       </HBox>
-        <HBox fx:id="layerConfig" spacing="20">
-         <children>
-            <ComboBox fx:id="hiddenLayerCount" prefWidth="100.0" />
-            <TextField prefWidth="50.0" text="1"/>
-            <TextField prefWidth="50.0" text="1"/>
-            <TextField prefWidth="50.0" text="1"/>
-            <TextField prefWidth="50.0" text="1"/>
-            <TextField prefWidth="50.0" text="1"/>
-         </children></HBox>
-        <StackPane fx:id="netConfig">
-           <children>
-               <Pane fx:id="layerVizualiser" />
-               <VBox fx:id="inputNodeConfig" alignment="CENTER_LEFT" spacing="2">
-               <children>
-               </children>
-            </VBox>
-           </children>
-        </StackPane>
-      <HBox fx:id="genConfig" prefHeight="33.0" prefWidth="100.0" spacing="20">
-         <children>
-            <TextField fx:id="generationCount" text="1" minWidth="50.0" />
-            <TextField fx:id="populationSize" text="1" minWidth="80.0" />
-            <TextField fx:id="learningRate" text="0.1" minWidth="80.0" />
-             <Region prefHeight="100.0" prefWidth="300.0" />
-             <Label minWidth="50.0" text="GEN:"></Label>
-             <Label fx:id="genCounter" text="0" minWidth="50.0"></Label>
-         </children>
-      </HBox>
+        <Pane>
+            <children>
+                <fx:include fx:id="nnconfig" source="NeuralNetConfigPanel.fxml" />
+            </children>
+        </Pane>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="500.0" spacing="20">
          <children>
             <Button fx:id="startButton" mnemonicParsing="false" text="start" />
-            <Button fx:id="statisticsButton" mnemonicParsing="false" text="statistics" />
-         </children></HBox>
+            <Button fx:id="stopButton" mnemonicParsing="false" text="stop" />
+            <!--<Button fx:id="statisticsButton" mnemonicParsing="false" text="statistics" />-->
+         </children>
+      </HBox>
+        <Region />
     </children>
 
 </VBox>

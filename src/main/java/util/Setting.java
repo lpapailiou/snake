@@ -21,7 +21,7 @@ public class Setting {
     private int generationCount = 60;
     private int populationSize = 1000;
     private double learningRate = 0.2;
-    private int[] netParams = {13, 16, 16, 12, 4};
+    private int[] netParams = {12, 16, 16, 12, 4};
     private int initialnputNodeCount = netParams[0];
     private Set<Integer> nodeSelection = new HashSet<>();
 

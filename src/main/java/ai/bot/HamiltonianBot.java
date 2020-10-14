@@ -1,16 +1,12 @@
 package ai.bot;
 
 import ai.HamiltonianPathGenerator;
-import ai.bot.Bot;
 import application.GamePanel;
-import util.Direction;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HamiltonianBot extends Bot {
-    List<int[]> staticPath = getHamPath();
+    List<int[]> staticPath = getPath();
     List<int[]> _path = getNextSection();
     List<int[]> snake;
     int index = 0;
@@ -18,7 +14,7 @@ public class HamiltonianBot extends Bot {
     @Override
     protected void run() {
         if (!_path.isEmpty()) {
-            boolean isRunning = GamePanel.move(_path.get(0));
+            boolean isRunning = GamePanel.move(_path.get(0), _path, staticPath);
             if (!isRunning) {
                 stop();
             }
@@ -32,11 +28,7 @@ public class HamiltonianBot extends Bot {
     }
 
     @Override
-    protected List<Direction> getPath() {
-        return null;
-    }
-
-    protected List<int[]> getHamPath() {
+    protected List<int[]> getPath() {
         snake = GamePanel.getPanel().getSnake();
         return new ArrayList<>(HamiltonianPathGenerator.getHamilton(snake.get(0)));
     }

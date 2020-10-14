@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NeuralNetConfigPanel">
+    <children>
+        <HBox fx:id="layerConfig" spacing="20">
+         <children>
+            <ComboBox fx:id="hiddenLayerCount" prefWidth="100.0">
+               <tooltip>
+                  <Tooltip text="count of hidden layers in neural network" />
+               </tooltip></ComboBox>
+            <TextField prefWidth="50.0" text="1">
+               <tooltip>
+                  <Tooltip text="node count of first hidden layer" />
+               </tooltip></TextField>
+            <TextField prefWidth="50.0" text="1">
+               <tooltip>
+                  <Tooltip text="node count of second hidden layer" />
+               </tooltip></TextField>
+            <TextField prefWidth="50.0" text="1">
+               <tooltip>
+                  <Tooltip text="nodee count of third hidden layer" />
+               </tooltip></TextField>
+            <TextField prefWidth="50.0" text="1">
+               <tooltip>
+                  <Tooltip text="node count of fourth hidden layer" />
+               </tooltip></TextField>
+            <TextField prefWidth="50.0" text="1">
+               <tooltip>
+                  <Tooltip text="node count of fifth hidden layer" />
+               </tooltip></TextField>
+         </children></HBox>
+        <StackPane fx:id="netConfig">
+           <children>
+               <Pane fx:id="layerVizualiser" />
+               <VBox fx:id="inputNodeConfig" alignment="CENTER_LEFT" spacing="4">
+               <children>
+               </children>
+            </VBox>
+           </children>
+        </StackPane>
+      <HBox fx:id="genConfig" prefHeight="33.0" prefWidth="100.0" spacing="20">
+         <children>
+            <TextField fx:id="generationCount" minWidth="50.0" text="1">
+               <tooltip>
+                  <Tooltip text="number of generations to play" />
+               </tooltip></TextField>
+            <TextField fx:id="populationSize" minWidth="80.0" text="1">
+               <tooltip>
+                  <Tooltip text="population size per generation" />
+               </tooltip></TextField>
+            <TextField fx:id="learningRate" minWidth="80.0" text="0.1">
+               <tooltip>
+                  <Tooltip text="randomization rate for mutations of neural network" />
+               </tooltip></TextField>
+             <Region prefHeight="100.0" prefWidth="300.0" />
+             <Label minWidth="50.0" text="GEN:" />
+             <Label fx:id="genCounter" minWidth="100.0" text="0">
+               <tooltip>
+                  <Tooltip text="display of the current generation playing" />
+               </tooltip></Label>
+         </children>
+      </HBox>
+    </children>
+
+</VBox>

@@ -6,16 +6,22 @@ import java.util.function.Supplier;
 
 public enum Mode {
 
-    MANUAL(null),
-    NEURAL_NETWORK(DeepBot::new),
-    HAMILTONIAN(HamiltonianBot::new),
-    HAMILTONIAN_SHORTCUT(HamiltonianShortcutBot::new),
-    AStar(AStarBot::new);
+    MANUAL("classic arcade mode (manual)", null),
+    NEURAL_NETWORK("neural network", DeepBot::new),
+    HAMILTONIAN("hamiltonian cycle", HamiltonianBot::new),
+    HAMILTONIAN_SHORTCUT("hamiltonian cycle \\w shortcut", HamiltonianShortcutBot::new),
+    AStar("A* algorithm", AStarBot::new);
 
+    private String label;
     private Supplier<Bot> template;
 
-    Mode(Supplier<Bot> template) {
+    Mode(String label, Supplier<Bot> template) {
+        this.label = label;
         this.template = template;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public boolean isBot() {

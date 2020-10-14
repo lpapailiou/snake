@@ -144,23 +144,24 @@ public class GamePanel implements Initializable {
         if (success) {
             instance.paint(goodiepath, path);
         } else {
-            instance.isTimerStopped = true;
-            instance.timeline.stop();
-            instance.repaint();
-            //instance.showEndGameDialog();
+            stop();
         }
+    }
+
+    public static void stop() {
+        instance.isTimerStopped = true;
+        if (instance.timeline != null) {
+            instance.timeline.stop();
+        }
+        instance.repaint();
+        //instance.showEndGameDialog();
     }
 
     private static void handleStep(boolean success) {
         if (success) {
             instance.paint();
         } else {
-            instance.isTimerStopped = true;
-            if (instance.timeline != null) {
-                instance.timeline.stop();
-            }
-            instance.repaint();
-            //instance.showEndGameDialog();
+            stop();
         }
     }
 
@@ -239,8 +240,8 @@ public class GamePanel implements Initializable {
 
     private void paint(List<int[]> pathgoodie, List<int[]> path) {
         paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrame());
-        paintPath(pathgoodie, Color.BLUE);
-        paintPath(path, Color.YELLOW);
+        paintPath(pathgoodie, Setting.getSettings().getColorScheme().getPathPrepared());
+        paintPath(path, Setting.getSettings().getColorScheme().getPathHighlighted());
         paintSnake();
         paintGoodie();
     }

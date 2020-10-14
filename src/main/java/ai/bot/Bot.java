@@ -1,14 +1,11 @@
 package ai.bot;
 
-import application.ConfigPanel;
-import application.GamePanel;
+import util.State;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import util.Direction;
 import util.Setting;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Bot {
@@ -20,6 +17,11 @@ public abstract class Bot {
         timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getBotSpeed()), event -> {
             if (running) {
                 run();
+                if (State.getInstance().isInterrupted()) {
+                    running = false;
+                    State.getInstance().setInterrupt(false);
+                    stop();
+                }
             } else {
                 if (timeline != null) {
                     timeline.stop();
@@ -35,5 +37,5 @@ public abstract class Bot {
         running = false;
     }
     protected abstract void run();
-    protected abstract List<Direction> getPath();
+    protected abstract List<int[]> getPath();
 }

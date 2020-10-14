@@ -2,6 +2,7 @@ package ai.bot;
 
 import application.ConfigPanel;
 import application.GamePanel;
+import application.NeuralNetConfigPanel;
 import netadapter.BoardAdapter;
 import netadapter.Generation;
 import neuralnet.NeuralNetwork;
@@ -32,9 +33,9 @@ public class DeepBot extends Bot {
                 GamePanel.getPanel().prepareNextGeneration();
                 best = getBest();
                 adapter = new BoardAdapter(GamePanel.getBoard(), best);
-                ConfigPanel.getPanel().incGenCounter();
+                NeuralNetConfigPanel.getPanel().incGenCounter();
             } else {
-                ConfigPanel.getPanel().resetGenCounter();
+                NeuralNetConfigPanel.getPanel().resetGenCounter();
                 stop();
             }
         }
@@ -42,7 +43,7 @@ public class DeepBot extends Bot {
     }
 
     @Override
-    protected List<Direction> getPath() {
+    protected List<int[]> getPath() {
         return null;
     }
 }

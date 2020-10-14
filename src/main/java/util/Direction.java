@@ -17,7 +17,7 @@ public enum Direction {
 
     private int x;
     private int y;
-    private static final Direction[] dirList = {UP, DOWN, LEFT, RIGHT};
+    private static final Direction[] dirList = {LEFT, RIGHT, UP, DOWN};
 
     Direction(int x, int y) {
         this.x = x;

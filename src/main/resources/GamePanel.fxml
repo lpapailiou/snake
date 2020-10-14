@@ -24,8 +24,13 @@
         </StackPane>
         <HBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
            <children>
-               <fx:include fx:id="dialog" source="ConfigPanel.fxml" />
+               <fx:include source="ConfigPanel.fxml" />
            </children>
-        </HBox>
+        </HBox><!--
+        <HBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
+            <children>
+                <fx:include source="NeuralNetConfigPanel.fxml" />
+            </children>
+        </HBox>-->
     </children>
 </HBox>

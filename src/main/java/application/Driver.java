@@ -26,9 +26,8 @@ public class Driver extends Application {
             scene.getStylesheets().add(Driver.class.getClassLoader().getResource("style.css").toExternalForm());
             scene.getStylesheets().add(Driver.class.getClassLoader().getResource(Setting.getSettings().getColorScheme().getCss()).toExternalForm());
             scene.setFill(Setting.getSettings().getColorScheme().getBackground());
-            root.setStyle("-fx-text-fill: red;");
             stage.setScene(scene);
-            stage.setMinHeight(539);
+            stage.setMinHeight(539);    //539
             stage.setMinWidth(1016);
             stage.setMaxHeight(539);
             stage.setMaxWidth(1016);
