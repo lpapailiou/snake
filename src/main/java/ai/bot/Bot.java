@@ -1,5 +1,6 @@
 package ai.bot;
 
+import application.NeuralNetConfigPanel;
 import util.State;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,6 +20,7 @@ public abstract class Bot {
                 run();
                 if (State.getInstance().isInterrupted()) {
                     running = false;
+                    NeuralNetConfigPanel.getPanel().resetGenCounter();
                     State.getInstance().setInterrupt(false);
                     stop();
                 }
