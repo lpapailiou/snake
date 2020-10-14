@@ -154,7 +154,7 @@ public class NeuralNetConfigPanel implements Initializable {
         generationCount.focusedProperty().addListener((o, oldValue, newValue) -> {
             String previousValue = tempGenerations.toString();
             tempGenerations.set(generationCount.getText());
-            if (configureTextField(generationCount, 1, 1000, tempGenerations.toString(), previousValue)) {
+            if (configureTextField(generationCount, 1, 5000, tempGenerations.toString(), previousValue)) {
                 Setting.getSettings().setGenerationCount(Integer.parseInt(tempGenerations.toString()));
             }
         });
@@ -163,7 +163,7 @@ public class NeuralNetConfigPanel implements Initializable {
         populationSize.focusedProperty().addListener((o, oldValue, newValue) -> {
             String previousValue = tempPopulations.toString();
             tempPopulations.set(populationSize.getText());
-            if (configureTextField(populationSize, 1, 2000, tempPopulations.toString(), previousValue)) {
+            if (configureTextField(populationSize, 1, 5000, tempPopulations.toString(), previousValue)) {
                 Setting.getSettings().setPopulationSize(Integer.parseInt(tempPopulations.toString()));
             }
         });
@@ -191,7 +191,7 @@ public class NeuralNetConfigPanel implements Initializable {
                 field.setText(network.get(i)+"");
             }
             field.textProperty().addListener((o, oldValue, newValue) -> {
-                if (configureTextField(field, 1, 20, newValue, oldValue)) {
+                if (configureTextField(field, 1, 64, newValue, oldValue)) {
                     updateNetwork();
                 }
             });
