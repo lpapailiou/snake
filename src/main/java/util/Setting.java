@@ -14,13 +14,13 @@ public class Setting {
     private int boardWidth = 20;
     private int boardHeight = 15;
     private int speed = 200;
-    private int botSpeed = 50;
+    private int botSpeed = 20;
     private int neuralBotTimeout = boardWidth * boardHeight;
     private Random random = new Random();
     private Supplier<Bot> botTemplate = DeepBot::new;
-    private int generationCount = 60;
-    private int populationSize = 1000;
-    private double learningRate = 0.2;
+    private int generationCount = 500;
+    private int populationSize = 2000;
+    private double learningRate = 0.8;
     private int[] netParams = {12, 16, 16, 12, 4};
     private int initialnputNodeCount = netParams[0];
     private Set<Integer> nodeSelection = new HashSet<>();

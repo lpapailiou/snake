@@ -80,7 +80,7 @@ public enum InputNode {
             int[] snakeHead = snake.getBody().get(0);
             int distanceY = snakeHead[1] - goodie[1];
             if (snakeHead[0]==goodie[0] && distanceY > 0) {
-                return 1;
+                return 1000;
             }
             return 0;
         }
@@ -91,7 +91,7 @@ public enum InputNode {
             int[] snakeHead = snake.getBody().get(0);
             int distanceY = snakeHead[0] - goodie[0];
             if (snakeHead[1]==goodie[1] && distanceY < 0) {
-                return 1;
+                return 1000;
             }
             return 0;
         }
@@ -102,7 +102,7 @@ public enum InputNode {
             int[] snakeHead = snake.getBody().get(0);
             int distanceY = snakeHead[1] - goodie[1];
             if (snakeHead[0]==goodie[0] && distanceY < 0) {
-                return 1;
+                return 1000;
             }
             return 0;
         }
@@ -113,7 +113,7 @@ public enum InputNode {
             int[] snakeHead = snake.getBody().get(0);
             int distanceY = snakeHead[0] - goodie[0];
             if (snakeHead[1]==goodie[1] && distanceY > 0) {
-                return 1;
+                return 1000;
             }
             return 0;
         }

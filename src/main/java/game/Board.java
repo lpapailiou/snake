@@ -56,13 +56,21 @@ public class Board {
 
 
         int snakeLength = snake.getBody().size();
-            return (long) Math.pow(snakeLength, 3.7) + moveCounter;
-/*
+        int stepsPerSnake = (int) (moveCounter / snakeLength);
+        int boardHalf = (Setting.getSettings().getBoardWidth() + Setting.getSettings().getBoardHeight())/2;
 
+        if (snakeLength < boardHalf * 1.5) {
+            return (long) Math.pow(snakeLength, 3.7) + moveCounter;
+        }
+        return (long) (Math.pow(snakeLength, 4.7) - (moveCounter/snakeLength));
+/*
+int snakeLength = snake.getBody().size();
+            return (long) Math.pow(snakeLength, 3.7) + moveCounter;
 
         int winnerPoints = result * 100;
         int snakeLength = snake.getBody().size();
         return winnerPoints + snakeLength*50 + moveCounter;
+
         int snakeLength = snake.getBody().size();
         if (snakeLength < 10) {
             return (long) (moveCounter*moveCounter * Math.pow(2, snakeLength));

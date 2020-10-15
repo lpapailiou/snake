@@ -1,6 +1,7 @@
 package netadapter;
 
 import neuralnet.NeuralNetwork;
+import util.Setting;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -40,22 +41,44 @@ public class Generation {
         generations.sort(Comparator.nullsLast(Collections.reverseOrder()));
         NeuralNetwork best = generations.get(0).getNet();
         System.out.println("fitness of generation is: " + generations.get(0).getFitness() + " \t snake length: " + generations.get(0).getSnakeLength());
-        NeuralNetwork secondBest = generations.get(1).getNet();
+        if (generations.get(0).getSnakeLength() < 10) {
+            NeuralNetwork secondBest = generations.get(1).getNet();
+            return NeuralNetwork.merge(best, secondBest);
+        }
 
 
-        /*  // TODO: improve or remove
-        // merge together some of the top scorers
+        // do roulette algorithm
+        int bound = (int) (Setting.getSettings().getPopulationSize()*0.01);
+        int choice = 2;
+
+        Map<Integer, Long> map = new HashMap();
+        double sum = 0;
         for (int i = 0; i < bound; i++) {
-          best = NeuralNetwork.merge(best, populationList.get(random.nextInt(bound)).getNeuralNetwork());
+            BoardAdapter adaapter = generations.get(i);
+            sum += adaapter.getFitness();
+            map.put(i, adaapter.getFitness());
         }
 
-        // seed in some random scorers to break 'eaten in' patterns and avoid local maima
-        for (int i = 0; i < bound/2; i++) {
-          best = NeuralNetwork.merge(best, populationList.get(random.nextInt(populationSize)).getNeuralNetwork());
+        for (int i = 0; i < choice; i++) {
+            best = NeuralNetwork.merge(best, spin(generations, map, bound, sum));
         }
-        */
 
-        return NeuralNetwork.merge(best, secondBest);
+        //NeuralNetwork secondBest = generations.get(1).getNet();
+        //return NeuralNetwork.merge(best, secondBest);
+        return best;
+    }
+
+    private NeuralNetwork spin(List<BoardAdapter> generations, Map<Integer, Long> map, int bound, double sum) {
+        long checksum = 0;
+        NeuralNetwork chosen = null;
+        for (int i = 0; i < bound; i++) {
+            checksum += map.get(i);
+            if (checksum > new Random().nextInt((int) sum)) {
+                chosen = generations.get(i).getNet();
+                break;
+            }
+        }
+        return chosen;
     }
 
     static class BackgroundGame implements Runnable {
