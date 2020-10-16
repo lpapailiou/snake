@@ -1,6 +1,5 @@
-package netadapter;
+package ai.netadapter;
 
-import application.ConfigPanel;
 import application.NeuralNetConfigPanel;
 import game.Board;
 import game.Snake;

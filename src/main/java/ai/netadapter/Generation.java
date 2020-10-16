@@ -1,14 +1,12 @@
-package netadapter;
+package ai.netadapter;
 
 import neuralnet.NeuralNetwork;
 import util.Setting;
 
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class Generation {
 
@@ -41,14 +39,25 @@ public class Generation {
         generations.sort(Comparator.nullsLast(Collections.reverseOrder()));
         NeuralNetwork best = generations.get(0).getNet();
         System.out.println("fitness of generation is: " + generations.get(0).getFitness() + " \t snake length: " + generations.get(0).getSnakeLength());
-        if (generations.get(0).getSnakeLength() < 10) {
+
+        if (generations.get(0).getSnakeLength() == (Setting.getSettings().getBoardWidth() * Setting.getSettings().getBoardHeight())) {
+            Serializer.save(best);
+        }
+
+        if (generations.size() < 2) {
+            return best;
+        } else if (generations.size() < 20 || generations.get(0).getSnakeLength() < 10) {
             NeuralNetwork secondBest = generations.get(1).getNet();
             return NeuralNetwork.merge(best, secondBest);
         }
 
-
         // do roulette algorithm
-        int bound = (int) (Setting.getSettings().getPopulationSize()*0.01);
+        int bound = 8;  // bound is the number of selected snake for possible reproduction
+        if (generations.size() > 100 && generations.size() < 200) {
+            bound = (int) (Setting.getSettings().getPopulationSize()*0.2);
+        } else if (generations.size() > 1000) {
+            bound = (int) (Setting.getSettings().getPopulationSize()*0.01);
+        }
         int choice = 2;
 
         Map<Integer, Long> map = new HashMap();
@@ -63,8 +72,6 @@ public class Generation {
             best = NeuralNetwork.merge(best, spin(generations, map, bound, sum));
         }
 
-        //NeuralNetwork secondBest = generations.get(1).getNet();
-        //return NeuralNetwork.merge(best, secondBest);
         return best;
     }
 

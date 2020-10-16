@@ -14,7 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import netadapter.InputNode;
+import ai.netadapter.InputNode;
 import util.Direction;
 import util.Mode;
 import util.Setting;
@@ -85,13 +85,17 @@ public class NeuralNetConfigPanel implements Initializable {
         return instance;
     }
 
-    void lockInput(boolean lock) {
+    void lockInput(boolean lock, Mode mode) {
         for (Node node : layerConfig.getChildren()) {
             node.setDisable(lock);
         }
+        boolean radioLock = lock;
+        if (mode == Mode.NEURAL_NETWORK_DEMO) {
+            radioLock = true;
+        }
         for (int i = 0; i < inputNodeConfig.getChildren().size(); i++) {
             RadioButton box = (RadioButton) inputNodeConfig.getChildren().get(i);
-            box.setDisable(lock);
+            box.setDisable(radioLock);
         }
         generationCount.setDisable(lock);
         populationSize.setDisable(lock);
@@ -111,8 +115,12 @@ public class NeuralNetConfigPanel implements Initializable {
 
     public void updateMode(Mode mode) {
         layerConfig.setVisible((mode == Mode.NEURAL_NETWORK));
-        netConfig.setVisible((mode == Mode.NEURAL_NETWORK));
+        netConfig.setVisible((mode == Mode.NEURAL_NETWORK) || (mode == Mode.NEURAL_NETWORK_DEMO));
         genConfig.setVisible((mode == Mode.NEURAL_NETWORK));
+        for (Node node : inputNodeConfig.getChildren()) {
+            RadioButton but = (RadioButton) node;
+            but.setDisable(mode == Mode.NEURAL_NETWORK_DEMO);
+        }
     }
 
     private boolean configureTextField(TextField field, int min, int max, String newValue, String oldValue) {

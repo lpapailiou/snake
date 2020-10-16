@@ -68,7 +68,8 @@ public class ConfigPanel implements Initializable {
         startButton.setDisable(lock);
         stopButton.setDisable(!lock);
         //statisticsButton.setDisable(lock);
-        NeuralNetConfigPanel.getPanel().lockInput(lock);
+        Mode mode = Arrays.stream(Mode.values()).filter(e -> e.getLabel().equals(modeChooser.getValue())).findFirst().get();
+        NeuralNetConfigPanel.getPanel().lockInput(lock, mode);
         Platform.runLater(() -> startButton.getParent().requestFocus());
     }
 

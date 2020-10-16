@@ -1,8 +1,6 @@
-package netadapter;
+package ai.netadapter;
 
-import ai.PathGenerator;
 import game.Snake;
-import util.Direction;
 import util.Setting;
 
 import static ai.PathGenerator.exists;

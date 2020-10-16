@@ -17,6 +17,18 @@
 
     <build>
         <outputDirectory>target/classes</outputDirectory>
+        <resources>
+            <resource>
+                <directory>
+                    resources
+                </directory>
+                <includes>
+                    <include>
+                        serialized
+                    </include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -51,9 +63,14 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
             <groupId>neuralnetwork</groupId>
             <artifactId>neural-network-repo</artifactId>
-            <version>1.5</version>
+            <version>1.8</version>
         </dependency>
     </dependencies>
 

@@ -8,6 +8,7 @@ public enum Mode {
 
     MANUAL("classic arcade mode (manual)", null),
     NEURAL_NETWORK("neural network", DeepBot::new),
+    NEURAL_NETWORK_DEMO("neural network (demo)", DeepDemoBot::new),
     HAMILTONIAN("hamiltonian cycle", HamiltonianBot::new),
     HAMILTONIAN_SHORTCUT("hamiltonian cycle \\w shortcut", HamiltonianShortcutBot::new),
     AStar("A* algorithm", AStarBot::new);
