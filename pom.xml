@@ -70,7 +70,7 @@
         <dependency>
             <groupId>neuralnetwork</groupId>
             <artifactId>neural-network-repo</artifactId>
-            <version>1.8</version>
+            <version>1.14</version>
         </dependency>
     </dependencies>
 

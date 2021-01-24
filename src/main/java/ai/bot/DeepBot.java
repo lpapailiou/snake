@@ -3,7 +3,7 @@ package ai.bot;
 import application.GamePanel;
 import application.NeuralNetConfigPanel;
 import ai.netadapter.BoardAdapter;
-import ai.netadapter.Generation;
+import geneticalgorithm.GeneticAlgorithmBatch;
 import neuralnet.NeuralNetwork;
 import util.Direction;
 import util.Setting;
@@ -12,13 +12,14 @@ import java.util.List;
 
 public class DeepBot extends Bot {
 
-    private NeuralNetwork best = new NeuralNetwork(Setting.getSettings().getLearningRate(), Setting.getSettings().getNetParams());
-    private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), best);
+    private NeuralNetwork currentSeedNetwork = new NeuralNetwork(Setting.getSettings().getLearningRate(), Setting.getSettings().getNetParams());
+    private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), currentSeedNetwork);
     private int generationCount = Setting.getSettings().getGenerationCount();
+    private int populationSize = Setting.getSettings().getPopulationSize();
+    private GeneticAlgorithmBatch batch = new GeneticAlgorithmBatch(currentSeedNetwork, new BoardAdapter(currentSeedNetwork), populationSize, generationCount);
 
-    private NeuralNetwork getBest() {
-        Generation gen = new Generation(Setting.getSettings().getPopulationSize());
-        return gen.run(best);
+    private void runGeneration() {
+        currentSeedNetwork = batch.processGeneration();
     }
 
 
@@ -27,11 +28,10 @@ public class DeepBot extends Bot {
         Direction d = adapter.getDirection(GamePanel.getBoard());
         boolean gameActive =  GamePanel.move(d);
         if (!gameActive) {
-            generationCount--;
-            if (generationCount != 0) {
+            if (currentSeedNetwork != null) {
                 GamePanel.getPanel().prepareNextGeneration();
-                best = getBest();
-                adapter = new BoardAdapter(GamePanel.getBoard(), best);
+                runGeneration();
+                adapter = new BoardAdapter(GamePanel.getBoard(), batch.getBestNeuralNetwork());
                 NeuralNetConfigPanel.getPanel().incGenCounter();
             } else {
                 NeuralNetConfigPanel.getPanel().resetGenCounter();

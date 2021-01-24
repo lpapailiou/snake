@@ -3,37 +3,47 @@ package ai.netadapter;
 import application.NeuralNetConfigPanel;
 import game.Board;
 import game.Snake;
+import geneticalgorithm.GeneticAlgorithmObject;
 import neuralnet.NeuralNetwork;
-import org.jetbrains.annotations.NotNull;
 import util.Direction;
 import util.Setting;
 
 import java.util.*;
 
-public class BoardAdapter implements Comparable<BoardAdapter>{
+public class BoardAdapter extends GeneticAlgorithmObject<BoardAdapter> {
 
-    private NeuralNetwork net;
     private Board board;
     private double[] inputValues = new double[Setting.getSettings().getNodeSelection().size()];
     private Set<Integer> nodeSelection = Setting.getSettings().getNodeSelection();
 
     public BoardAdapter(NeuralNetwork net) { // used by Generation for background game
+        super(net);
         board = new Board();
-        this.net = net;
     }
 
     public BoardAdapter(Board board, NeuralNetwork net) {   // used by bot for real game
+        super(net);
         this.board = board;
-        this.net = net;
     }
 
-    public boolean moveSnake() {    // used by Generation
+    @Override
+    public boolean executeStep() {    // used by Generation
         Snake snake = board.getRealSnake();
         int[] goodie = board.getGoodie();
         Direction dir = getDirection(snake, goodie);
-        boolean result = moveSnake(dir);
-        return result;      // true = still alive
+        return executeStep(dir);      // true = still alive
     }
+
+    @Override
+    public boolean isImmature() {
+        return getSnakeLength() < 10;
+    }
+
+    @Override
+    public GeneticAlgorithmObject getGeneticAlgorithmObject(NeuralNetwork neuralNetwork) {
+        return new BoardAdapter(neuralNetwork);
+    }
+
 
     public Direction getDirection(Board board) {    // used by bot
         Snake snake = board.getRealSnake();
@@ -50,12 +60,13 @@ public class BoardAdapter implements Comparable<BoardAdapter>{
             inputValues[arrayIndex] = InputNode.values()[index].getInputValue(snake, goodie);
             arrayIndex++;
         }
-        List<Double> out = net.predict(inputValues);
+        List<Double> out = super.predict(inputValues);
         int maxIndex = out.indexOf(Collections.max(out));
 
         return Direction.getDirections()[maxIndex];
     }
 
+    @Override
     public long getFitness() {
         return board.getFitness();
     }
@@ -64,23 +75,8 @@ public class BoardAdapter implements Comparable<BoardAdapter>{
         return board.getSnake().size();
     }
 
-    public boolean moveSnake(Direction dir) {
+    public boolean executeStep(Direction dir) {
         return board.moveSnake(dir);
     }
 
-    public NeuralNetwork getNet() {
-        return net;
-    }
-
-    @Override
-    public int compareTo(@NotNull BoardAdapter o) {
-        long thisf = this.getFitness();
-        long of = o.getFitness();
-        if (thisf > of) {
-            return 1;
-        } else if (thisf < of) {
-            return -1;
-        }
-        return 0;
-    }
 }
