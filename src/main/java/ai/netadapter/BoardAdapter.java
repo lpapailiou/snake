@@ -39,12 +39,6 @@ public class BoardAdapter extends GeneticAlgorithmObject<BoardAdapter> {
         return getSnakeLength() < 10;
     }
 
-    @Override
-    public GeneticAlgorithmObject getGeneticAlgorithmObject(NeuralNetwork neuralNetwork) {
-        return new BoardAdapter(neuralNetwork);
-    }
-
-
     public Direction getDirection(Board board) {    // used by bot
         Snake snake = board.getRealSnake();
         int[] goodie = board.getGoodie();
@@ -67,8 +61,18 @@ public class BoardAdapter extends GeneticAlgorithmObject<BoardAdapter> {
     }
 
     @Override
+    public String getLogMessage() {
+        return "snake length: " + board.getSnake().size();
+    }
+
+    @Override
     public long getFitness() {
         return board.getFitness();
+    }
+
+    @Override
+    public boolean isPerfectScore() {
+        return board.getSnake().size() == Setting.getSettings().getBoardWidth() * Setting.getSettings().getBoardHeight();
     }
 
     public int getSnakeLength() {

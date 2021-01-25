@@ -16,7 +16,11 @@ public class DeepBot extends Bot {
     private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), currentSeedNetwork);
     private int generationCount = Setting.getSettings().getGenerationCount();
     private int populationSize = Setting.getSettings().getPopulationSize();
-    private GeneticAlgorithmBatch batch = new GeneticAlgorithmBatch(currentSeedNetwork, new BoardAdapter(currentSeedNetwork), populationSize, generationCount);
+    private GeneticAlgorithmBatch batch = new GeneticAlgorithmBatch(currentSeedNetwork, populationSize, generationCount);
+
+    public DeepBot() {
+        batch.setGeneticAlgorithmObjectTemplate("ai.netadapter.BoardAdapter");
+    }
 
     private void runGeneration() {
         currentSeedNetwork = batch.processGeneration();

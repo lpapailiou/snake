@@ -36,6 +36,10 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+
+                    <includes>
+                        <include>directory path/*.jar</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
@@ -47,6 +51,40 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>resource-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>neuralnetwork</groupId>
+                                    <artifactId>neural-network-repo</artifactId>
+                                    <version>${neuralnetwork.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <includes>**/*.properties</includes>
+                                    <excludes>**/generated-test-sources/*</excludes>
+                                    <excludes>**/dependency-maven-plugin-markers/*</excludes>
+                                    <outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <includes>**/*.properties</includes>
+                            <excludes>**/generated-test-sources/*</excludes>
+                            <excludes>**/dependency-maven-plugin-markers/*</excludes>
+                            <outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
     <dependencies>
@@ -70,8 +108,11 @@
         <dependency>
             <groupId>neuralnetwork</groupId>
             <artifactId>neural-network-repo</artifactId>
-            <version>1.14</version>
+            <version>${neuralnetwork.version}</version>
         </dependency>
     </dependencies>
 
+    <properties>
+        <neuralnetwork.version>LATEST</neuralnetwork.version>
+    </properties>
 </project>
