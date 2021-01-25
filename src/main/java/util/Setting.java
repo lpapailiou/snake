@@ -10,7 +10,7 @@ public class Setting {
 
     private static Setting instance;
 
-    private ColorScheme colorScheme = ColorScheme.CLASSIC;
+    private Theme theme = Theme.CLASSIC;
     private int boardWidth = 16;
     private int boardHeight = 12;
     private int speed = 200;
@@ -42,12 +42,12 @@ public class Setting {
         return instance;
     }
 
-    public ColorScheme getColorScheme() {
-        return colorScheme;
+    public Theme getTheme() {
+        return theme;
     }
 
-    public void setColorScheme(ColorScheme scheme) {
-        this.colorScheme = scheme;
+    public void setTheme(Theme scheme) {
+        this.theme = scheme;
     }
 
     public int getBoardWidth() {

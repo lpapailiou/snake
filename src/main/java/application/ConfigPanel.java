@@ -8,9 +8,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import util.ColorScheme;
 import util.Mode;
 import util.Setting;
+import util.Theme;
+
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class ConfigPanel implements Initializable {
 
     private ObservableList<String> modeList = FXCollections.observableArrayList(Arrays.stream(Mode.values()).map(Mode::getLabel).collect(Collectors.toList()));
-    private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.stream(ColorScheme.values()).map(Enum::name).collect(Collectors.toList()));
+    private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.stream(Theme.values()).map(Enum::name).collect(Collectors.toList()));
     private boolean init = true;
     private static ConfigPanel instance;
 
@@ -148,17 +149,17 @@ public class ConfigPanel implements Initializable {
     }
 
     private void updateColorScheme() {
-        List<String> cssList = Arrays.stream(ColorScheme.values()).map(ColorScheme::getCss).collect(Collectors.toList());
+        List<String> cssList = Arrays.stream(Theme.values()).map(Theme::getCss).collect(Collectors.toList());
         for (Object str : cssList) {
             String sheet = (String) str;
             configPanel.getScene().getStylesheets().removeIf(s -> s.matches(Objects.requireNonNull(Driver.class.getClassLoader().getResource(sheet)).toExternalForm()));
         }
         String selection = colorSchemeChooser.getValue();
-        ColorScheme scheme = ColorScheme.valueOf(selection);
-        configPanel.getScene().getStylesheets().remove(Setting.getSettings().getColorScheme().getCss());
-        Setting.getSettings().setColorScheme(scheme);
+        Theme scheme = Theme.valueOf(selection);
+        configPanel.getScene().getStylesheets().remove(Setting.getSettings().getTheme().getCss());
+        Setting.getSettings().setTheme(scheme);
         GamePanel.getPanel().paint();
-        configPanel.getScene().setFill(Setting.getSettings().getColorScheme().getBackground());
+        configPanel.getScene().setFill(Setting.getSettings().getTheme().getBackgroundColor());
         configPanel.getScene().getStylesheets().add(Objects.requireNonNull(Driver.class.getClassLoader().getResource(scheme.getCss())).toExternalForm());
         NeuralNetConfigPanel.getPanel().updateNetwork();
     }

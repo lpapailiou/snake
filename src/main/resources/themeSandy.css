@@ -1,0 +1,35 @@
+* {
+    -fx-base: rgba(184,163,136,0.69);                        /* combobox color */
+    -fx-text-fill: rgb(75, 60, 52);                          /* no idea but seems important */
+    -fx-text-background-color: rgb(75, 60, 52);              /* text in combobox */
+    -fx-control-inner-background: rgba(204,181,152, 0.45);   /* combobox list background */
+    -fx-accent: rgba(184,163,136,0.69);                      /* combobox selected background */
+    -fx-focus-color: rgba(223,201,172,0.69);                 /* focus color */
+    -fx-cell-focus-inner-border: rgba(193,179,158,0.69);     /* inner border of list cell */
+
+    -fx-hover-base: #c1b39e;                                 /* hover */
+    -fx-color: -fx-accent;                                   /* outer border for list cell */
+    -fx-pressed-base: #c1b39e;                               /* control pressed */
+    -fx-body-color: -fx-accent;                              /* inactive frame */
+
+    -fx-outer-border: -fx-accent;                            /* not sure about this */
+    -fx-inner-border: -fx-accent;                            /* not sure about this */
+    -fx-focused-base: -fx-accent;                            /* not sure about this */
+}
+
+.label {
+    -fx-text-fill: rgb(75, 60, 52);
+}
+
+.tooltip {
+    -fx-text-fill: rgb(231,209,181);
+}
+
+#baseControls, #neuralNetworkControls, #actionControls, #statisticControls {
+    -fx-border-color: #b8a388;
+}
+
+#baseControlsLabel, #neuralNetworkControlsLabel, #actionControlsLabel, #statisticControlsLabel {
+    -fx-text-fill: #b8a388;
+    -fx-background-color: #e7d1b5;
+}

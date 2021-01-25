@@ -23,9 +23,9 @@ public class Driver extends Application {
             FXMLLoader loader = new FXMLLoader(Driver.class.getClassLoader().getResource("GamePanel.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1000, 500);
-            scene.getStylesheets().add(Driver.class.getClassLoader().getResource("style.css").toExternalForm());
-            scene.getStylesheets().add(Driver.class.getClassLoader().getResource(Setting.getSettings().getColorScheme().getCss()).toExternalForm());
-            scene.setFill(Setting.getSettings().getColorScheme().getBackground());
+            scene.getStylesheets().add(Driver.class.getClassLoader().getResource("application.css").toExternalForm());
+            scene.getStylesheets().add(Driver.class.getClassLoader().getResource(Setting.getSettings().getTheme().getCss()).toExternalForm());
+            scene.setFill(Setting.getSettings().getTheme().getBackgroundColor());
             stage.setScene(scene);
             stage.setMinHeight(539);    //539
             stage.setMinWidth(1016);

@@ -303,7 +303,7 @@ public class NeuralNetConfigPanel implements Initializable {
         for (int i = 0; i < nodes.get(nodes.size()-1).size(); i++) {
             NetNode node = nodes.get(nodes.size()-1).get(i);
             if (i == flash) {
-                paintDot(node.x, node.y, radius, Setting.getSettings().getColorScheme().getGoodie());
+                paintDot(node.x, node.y, radius, Setting.getSettings().getTheme().getFoodColor());
             } else {
                 paintDot(node.x, node.y, radius);
             }
@@ -318,7 +318,7 @@ public class NeuralNetConfigPanel implements Initializable {
                     paintDot(node.x, node.y, radius);
                     if (i == nodes.size()-1) {
                         context.setLineWidth(0.7);
-                        context.setFont(new Font("Courier New", 12));
+                        context.setFont(new Font("", 12));
                         context.strokeText(Direction.values()[j].name(), node.x+radius*0.5, node.y-radius*0.5);
                     }
                 }
@@ -349,7 +349,7 @@ public class NeuralNetConfigPanel implements Initializable {
     }
 
     private void paintDot(int x, int y, int radius) {
-        context.setFill(Setting.getSettings().getColorScheme().getBackgroundFrame());
+        context.setFill(Setting.getSettings().getTheme().getFrameActiveColor());
         context.fillOval(x+correctionOffset, y+correctionOffset, radius, radius);
     }
 
@@ -359,7 +359,7 @@ public class NeuralNetConfigPanel implements Initializable {
     }
 
     private void paintLine(NetNode a, NetNode b) {
-        context.setStroke(Setting.getSettings().getColorScheme().getBackgroundFrame().darker());
+        context.setStroke(Setting.getSettings().getTheme().getFrameActiveColor().darker());
         context.setLineWidth(2);
         context.strokeLine(a.x+(radius/2)+correctionOffset, a.y+(radius/2)+correctionOffset, b.x+(radius/2)+correctionOffset, b.y+(radius/2)+correctionOffset);
     }
@@ -367,7 +367,7 @@ public class NeuralNetConfigPanel implements Initializable {
 
     private void paintBackground() {
         context.clearRect(0, 0, width, height);
-        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.setFill(Setting.getSettings().getTheme().getBackgroundColor());
         context.fillRect(0, 0, width,height);
     }
 

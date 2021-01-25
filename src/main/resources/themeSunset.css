@@ -1,0 +1,35 @@
+* {
+    -fx-base: rgba(255, 117, 130, 0.69);                        /* combobox color */
+    -fx-text-fill: #2a3950;                                     /* text color */
+    -fx-text-background-color: #2a3950;                         /* text in combobox */
+    -fx-control-inner-background: rgba(255, 117, 130, 0.45);    /* combobox list background */
+    -fx-accent: rgba(255, 117, 130, 0.69);                      /* combobox selected background */
+    -fx-focus-color: rgba(255, 139, 124, 0.69);                 /* focus color */
+    -fx-cell-focus-inner-border: rgba(255, 139, 124, 0.69);     /* inner border of list cell */
+
+    -fx-hover-base: moccasin;                                   /* hover */
+    -fx-color: -fx-accent;                                      /* outer border for list cell */
+    -fx-pressed-base: moccasin;                                 /* control pressed */
+    -fx-body-color: -fx-accent;                                 /* inactive frame */
+
+    -fx-outer-border: -fx-accent;                               /* not sure about this */
+    -fx-inner-border: -fx-accent;                               /* not sure about this */
+    -fx-focused-base: -fx-accent;                               /* not sure about this */
+}
+
+.label {
+    -fx-text-fill: #ff7582;
+}
+
+.tooltip {
+    -fx-text-fill: #ff7582;
+}
+
+#baseControls, #neuralNetworkControls, #actionControls, #statisticControls {
+    -fx-border-color: #725a7a;
+}
+
+#baseControlsLabel, #neuralNetworkControlsLabel, #actionControlsLabel, #statisticControlsLabel {
+    -fx-text-fill: #725a7a;
+    -fx-background-color: #2a3950;
+}

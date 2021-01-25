@@ -51,8 +51,8 @@ public class GamePanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        gameOverTitle.setTextFill(Setting.getSettings().getColorScheme().getText());
-        gameOverText.setTextFill(Setting.getSettings().getColorScheme().getText());
+        gameOverTitle.setTextFill(Setting.getSettings().getTheme().getFrameActiveColor());
+        gameOverText.setTextFill(Setting.getSettings().getTheme().getFrameActiveColor());
     }
 
     private void setUpTimer() {
@@ -233,21 +233,21 @@ public class GamePanel implements Initializable {
     }
 
     public void paint() {
-        paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrame());
+        paintBackground(Setting.getSettings().getTheme().getFrameActiveColor());
         paintSnake();
         paintGoodie();
     }
 
     private void paint(List<int[]> pathgoodie, List<int[]> path) {
-        paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrame());
-        paintPath(pathgoodie, Setting.getSettings().getColorScheme().getPathPrepared());
-        paintPath(path, Setting.getSettings().getColorScheme().getPathHighlighted());
+        paintBackground(Setting.getSettings().getTheme().getBackgroundColor());
+        paintPath(pathgoodie, Setting.getSettings().getTheme().getFrameInactiveColor());
+        paintPath(path, Setting.getSettings().getTheme().getFrameInactiveColor().brighter());
         paintSnake();
         paintGoodie();
     }
 
     private void repaint() {
-        paintBackground(Setting.getSettings().getColorScheme().getBackgroundFrameEnd());
+        paintBackground(Setting.getSettings().getTheme().getFrameInactiveColor());
         paintSnake();
         paintGoodie();
         ConfigPanel.getPanel().lockInput(false);
@@ -257,23 +257,23 @@ public class GamePanel implements Initializable {
         int width = Setting.getSettings().getBoardWidth();
         int height = Setting.getSettings().getBoardHeight();
         context.clearRect(0, 0, 500, 500);
-        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.setFill(Setting.getSettings().getTheme().getBackgroundColor());
         context.fillRect(0, 0, 500, 500);
         double offset = (Math.min(PADDING_WIDTH, PADDING_HEIGHT))/6;
         context.setFill(backgroundFrameColor);
         context.fillRect(PADDING_WIDTH-offset, PADDING_HEIGHT-offset, (CELL_WIDTH*width)+offset*2, (CELL_WIDTH*height)+offset*2);
-        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.setFill(Setting.getSettings().getTheme().getBackgroundColor());
         context.fillRect(PADDING_WIDTH, PADDING_HEIGHT, (CELL_WIDTH*width), (CELL_WIDTH*height));
     }
 
     private void paintGameOverBackground() {
-        context.setFill(Setting.getSettings().getColorScheme().getBackground());
+        context.setFill(Setting.getSettings().getTheme().getBackgroundColor());
         context.fillRect(PADDING_WIDTH, WINDOW_HEIGHT/2-80, (CELL_WIDTH*Setting.getSettings().getBoardWidth()), 110);
     }
 
     private void paintGoodie() {
         int[] goodie = board.getGoodie();
-        drawCell(goodie[0], goodie[1], Setting.getSettings().getColorScheme().getGoodie());
+        drawCell(goodie[0], goodie[1], Setting.getSettings().getTheme().getFoodColor());
     }
 
     private void paintSnake() {
@@ -287,10 +287,10 @@ public class GamePanel implements Initializable {
                 } else {
                     partNext = snake.get(i);
                 }
-                drawLine(part[0], part[1], partNext[0], partNext[1], Setting.getSettings().getColorScheme().getSnake());
+                drawLine(part[0], part[1], partNext[0], partNext[1], Setting.getSettings().getTheme().getSnakeBodyColor());
             }
         } else {
-            drawCell(snake.get(0)[0], snake.get(0)[1], Setting.getSettings().getColorScheme().getSnake());
+            drawCell(snake.get(0)[0], snake.get(0)[1], Setting.getSettings().getTheme().getSnakeBodyColor());
         }
     }
 
