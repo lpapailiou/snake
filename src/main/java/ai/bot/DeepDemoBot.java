@@ -1,10 +1,9 @@
 package ai.bot;
 
-import ai.netadapter.BoardAdapter;
+import ai.netadapter.BoardDecorator;
 import ai.netadapter.Serializer;
 import application.GamePanel;
 import application.NeuralNetConfigPanel;
-import geneticalgorithm.GeneticAlgorithmBatch;
 import neuralnet.NeuralNetwork;
 import util.Direction;
 
@@ -14,7 +13,7 @@ public class DeepDemoBot extends Bot {
 
     private NeuralNetwork best = Serializer.load();
 
-    private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), best);
+    private BoardDecorator adapter = new BoardDecorator(GamePanel.getBoard(), best);
 
     @Override
     protected void run() {

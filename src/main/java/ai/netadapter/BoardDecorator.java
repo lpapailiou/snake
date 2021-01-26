@@ -10,28 +10,28 @@ import util.Setting;
 
 import java.util.*;
 
-public class BoardAdapter extends GeneticAlgorithmObject<BoardAdapter> {
+public class BoardDecorator extends GeneticAlgorithmObject {
 
     private Board board;
     private double[] inputValues = new double[Setting.getSettings().getNodeSelection().size()];
     private Set<Integer> nodeSelection = Setting.getSettings().getNodeSelection();
 
-    public BoardAdapter(NeuralNetwork net) { // used by Generation for background game
+    public BoardDecorator(NeuralNetwork net) { // used by Generation for background game
         super(net);
         board = new Board();
     }
 
-    public BoardAdapter(Board board, NeuralNetwork net) {   // used by bot for real game
+    public BoardDecorator(Board board, NeuralNetwork net) {   // used by bot for real game
         super(net);
         this.board = board;
     }
 
     @Override
-    public boolean executeStep() {    // used by Generation
+    public boolean perform() {    // used by Generation
         Snake snake = board.getRealSnake();
         int[] goodie = board.getGoodie();
         Direction dir = getDirection(snake, goodie);
-        return executeStep(dir);      // true = still alive
+        return perform(dir);      // true = still alive
     }
 
     @Override
@@ -79,7 +79,7 @@ public class BoardAdapter extends GeneticAlgorithmObject<BoardAdapter> {
         return board.getSnake().size();
     }
 
-    public boolean executeStep(Direction dir) {
+    public boolean perform(Direction dir) {
         return board.moveSnake(dir);
     }
 

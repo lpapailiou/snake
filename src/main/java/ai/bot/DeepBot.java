@@ -2,7 +2,7 @@ package ai.bot;
 
 import application.GamePanel;
 import application.NeuralNetConfigPanel;
-import ai.netadapter.BoardAdapter;
+import ai.netadapter.BoardDecorator;
 import geneticalgorithm.GeneticAlgorithmBatch;
 import neuralnet.NeuralNetwork;
 import util.Direction;
@@ -13,14 +13,10 @@ import java.util.List;
 public class DeepBot extends Bot {
 
     private NeuralNetwork currentSeedNetwork = new NeuralNetwork(Setting.getSettings().getLearningRate(), Setting.getSettings().getNetParams());
-    private BoardAdapter adapter = new BoardAdapter(GamePanel.getBoard(), currentSeedNetwork);
+    private BoardDecorator adapter = new BoardDecorator(GamePanel.getBoard(), currentSeedNetwork);
     private int generationCount = Setting.getSettings().getGenerationCount();
     private int populationSize = Setting.getSettings().getPopulationSize();
-    private GeneticAlgorithmBatch batch = new GeneticAlgorithmBatch(currentSeedNetwork, populationSize, generationCount);
-
-    public DeepBot() {
-        batch.setGeneticAlgorithmObjectTemplate("ai.netadapter.BoardAdapter");
-    }
+    private GeneticAlgorithmBatch<BoardDecorator> batch = new GeneticAlgorithmBatch<>(BoardDecorator.class, currentSeedNetwork, populationSize, generationCount);
 
     private void runGeneration() {
         currentSeedNetwork = batch.processGeneration();
@@ -35,7 +31,7 @@ public class DeepBot extends Bot {
             if (currentSeedNetwork != null) {
                 GamePanel.getPanel().prepareNextGeneration();
                 runGeneration();
-                adapter = new BoardAdapter(GamePanel.getBoard(), batch.getBestNeuralNetwork());
+                adapter = new BoardDecorator(GamePanel.getBoard(), batch.getBestNeuralNetwork());
                 NeuralNetConfigPanel.getPanel().incGenCounter();
             } else {
                 NeuralNetConfigPanel.getPanel().resetGenCounter();

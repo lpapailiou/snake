@@ -27,10 +27,10 @@ public class Driver extends Application {
             scene.getStylesheets().add(Driver.class.getClassLoader().getResource(Setting.getSettings().getTheme().getCss()).toExternalForm());
             scene.setFill(Setting.getSettings().getTheme().getBackgroundColor());
             stage.setScene(scene);
-            stage.setMinHeight(539);    //539
-            stage.setMinWidth(1016);
-            stage.setMaxHeight(539);
-            stage.setMaxWidth(1016);
+            stage.setMinHeight(839);    //539
+            stage.setMinWidth(1616);
+            stage.setMaxHeight(839);
+            stage.setMaxWidth(1616);
             stage.setTitle("Snake");
             stage.getIcons().add(new Image("snake.png"));
             setUpKeyParser(scene);

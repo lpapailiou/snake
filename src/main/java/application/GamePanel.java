@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class GamePanel implements Initializable {
 
     @FXML
-    private Pane gamePane;
+    private Canvas gamePane;
 
     @FXML
     private Label gameOverTitle;
@@ -82,13 +82,11 @@ public class GamePanel implements Initializable {
     }
 
     public void setDimensions() {
-        WINDOW_WIDTH = 500;
-        WINDOW_HEIGHT = 500;
+        WINDOW_WIDTH = 800;
+        WINDOW_HEIGHT = 800;
         int width = Setting.getSettings().getBoardWidth();
         int height = Setting.getSettings().getBoardHeight();
-        Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        context = canvas.getGraphicsContext2D();
-        gamePane.getChildren().add(canvas);
+        context = gamePane.getGraphicsContext2D();
 
         if (width >= height) {
             CELL_WIDTH = (WINDOW_WIDTH-BASE_PADDING*2)/width;

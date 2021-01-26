@@ -8,11 +8,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.canvas.Canvas?>
 <HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GamePanel">
     <children>
-        <StackPane prefHeight="500.0" prefWidth="500.0">
+        <StackPane prefHeight="800.0" prefWidth="800.0">
             <children>
-                <Pane fx:id="gamePane" prefHeight="500.0" prefWidth="500.0" />
+                <Canvas fx:id="gamePane" height="800.0" width="800.0" />
                 <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
                     <children>
                         <Label fx:id="gameOverTitle" text="" textAlignment="CENTER" />
