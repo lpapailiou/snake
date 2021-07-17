@@ -1,15 +1,15 @@
 package neuralnet;
 
-import game.Board;
+import game.Game;
+import main.Direction;
 import org.junit.Test;
-import util.Direction;
 
-public class BoardHandlerTest {
+public class GameHandlerTest {
 
 
     @Test
     public void boardTest() {
-        Board b = new Board();
+        Game b = new Game();
         b.moveSnake(Direction.LEFT);
         b.moveSnake(Direction.LEFT);
         b.moveSnake(Direction.LEFT);

@@ -1,6 +1,6 @@
 package neuralnet;
 
-import game.Board;
+import game.Game;
 import game.Snake;
 import ai.netadapter.InputNode;
 import org.junit.Test;
@@ -11,9 +11,9 @@ public class InputTest {
 
     @Test
     public void inputTest() {
-        Board board = new Board();
-        Snake snake = board.getRealSnake();
-        int[] goodie = board.getGoodie();
+        Game game = new Game();
+        Snake snake = game.getRealSnake();
+        int[] goodie = game.getGoodie();
 
         System.out.println("snake: " + Arrays.toString(snake.getBody().get(0)));
         System.out.println("goodie: " + Arrays.toString(goodie));

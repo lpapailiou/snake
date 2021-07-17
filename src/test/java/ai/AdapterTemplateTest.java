@@ -1,8 +1,6 @@
 package ai;
 
-import game.Board;
-import geneticalgorithm.GeneticAlgorithmObject;
-import neuralnet.NeuralNetwork;
+import game.Game;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
@@ -12,7 +10,7 @@ public class AdapterTemplateTest {
 
     @Test
     public void test() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<?> templateBuilder= Class.forName("ai.netadapter.BoardDecorator").getConstructor(String.class);
-        GeneticAlgorithmObject object = (GeneticAlgorithmObject) templateBuilder.newInstance(new Object[] {new Board(), new NeuralNetwork(2,2,2)});
+        //Constructor<?> templateBuilder= Class.forName("ai.netadapter.GameDecorator").getConstructor(String.class);
+        //GeneticAlgorithmObject object = (GeneticAlgorithmObject) templateBuilder.newInstance(new Object[] {new Game(), new NeuralNetwork(2,2,2)});
     }
 }

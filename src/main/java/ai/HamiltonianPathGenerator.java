@@ -1,16 +1,7 @@
 package ai;
 
-import util.Direction;
-import util.Setting;
-
-import java.util.*;
-
-import static ai.PathGenerator.exists;
-import static ai.PathGenerator.intersect;
-import static util.Setting.*;
-
 public class HamiltonianPathGenerator extends PathGenerator {
-
+/*
     private static final int PHASE_THRESHOLD = 10;
     private static final int SEARCH_SCOPE = 6;
     private static final int PATIENCE = 8;
@@ -304,7 +295,7 @@ public class HamiltonianPathGenerator extends PathGenerator {
                         /*path = new ArrayList<>(pathHistory.get(0)); // reset
                         patienceThreshold--;
                         counter = threshold * SEARCH_SCOPE;
-                        System.out.println("reset");*/
+                        System.out.println("reset"); // HERE WAS A COMMENT OUT //TODO
                     }
                 }
                 if (path.size() >= threshold) {
@@ -399,4 +390,5 @@ public class HamiltonianPathGenerator extends PathGenerator {
             return false;
         } else return next[1] >= boardY1 && next[1] < boardY2;
     }
+    */
 }

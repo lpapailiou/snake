@@ -1,14 +1,18 @@
 package ai.bot;
 
-import ai.AStarPathGenerator;
-import ai.HamiltonianPathGenerator;
-import application.GamePanel;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class AStarBot extends Bot {
+    @Override
+    protected void run() {
 
+    }
+
+    @Override
+    protected List<int[]> getPath() {
+        return null;
+    }
+/*
     List<int[]> staticPath = getPath();
     List<int[]> _goodiepath = getGoodiePath();
     List<int[]> _path = getMyPath();
@@ -45,5 +49,5 @@ public class AStarBot extends Bot {
     protected List<int[]> getGoodiePath() {
         List<int[]> p = HamiltonianPathGenerator.getPathBetween(staticPath, GamePanel.getPanel().getSnake().get(0), GamePanel.getPanel().getGoodie());
         return p;
-    }
+    }*/
 }

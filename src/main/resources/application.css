@@ -9,10 +9,18 @@
     -fx-cursor: hand;
 }
 
+.radio-button {
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0em;
+    -fx-background-insets: -5;
+    -fx-translate-x: -1px;
+    -fx-translate-y: -3px;
+}
+
 .radio-button .radio {
     -fx-border-width: 0px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 2.0em;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 1.0em;
     -fx-padding: 0.2em;
     -fx-cursor: hand;
 }

@@ -1,11 +1,9 @@
 package ai;
 
-import util.Direction;
 
-import java.util.*;
 
 public class AStarPathGenerator extends PathGenerator{
-
+/*
     public static List<int[]> getAStarPath(List<int[]> availableNodes, int[] start, int[] end, boolean minimize) {
         List<int[]> path = new ArrayList<>();
         Set<Node> graph = buildGraph(availableNodes, start, end);
@@ -137,4 +135,6 @@ public class AStarPathGenerator extends PathGenerator{
             return 0;
         }
     }
+
+ */
 }

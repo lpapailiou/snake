@@ -1,8 +1,7 @@
 package ai;
 
 import javafx.scene.Node;
-import util.Direction;
-import util.Setting;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PathGenerator {
-
+/*
     public static void print(List<int[]> list) {
         for (int i = 0; i < list.size(); i++) {
             if (i == list.size()-1) {
@@ -99,4 +98,6 @@ public class PathGenerator {
     static boolean intersect(int[] coord1, int[] coord2) {
         return ((coord1[0] == coord2[0] ^ coord1[1] == coord2[1]) && (Math.abs(coord1[0] - coord2[0]) == 1 ^ Math.abs(coord1[1] - coord2[1]) == 1));
     }
+
+ */
 }

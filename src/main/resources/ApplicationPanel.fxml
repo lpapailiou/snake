@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<HBox fx:id="rootElement" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ApplicationController">
+    <fx:include fx:id="game" source="GamePanel.fxml" />
+    <fx:include fx:id="config" source="ConfigPanel.fxml"/>
+</HBox>

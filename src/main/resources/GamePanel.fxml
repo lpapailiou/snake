@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-
 <?import javafx.scene.canvas.Canvas?>
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GamePanel">
-    <children>
-        <StackPane prefHeight="800.0" prefWidth="800.0">
-            <children>
-                <Canvas fx:id="gamePane" height="800.0" width="800.0" />
-                <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
-                    <children>
-                        <Label fx:id="gameOverTitle" text="" textAlignment="CENTER" />
-                        <Label fx:id="gameOverText" text="" textAlignment="CENTER" />
-                        <Region prefHeight="60.0" prefWidth="200.0" />
-                    </children>
-                </VBox>
-            </children>
-        </StackPane>
-        <HBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
-           <children>
-               <fx:include source="ConfigPanel.fxml" />
-           </children>
-        </HBox><!--
-        <HBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
-            <children>
-                <fx:include source="NeuralNetConfigPanel.fxml" />
-            </children>
-        </HBox>-->
-    </children>
-</HBox>
+<?import javafx.scene.layout.Pane?>
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GameController">
+    <Canvas fx:id="gamePane" height="800.0" width="800.0"/>
+</Pane>

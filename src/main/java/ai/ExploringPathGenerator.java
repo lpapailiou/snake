@@ -1,16 +1,9 @@
 package ai;
 
-import util.Direction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import static ai.PathGenerator.exists;
-import static ai.PathGenerator.isValid;
 
 public class ExploringPathGenerator extends PathGenerator {
+/*
 
     private static final int THRESHOLD = 50;
 
@@ -62,4 +55,6 @@ public class ExploringPathGenerator extends PathGenerator {
         }
         return path;
     }
+
+ */
 }

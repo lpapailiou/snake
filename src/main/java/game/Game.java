@@ -1,31 +1,40 @@
 package game;
 
-import ai.bot.DeepBot;
-import util.Direction;
-import util.Setting;
+import main.Config;
+import main.Direction;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.List;
+import java.util.Random;
 
-import static ai.PathGenerator.exists;
-import static util.Setting.*;
+import static ai.netadapter.InputNode.exists;
 
-public class Board {
+public class Game {
+
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     private Snake snake = new Snake();
     private int[] goodie;
     private int result = 0;
     private int moveCounter = 0;
+    private int boardWith = Config.getInstance().getBoardWidth();
+    private int boardHeight = Config.getInstance().getBoardHeight();
 
-    public Board() {
+    public Game() {
         setGoodie();
     }
 
     private void setGoodie() {
         int[] newGoodie = null;
         while (newGoodie == null || exists(snake.getBody(), newGoodie)) {
-            newGoodie = new int[] {Setting.getSettings().getRandom().nextInt(Setting.getSettings().getBoardWidth()), Setting.getSettings().getRandom().nextInt(Setting.getSettings().getBoardHeight())};
+            newGoodie = new int[] {new Random().nextInt(boardWith), new Random().nextInt(boardHeight)};
         }
         goodie = newGoodie;
+    }
+
+    public void addListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener("tick", l);
     }
 
     public boolean moveSnake(Direction dir) {
@@ -37,6 +46,7 @@ public class Board {
     }
 
     private boolean validateMove(boolean isNewGoodieRequired) {
+        pcs.firePropertyChange("tick", false, true);
         if (snake.isAlive() && !snake.isWinner()) {
             moveCounter++;
             if (isNewGoodieRequired) {
@@ -53,11 +63,9 @@ public class Board {
     }
 
     public long getFitness() {
-
-
         int snakeLength = snake.getBody().size();
         int stepsPerSnake = (int) (moveCounter / snakeLength);
-        int boardHalf = (Setting.getSettings().getBoardWidth() + Setting.getSettings().getBoardHeight())/2;
+        int boardHalf = (boardWith + boardHeight)/2;
 
         if (snakeLength < boardHalf * 1.5) {
             return (long) Math.pow(snakeLength, 3.7) + moveCounter;

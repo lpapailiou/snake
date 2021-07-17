@@ -1,10 +1,8 @@
 package ai.netadapter;
 
-import neuralnet.NeuralNetwork;
+import nn.neuralnet.NeuralNetwork;
 
-import java.awt.*;
 import java.io.*;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;

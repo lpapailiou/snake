@@ -1,15 +1,10 @@
 package ai.bot;
 
-import application.NeuralNetConfigPanel;
-import util.State;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import util.Setting;
 
 import java.util.List;
 
 public abstract class Bot {
+    /*
     private boolean running = true;
     private long id = System.currentTimeMillis();
     private Timeline timeline;
@@ -18,10 +13,10 @@ public abstract class Bot {
         timeline = new Timeline(new KeyFrame(Duration.millis(Setting.getSettings().getBotSpeed()), event -> {
             if (running) {
                 run();
-                if (State.getInstance().isInterrupted()) {
+                if (StateOld.getInstance().isInterrupted()) {
                     running = false;
                     NeuralNetConfigPanel.getPanel().resetGenCounter();
-                    State.getInstance().setInterrupt(false);
+                    StateOld.getInstance().setInterrupt(false);
                     stop();
                 }
             } else {
@@ -38,6 +33,8 @@ public abstract class Bot {
     protected void stop() {
         running = false;
     }
+    */
     protected abstract void run();
     protected abstract List<int[]> getPath();
+
 }

@@ -1,19 +1,21 @@
 package ai.bot;
 
-import ai.netadapter.BoardDecorator;
-import ai.netadapter.Serializer;
-import application.GamePanel;
-import application.NeuralNetConfigPanel;
-import neuralnet.NeuralNetwork;
-import util.Direction;
-
 import java.util.List;
 
 public class DeepDemoBot extends Bot {
+    @Override
+    protected void run() {
 
+    }
+
+    @Override
+    protected List<int[]> getPath() {
+        return null;
+    }
+/*
     private NeuralNetwork best = Serializer.load();
 
-    private BoardDecorator adapter = new BoardDecorator(GamePanel.getBoard(), best);
+    private GameDecorator adapter = new GameDecorator(GamePanel.getBoard(), best);
 
     @Override
     protected void run() {
@@ -29,5 +31,5 @@ public class DeepDemoBot extends Bot {
     @Override
     protected List<int[]> getPath() {
         return null;
-    }
+    }*/
 }

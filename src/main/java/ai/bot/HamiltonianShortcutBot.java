@@ -1,13 +1,18 @@
 package ai.bot;
 
-import ai.HamiltonianPathGenerator;
-import application.GamePanel;
-import util.Direction;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class HamiltonianShortcutBot extends Bot {
+    @Override
+    protected void run() {
+
+    }
+
+    @Override
+    protected List<int[]> getPath() {
+        return null;
+    }
+    /*
     List<int[]> staticPath = getPath();
     List<int[]> _path = HamiltonianPathGenerator.getPathSection(staticPath, GamePanel.getPanel().getSnake(), GamePanel.getPanel().getGoodie());
     List<int[]> snake;
@@ -34,5 +39,7 @@ public class HamiltonianShortcutBot extends Bot {
         return new ArrayList<>(HamiltonianPathGenerator.getHamilton(snake.get(0)));
     }
 
+
+     */
 
 }

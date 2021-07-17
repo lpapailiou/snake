@@ -1,6 +1,7 @@
 package neuralnet;
 
 import ai.netadapter.Serializer;
+import nn.neuralnet.NeuralNetwork;
 import org.junit.Test;
 
 import java.awt.*;

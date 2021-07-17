@@ -1,11 +1,14 @@
 package ai.netadapter;
 
 import game.Snake;
-import util.Setting;
+import main.Config;
 
-import static ai.PathGenerator.exists;
+import java.util.Arrays;
+import java.util.List;
 
 public enum InputNode {
+
+
 
     // ============================ DISTANCE TO WALL ============================
     WALL_UP("distance to upper wall"){
@@ -18,13 +21,13 @@ public enum InputNode {
     WALL_RIGHT("distance to right wall"){
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
-            return 1/(Math.abs(Setting.getSettings().getBoardWidth()-1 - snake.getBody().get(0)[0])+0.001);
+            return 1/(Math.abs(Config.getInstance().getBoardWidth()-1 - snake.getBody().get(0)[0])+0.001);
         }
     },
     WALL_DOWN("distance to lower wall"){
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
-            return 1/(Math.abs(Setting.getSettings().getBoardHeight()-1 - snake.getBody().get(0)[1])+0.001);
+            return 1/(Math.abs(config.getBoardHeight()-1 - snake.getBody().get(0)[1])+0.001);
         }
     },
     WALL_LEFT("distance to left wall"){
@@ -33,44 +36,6 @@ public enum InputNode {
             return 1/(snake.getBody().get(0)[0]+0.001);
         }
     },
-
-    /*
-    WALL_UP_RIGHT("distance to wall diagonally up/right"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            int[] snakeHead = snake.getBody().get(0);
-            int x = Setting.getSettings().getBoardWidth()-1-snakeHead[0];
-            int y = snakeHead[1];
-            return 1/(x + y + 0.001);
-        }
-    },
-    WALL_DOWN_RIGHT("distance to wall diagonally down/right"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            int[] snakeHead = snake.getBody().get(0);
-            int x = Setting.getSettings().getBoardWidth()-1-snakeHead[0];
-            int y = Setting.getSettings().getBoardHeight()-1-snakeHead[1];
-            return 1/(x + y + 0.001);
-        }
-    },
-    WALL_DOWN_LEFT("distance to wall diagonally down/left"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            int[] snakeHead = snake.getBody().get(0);
-            int x = snakeHead[0];
-            int y = Setting.getSettings().getBoardHeight()-1-snakeHead[1];
-            return 1/(x + y + 0.001);
-        }
-    },
-    WALL_UP_LEFT("distance to wall diagonally up/left"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            int[] snakeHead = snake.getBody().get(0);
-            int x = snakeHead[0];
-            int y = snakeHead[1];
-            return 1/(x + y + 0.001);
-        }
-    },*/
 
     GOODIE_UP("vision of goodie up"){
         @Override
@@ -136,7 +101,7 @@ public enum InputNode {
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             int[] pos = snake.getBody().get(0).clone();
-            int end = Setting.getSettings().getBoardWidth();
+            int end = config.getBoardWidth();
             int index = 0;
             for (int i = pos[0]+1; i < end; i++) {
                 pos[0] = i;
@@ -153,7 +118,7 @@ public enum InputNode {
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             int[] pos = snake.getBody().get(0).clone();
-            int end = Setting.getSettings().getBoardHeight();
+            int end = config.getBoardHeight();
             int index = 0;
             for (int i = pos[1]+1; i < end; i++) {
                 pos[1] = i;
@@ -196,13 +161,7 @@ public enum InputNode {
         }
     },
 
-    /*
-    TIME_REMAINING("time remaining"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            return snake.getTimeout();
-        }
-    },*/
+
 
 
 
@@ -281,7 +240,7 @@ public enum InputNode {
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             int[] pos = snake.getBody().get(0).clone();
-            int targetW = Setting.getSettings().getBoardWidth() - pos[0];
+            int targetW = config.getBoardWidth() - pos[0];
             int targetH = pos[1];
             int max = Math.max(targetH, targetW);
             for (int i = 1; i < max; i++) {
@@ -298,8 +257,8 @@ public enum InputNode {
         @Override
         public double getInputValue(Snake snake, int[] goodie) {
             int[] pos = snake.getBody().get(0).clone();
-            int targetW = Setting.getSettings().getBoardWidth() - pos[0];
-            int targetH = Setting.getSettings().getBoardHeight() - pos[1];
+            int targetW = config.getBoardWidth() - pos[0];
+            int targetH = config.getBoardHeight() - pos[1];
             int max = Math.max(targetH, targetW);
             for (int i = 1; i < max; i++) {
                 pos[0] = pos[0]+1;
@@ -316,7 +275,7 @@ public enum InputNode {
         public double getInputValue(Snake snake, int[] goodie) {
             int[] pos = snake.getBody().get(0).clone();
             int targetW = pos[0];
-            int targetH = Setting.getSettings().getBoardHeight() - pos[1];
+            int targetH = config.getBoardHeight() - pos[1];
             int max = Math.max(targetH, targetW);
             for (int i = 1; i < max; i++) {
                 pos[0] = pos[0]-1;
@@ -349,38 +308,7 @@ public enum InputNode {
 
 
 
-
-
-
-
-    // ============================ DISTANCE TO BODY OLD ============================
-    /*
-    DISTANCE_BODY_LEFT("body not blocking left"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.LEFT))) ? -1 : 1;
-        }
-    },
-    DISTANCE_BODY_RIGHT("body not blocking right"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.RIGHT))) ? -1 : 1;
-        }
-    },
-    DISTANCE_BODY_UP("body not blocking up"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.UP))) ? -1 : 1;
-        }
-    },
-    DISTANCE_BODY_DOWN("body not blocking down"){
-        @Override
-        public double getInputValue(Snake snake, int[] goodie) {
-            return (PathGenerator.exists(snake.getBody(), Direction.getNextCoord(snake.getBody().get(0), Direction.DOWN))) ? -1 : 1;
-        }
-    };*/
-
-
+    private static Config config = Config.getInstance();
     private String tooltip;
 
     InputNode(String tooltip) {
@@ -391,5 +319,12 @@ public enum InputNode {
         return 0;
     }
     public String getTooltip() { return tooltip; }
-
+    public static boolean exists(List<int[]> list, int[] block) {
+        for (int[] coord : list) {
+            if (Arrays.equals(coord, block)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

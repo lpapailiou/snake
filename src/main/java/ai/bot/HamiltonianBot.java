@@ -1,11 +1,18 @@
 package ai.bot;
 
-import ai.HamiltonianPathGenerator;
-import application.GamePanel;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HamiltonianBot extends Bot {
+    @Override
+    protected void run() {
+
+    }
+
+    @Override
+    protected List<int[]> getPath() {
+        return null;
+    }
+    /*
     List<int[]> staticPath = getPath();
     List<int[]> _path = getNextSection();
     List<int[]> snake;
@@ -38,5 +45,5 @@ public class HamiltonianBot extends Bot {
         section.remove(0);
         return section;
     }
-
+*/
 }

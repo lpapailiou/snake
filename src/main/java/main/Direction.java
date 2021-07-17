@@ -1,23 +1,17 @@
-package util;
+package main;
 
 import java.util.Random;
 
 public enum Direction {
 
-    LEFT(-1, 0),
-    RIGHT(1, 0),
     UP(0, -1),
+    RIGHT(1, 0),
     DOWN(0, 1),
-    UP_LEFT(-1, -1),
-    UP_RIGHT(1, -1),
-    DOWN_LEFT(-1, 1),
-    DOWN_RIGHT(1, 1),
-    NONE(0, 0),
-    GONE(-9, 0);
+    LEFT(-1, 0);
 
-    private int x;
-    private int y;
-    private static final Direction[] dirList = {LEFT, RIGHT, UP, DOWN};
+    public final int x;
+    public final int y;
+    private static final Direction[] dirList = {UP, RIGHT, DOWN, LEFT};
 
     Direction(int x, int y) {
         this.x = x;
@@ -32,8 +26,18 @@ public enum Direction {
         return y;
     }
 
+    public static String[] getLabels() {
+        String[] labels = new String[Direction.values().length];
+        int index = 0;
+        for (Direction d : Direction.values()) {
+            labels[index] = d.name();
+            index++;
+        }
+        return labels;
+    }
+
     public static Direction getRandomDirection() {
-        int random = Setting.getSettings().getRandom().nextInt(dirList.length);
+        int random = new Random().nextInt(dirList.length);
         return dirList[random];
     }
 
@@ -58,7 +62,7 @@ public enum Direction {
                 return dir;
             }
         }
-        return Direction.NONE;
+        return null;
     }
 
     public int[] asArray() {

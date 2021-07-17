@@ -1,6 +1,6 @@
 package ai;
 
-import util.Direction;
+import main.Direction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class StupidPathGenerator extends PathGenerator {
-
+/*
     public static List<Direction> getPath(List<int[]> snake, int[] goodie) {
         int[] distance = new int[] {goodie[0]-snake.get(0)[0], goodie[1]-snake.get(0)[1]};
         List<Direction> path = getShortestPath(distance);
@@ -60,4 +60,7 @@ public class StupidPathGenerator extends PathGenerator {
         Collections.shuffle(dirs);
         return dirs;
     }
+
+
+ */
 }

@@ -6,7 +6,21 @@
 
     <groupId>snake</groupId>
     <artifactId>snake</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <properties>
+        <main.class>main.Main</main.class>
+        <outputDir>target/classes</outputDir>
+        <resourceDir>src/main/resources</resourceDir>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
+        <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+        <neuralnetwork.group>nn</neuralnetwork.group>
+        <neuralnetwork.id>neural-network</neuralnetwork.id>
+        <neuralnetwork.version>LATEST</neuralnetwork.version>
+    </properties>
 
     <repositories>
         <repository>
@@ -16,40 +30,15 @@
     </repositories>
 
     <build>
-        <outputDirectory>target/classes</outputDirectory>
-        <resources>
-            <resource>
-                <directory>
-                    src/main/resources
-                </directory>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
+        <outputDirectory>${outputDir}</outputDirectory>
+        <resources><resource><directory>${resourceDir}</directory></resource></resources>
 
-                    <includes>
-                        <include>directory path/*.jar</include>
-                    </includes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
+        <plugins>
+            <!-- copies properties file from neural network library to resources folder -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>${maven-dependency-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>resource-dependencies</id>
@@ -60,28 +49,47 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>neuralnetwork</groupId>
-                                    <artifactId>neural-network-repo</artifactId>
+                                    <groupId>${neuralnetwork.group}</groupId>
+                                    <artifactId>${neuralnetwork.id}</artifactId>
                                     <version>${neuralnetwork.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <includes>**/*.properties</includes>
-                                    <excludes>**/generated-test-sources/*</excludes>
-                                    <excludes>**/dependency-maven-plugin-markers/*</excludes>
-                                    <outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                             <includes>**/*.properties</includes>
-                            <excludes>**/generated-test-sources/*</excludes>
-                            <excludes>**/dependency-maven-plugin-markers/*</excludes>
-                            <outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
+                            <outputDirectory>${project.basedir}/${resourceDir}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
+            <!-- creates executable jar file with dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -101,13 +109,10 @@
             <version>2.11.1</version>
         </dependency>
         <dependency>
-            <groupId>neuralnetwork</groupId>
-            <artifactId>neural-network-repo</artifactId>
+            <groupId>${neuralnetwork.group}</groupId>
+            <artifactId>${neuralnetwork.id}</artifactId>
             <version>${neuralnetwork.version}</version>
         </dependency>
     </dependencies>
 
-    <properties>
-        <neuralnetwork.version>LATEST</neuralnetwork.version>
-    </properties>
 </project>

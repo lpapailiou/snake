@@ -1,54 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.ConfigController">
+    <VBox alignment="CENTER" prefHeight="800.0" prefWidth="800.0">
+        <VBox alignment="CENTER" maxHeight="700.0" maxWidth="700.0" prefHeight="700.0"
+              prefWidth="700.0" spacing="20">
+            <HBox fx:id="baseControls" minWidth="700.0" prefWidth="700.0" spacing="20">
+                <VBox spacing="20">
+                    <Label fx:id="baseControlsLabel"
+                           text="base configuration"/>
+                    <HBox fx:id="hbox1" minWidth="680.0" spacing="20">
+                        <Label text="board size (W x H):" prefWidth="140.0"/>
+                        <TextField fx:id="boardWithControl" text="20" prefWidth="50.0"/>
+                        <Label text="x"/>
+                        <TextField fx:id="boardHeightControl" text="20" prefWidth="50.0"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="theme:"/>
+                        <ComboBox fx:id="themeSelector" prefWidth="120.0"/>
+                        <Region prefWidth="1"/>
+                    </HBox>
+                    <HBox fx:id="hbox2" spacing="20">
+                        <Label text="mode:" prefWidth="140.0"/>
+                        <ComboBox fx:id="modeSelector" prefWidth="290.0"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+            <HBox fx:id="neuralNetworkControls" minWidth="700.0" prefWidth="700.0" spacing="20">
+                <VBox spacing="20">
+                    <Label fx:id="neuralNetworkControlsLabel"
+                           text="neural network"/>
+                    <HBox fx:id="hiddenLayerConfiguration" spacing="20">
+                        <Label text="hidden layers:" prefWidth="140.0"/>
+                        <ComboBox fx:id="hiddenLayerCount" prefWidth="100.0"/>
+                        <Region prefWidth="5"/>
+                        <HBox fx:id="hiddenLayerControls" spacing="20">
+                            <TextField prefWidth="50.0" text="1"/>
+                            <TextField prefWidth="50.0" text="1"/>
+                            <TextField prefWidth="50.0" text="1"/>
+                            <TextField prefWidth="50.0" text="1"/>
+                            <TextField prefWidth="50.0" text="1"/>
+                        </HBox>
+                    </HBox>
+                    <HBox>
+                        <Region prefWidth="160.0" minWidth="160.0" maxWidth="160.0"/>
+                        <StackPane fx:id="neuralNetworkStack" minWidth="520.0">
+                            <Canvas fx:id="layerPane" width="520" height="290"/>
+                            <VBox fx:id="inputNodeConfiguration" alignment="CENTER_LEFT" spacing="4">
+                                <!-- to be filled by code --> </VBox>
+                        </StackPane>
+                    </HBox>
 
-<VBox fx:id="configPanel" alignment="CENTER" prefHeight="500.0" prefWidth="480.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConfigPanel">
-    <children>
-        <Region prefHeight="32.0" />
-      <HBox prefWidth="500.0" spacing="20">
-         <children>
-            <TextField fx:id="boardWithControl" prefWidth="200.0" text="20">
-               <tooltip>
-                  <Tooltip text="board width" />
-               </tooltip></TextField>
-            <Label prefWidth="15.0" text="x" />
-            <TextField fx:id="boardHeightControl" prefWidth="200.0" text="15">
-               <tooltip>
-                  <Tooltip text="board height" />
-               </tooltip></TextField>
-            <Region prefHeight="100.0" prefWidth="200.0" />
-            <ComboBox fx:id="colorSchemeChooser" prefWidth="300.0">
-               <tooltip>
-                  <Tooltip text="color scheme" />
-               </tooltip></ComboBox>
-         </children>
-      </HBox>
-      <HBox prefHeight="28.0" prefWidth="500.0" spacing="20">
-         <children>
-            <ComboBox fx:id="modeChooser" prefWidth="310.0">
-               <tooltip>
-                  <Tooltip text="mode choice (ai selection or manual game)" />
-               </tooltip></ComboBox>
-         </children>
-      </HBox>
-        <Pane>
-            <children>
-                <fx:include fx:id="nnconfig" source="NeuralNetConfigPanel.fxml" />
-            </children>
-        </Pane>
-      <HBox alignment="CENTER" prefHeight="31.0" prefWidth="500.0" spacing="20">
-         <children>
-            <Button fx:id="startButton" mnemonicParsing="false" text="start" />
-            <Button fx:id="stopButton" mnemonicParsing="false" text="stop" />
-            <!--<Button fx:id="statisticsButton" mnemonicParsing="false" text="statistics" />-->
-         </children>
-      </HBox>
-        <Region />
-    </children>
-
-</VBox>
+                    <HBox fx:id="hbox3" spacing="20">
+                        <Label text="generations:" prefWidth="140.0"/>
+                        <TextField fx:id="generationControl" text="30" prefWidth="50.0"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="population size:"/>
+                        <TextField fx:id="populationControl" text="500" prefWidth="50.0"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="randomization rate:"/>
+                        <TextField fx:id="randomizationControl" text="0.6" prefWidth="50.0"/>
+                        <Region prefWidth="1"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+            <HBox minWidth="700.0" prefWidth="700.0" maxWidth="700.0" spacing="20">
+                <HBox fx:id="statisticControls" minWidth="330.0" prefWidth="350.0" spacing="20">
+                    <VBox spacing="20">
+                        <Label fx:id="statisticControlsLabel"
+                               text="statistics"/>
+                        <HBox fx:id="hbox4" alignment="CENTER" prefWidth="310.0" maxWidth="310.0"
+                              spacing="20">
+                            <Label fx:id="openLabel" text="open as graph:" prefWidth="140"></Label>
+                            <Button fx:id="statisticsButton" text="STATISTICS" prefWidth="100.0"/>
+                            <Region prefWidth="28.0"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+                <HBox fx:id="actionControls" maxHeight="62.0" minWidth="330.0" prefWidth="700.0"
+                      spacing="20">
+                    <VBox spacing="20">
+                        <Label fx:id="actionControlsLabel"
+                               text="action"/>
+                        <HBox fx:id="hbox5" alignment="CENTER" maxHeight="62.0" minWidth="310.0"
+                              prefWidth="700.0" spacing="20">
+                            <Button fx:id="startButton" text="START" prefWidth="100.0"/>
+                            <Button fx:id="stopButton" text="STOP" prefWidth="100.0"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</Pane>

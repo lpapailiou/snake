@@ -1,25 +1,28 @@
 package ai.bot;
 
-import application.GamePanel;
-import application.NeuralNetConfigPanel;
-import ai.netadapter.BoardDecorator;
-import geneticalgorithm.GeneticAlgorithmBatch;
-import neuralnet.NeuralNetwork;
-import util.Direction;
-import util.Setting;
-
 import java.util.List;
 
 public class DeepBot extends Bot {
+    @Override
+    protected void run() {
 
-    private NeuralNetwork currentSeedNetwork = new NeuralNetwork(Setting.getSettings().getLearningRate(), Setting.getSettings().getNetParams());
-    private BoardDecorator adapter = new BoardDecorator(GamePanel.getBoard(), currentSeedNetwork);
+    }
+
+    @Override
+    protected List<int[]> getPath() {
+        return null;
+    }
+/*
+    private NeuralNetwork currentSeedNetwork = new NeuralNetwork(Setting.getSettings().getNetParams()).setLearningRate(Setting.getSettings().getLearningRate());
+    private GameDecorator adapter = new GameDecorator(GamePanel.getBoard(), currentSeedNetwork);
     private int generationCount = Setting.getSettings().getGenerationCount();
     private int populationSize = Setting.getSettings().getPopulationSize();
-    private GeneticAlgorithmBatch<BoardDecorator> batch = new GeneticAlgorithmBatch<>(BoardDecorator.class, currentSeedNetwork, populationSize, generationCount);
+    private GeneticAlgorithmBatch<GameDecorator> batch = new GeneticAlgorithmBatch<>(GameDecorator.class, currentSeedNetwork, populationSize, generationCount);
 
     private void runGeneration() {
         currentSeedNetwork = batch.processGeneration();
+        //System.out.println(currentSeedNetwork.getMutationRate());
+
     }
 
 
@@ -31,7 +34,7 @@ public class DeepBot extends Bot {
             if (currentSeedNetwork != null) {
                 GamePanel.getPanel().prepareNextGeneration();
                 runGeneration();
-                adapter = new BoardDecorator(GamePanel.getBoard(), batch.getBestNeuralNetwork());
+                adapter = new GameDecorator(GamePanel.getBoard(), batch.getBestNeuralNetwork());
                 NeuralNetConfigPanel.getPanel().incGenCounter();
             } else {
                 NeuralNetConfigPanel.getPanel().resetGenCounter();
@@ -44,5 +47,5 @@ public class DeepBot extends Bot {
     @Override
     protected List<int[]> getPath() {
         return null;
-    }
+    }*/
 }

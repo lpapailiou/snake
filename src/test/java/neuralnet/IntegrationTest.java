@@ -1,7 +1,6 @@
 package neuralnet;
 
 import org.junit.Test;
-import util.Setting;
 
 public class IntegrationTest {
 

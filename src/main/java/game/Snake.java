@@ -1,14 +1,11 @@
 package game;
 
-import ai.bot.DeepBot;
-import util.Direction;
-import util.Setting;
-
+import main.Config;
+import main.Direction;
+import main.Mode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static util.Setting.*;
 
 public class Snake {
 
@@ -16,9 +13,11 @@ public class Snake {
     private boolean isAlive = true;
     private boolean isWinner = false;
     private int moveCounter = 0;
+    private int boardWidth = Config.getInstance().getBoardWidth();
+    private int boardHeight = Config.getInstance().getBoardHeight();
 
     public Snake() {
-        snake.add(new int[] {Setting.getSettings().getBoardWidth()/2, Setting.getSettings().getBoardHeight()/2});
+        snake.add(new int[] {boardWidth/2, boardHeight/2});
         snake.add(Direction.getNextCoord(snake.get(0), Direction.getRandomDirection()));
     }
 
@@ -29,8 +28,8 @@ public class Snake {
 
     public boolean move(int[] coord, int[] goodie) {
         moveCounter++;
-        if (moveCounter > Setting.getSettings().getNeuralBotTimeout()) {
-            if (Setting.getSettings().getBot() instanceof DeepBot) {
+        if (moveCounter > boardWidth * boardHeight) {
+            if (Config.getInstance().getMode() == Mode.NEURAL_NETWORK) {
                 isAlive = false;
                 //System.out.println("killed snake because time limit is over");
             }
@@ -57,7 +56,7 @@ public class Snake {
             snake.remove(snake.size() - 1);
         } else {
             moveCounter = 0;
-            if (snake.size() < Setting.getSettings().getBoardWidth()*Setting.getSettings().getBoardHeight()) {
+            if (snake.size() < boardWidth*boardHeight) {
                 return true;
             } else {
                 isWinner = true;
@@ -81,9 +80,9 @@ public class Snake {
     }
 
     private boolean isOnBoard(int[] coord) {
-        if (coord[0] < 0 || coord[0] >= Setting.getSettings().getBoardWidth()) {
+        if (coord[0] < 0 || coord[0] >= boardWidth) {
             return false;
-        } else return coord[1] >= 0 && coord[1] < Setting.getSettings().getBoardHeight();
+        } else return coord[1] >= 0 && coord[1] < boardHeight;
     }
 
     private boolean isGoingBackwards(int[] coord) {

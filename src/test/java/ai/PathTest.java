@@ -1,7 +1,6 @@
 package ai;
 
 import org.junit.Test;
-import util.Direction;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +9,7 @@ public class PathTest {
 
     @Test
     public void pathConversionTest2() {
+        /*
         List<Direction> directions = PathGenerator.getDirectionsFromPath(new int[]{2, 2}, Arrays.asList(new int[][] {{2, 1}, {3, 1}, {3, 0}, {2, 0}, {1, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 2}, {0, 2}, {0, 3}, {1, 3}, {2, 3}, {3, 3}, {3, 2}, {2, 2}}));
         for (Direction dir : directions) {
             System.out.print(dir.name() +", ");
@@ -25,12 +25,14 @@ public class PathTest {
         for (int[] coord : path) {
             System.out.print("("+coord[0]+", "+coord[1]+"), ");
         }
+
+         */
         /*
         LEFT, UP, RIGHT, RIGHT, RIGHT, DOWN, LEFT, DOWN, RIGHT, DOWN, LEFT, LEFT, LEFT, UP, RIGHT, UP,
         (2, 1), (3, 1), (3, 0), (2, 0), (1, 0), (0, 0), (0, 1), (1, 1), (1, 2), (0, 2), (0, 3), (1, 3), (2, 3), (3, 3), (3, 2), (2, 2),
          */
     }
-
+/*
 
 
     public void testPathConversion() {
@@ -48,5 +50,5 @@ public class PathTest {
         for (Direction dir : directionsConvertedBack) {
             System.out.print(dir.name() +", ");
         }
-    }
+    }*/
 }
