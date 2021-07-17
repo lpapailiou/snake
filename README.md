@@ -1,7 +1,7 @@
 # WIP - snake
 
 A __snake__ game, with multiple ai algorithms.  
-Currently, this project is used to test the [neuralnetwork library](https://github.com/lpapailiou/neuralnetwork).
+Currently, this project is used to test the [neuralnetwork library](https://github.com/lpapailiou/neuralnetwork). 
 
 ## Table of Contents
 1. [About the game](#about-the-game)  
